@@ -176,7 +176,7 @@ const Teams = () => {
         <div className="bg-secondary py-8">
           <ScrollAnimation>
             <SectionTitle
-              title="Consultants"
+              title="Our Leaders"
               subtitle="Expert mentors driving innovation and excellence"
               centered={true}
             />

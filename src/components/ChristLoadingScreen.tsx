@@ -11,7 +11,7 @@ interface ChristLoadingScreenProps {
 
 const ChristLoadingScreen: React.FC<ChristLoadingScreenProps> = ({
   children,
-  loadingText = "CHRIST Consultancy & Incubation Foundation",
+  loadingText = "CHRIST Incubation & Consultancy Foundation",
   minDuration = 2000,
   cacheKey = "app-cache",
   cacheDuration = 1000, // 1 minute

@@ -55,6 +55,10 @@ const About = () => {
                 src="/images/home/about.png"
                 alt="CHRIST Consulting Team"
                 className="w-full h-auto rounded-lg shadow-xl relative z-10"
+                loading="lazy"
+                decoding="async"
+                width="600"
+                height="400"
               />
               <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-primary rounded-lg opacity-20"></div>
 
@@ -84,8 +88,8 @@ const About = () => {
             <div className="relative pt-[56.25%]">
               <iframe
                 className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/G-GpX2-IxWI?autoplay=1"
-                title="CHRIST Consulting Video"
+                src="https://www.youtube.com/embed/ubt6AoAT7Rk?autoplay=1"
+                title="CHRIST Incubation and Consultancy Foundation "
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>

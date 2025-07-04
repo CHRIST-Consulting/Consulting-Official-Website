@@ -60,6 +60,11 @@ const Hero = () => {
                 src="/images/home/hero.png"
                 alt="CICF Team"
                 className="w-full h-auto rounded-lg"
+                loading="eager"
+                decoding="async"
+                width="600"
+                height="400"
+                fetchPriority="high"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent"></div>
             </div>
