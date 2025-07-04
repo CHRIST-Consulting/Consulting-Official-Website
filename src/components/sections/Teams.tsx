@@ -311,7 +311,7 @@ const Teams = () => {
         </div>
 
         {/* Student Testimonials Carousel */}
-        <div className="mt-20 bg-secondary py-16">
+        {/* <div className="mt-20 bg-secondary py-16">
           <div className="section-container">
             <ScrollAnimation>
               <SectionTitle
@@ -383,7 +383,7 @@ const Teams = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <ScrollAnimation>
           <div className="mt-20 bg-white rounded-2xl p-8 py-20 md:p-12">
