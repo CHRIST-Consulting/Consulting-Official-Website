@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface ChristLoadingScreenProps {
   children: React.ReactNode;
@@ -9,24 +9,24 @@ interface ChristLoadingScreenProps {
   cacheDuration?: number; // Cache validity in milliseconds (default: 1 minute)
 }
 
-const ChristLoadingScreen: React.FC<ChristLoadingScreenProps> = ({ 
-  children, 
-  loadingText = 'CHRIST Consulting', 
-  minDuration = 1500,
-  cacheKey = 'app-cache',
-  cacheDuration = 1000 // 1 minute
+const ChristLoadingScreen: React.FC<ChristLoadingScreenProps> = ({
+  children,
+  loadingText = "CHRIST Consultancy & Incubation Foundation",
+  minDuration = 2000,
+  cacheKey = "app-cache",
+  cacheDuration = 1000, // 1 minute
 }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const letters = loadingText.split('');
+  const letters = loadingText.split("");
 
   const checkCache = () => {
     try {
       const cachedData = localStorage.getItem(cacheKey);
       if (!cachedData) return false;
-      
+
       const { timestamp, data } = JSON.parse(cachedData);
       const isCacheValid = Date.now() - timestamp < cacheDuration;
-      
+
       return isCacheValid && data;
     } catch {
       return false;
@@ -39,22 +39,22 @@ const ChristLoadingScreen: React.FC<ChristLoadingScreenProps> = ({
 
     const checkPageLoaded = () => {
       const images = Array.from(document.images);
-      const imagesLoaded = images.every(img => img.complete);
-      const domReady = document.readyState === 'complete';
+      const imagesLoaded = images.every((img) => img.complete);
+      const domReady = document.readyState === "complete";
       return imagesLoaded && domReady;
     };
 
     const loadData = async () => {
       try {
         const hasValidCache = checkCache();
-        
+
         if (hasValidCache) {
           setIsLoading(false);
           return;
         }
 
         await Promise.all([
-          new Promise<void>(resolve => {
+          new Promise<void>((resolve) => {
             const check = () => {
               if (checkPageLoaded()) {
                 resolve();
@@ -65,20 +65,23 @@ const ChristLoadingScreen: React.FC<ChristLoadingScreenProps> = ({
             check();
           }),
 
-          new Promise(resolve => {
+          new Promise((resolve) => {
             const elapsed = Date.now() - startTime;
             const remainingTime = Math.max(0, minDuration - elapsed);
             setTimeout(resolve, remainingTime);
-          })
+          }),
         ]);
 
         // Store in cache after successful load
-        localStorage.setItem(cacheKey, JSON.stringify({
-          timestamp: Date.now(),
-          data: true
-        }));
+        localStorage.setItem(
+          cacheKey,
+          JSON.stringify({
+            timestamp: Date.now(),
+            data: true,
+          })
+        );
       } catch (error) {
-        console.error('Loading error:', error);
+        console.error("Loading error:", error);
       } finally {
         if (mounted) {
           setIsLoading(false);
@@ -97,7 +100,7 @@ const ChristLoadingScreen: React.FC<ChristLoadingScreenProps> = ({
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
         <div className="text-center">
-          <motion.div 
+          <motion.div
             className="flex justify-center mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -109,15 +112,15 @@ const ChristLoadingScreen: React.FC<ChristLoadingScreenProps> = ({
                 className="text-4xl md:text-6xl font-bold text-primary"
                 animate={{
                   y: [0, -15, 0],
-                  opacity: [0.5, 1, 0.5]
+                  opacity: [0.5, 1, 0.5],
                 }}
                 transition={{
-                  duration: 1.5,
+                  duration: 2,
                   repeat: Infinity,
-                  delay: index * 0.1
+                  delay: index * 0.1,
                 }}
               >
-                {letter === ' ' ? '\u00A0' : letter}
+                {letter === " " ? "\u00A0" : letter}
               </motion.span>
             ))}
           </motion.div>
