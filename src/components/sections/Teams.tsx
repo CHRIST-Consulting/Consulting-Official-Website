@@ -14,7 +14,7 @@ const Teams = () => {
     image: "/images/teams/consultants/FR Jossy.png",
     expertise:
       "Dr Fr Jossy P George is a visionary academic leader with extensive experience in computer science, research, and institutional development. Under his guidance, CHRIST University continues to expand its impact, offering diverse opportunities for research, education, and holistic student development.",
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/frjossy/",
     email: "",
   };
 
@@ -34,7 +34,7 @@ const Teams = () => {
       image: "/images/teams/consultants/Alexander.png",
       expertise:
         "Business Development Professional with sound knowledge in Finance with professional expertise in multiple industries. Actively engaged in the Educational sector with focus on Institutional Revenue Growth.",
-
+      linkedin: "https://www.linkedin.com/in/alexander-porinchu-a90a17120/",
       email: "alexander.thalakottour@christuniversity.in",
     },
     {
@@ -48,7 +48,7 @@ const Teams = () => {
     },
     {
       name: "Mr Suman Thomas",
-      role: "Business Development Manager",
+      role: "Lead Consultant",
       image: "/images/teams/consultants/Suman.png",
       expertise:
         "Mr Suman Thomas has over 10 years of experience in sales and marketing at KUONI Global Travel Services.",
@@ -70,22 +70,16 @@ const Teams = () => {
     {
       name: "Adharsh Jolly",
       role: "Student Head - Tech and Innovation",
-      program:
-        "B.Tech Computer Science and Engineering with splz. in Artificial Intelligence and Machine Learning",
       image: "/images/teams/students/Adharsh.png",
     },
     {
       name: "Srinath S P",
-      role: "Student Head - Head of branding and Strategy",
-      program:
-        "BSc Economics, Mathematics, Statistics/ Econometrics Honours/Honours with Research",
+      role: "Student Head - Branding and Strategy",
       image: "/images/teams/students/Srinath.jpg",
     },
     {
       name: "Arnav Paul",
       role: "Student Head - Creative and Social Media Strategy",
-      program:
-        "BSc Economics, Mathematics, Statistics/ Econometrics Honours/Honours with Research",
       image: "/images/teams/students/Arnav.png",
     },
   ];
@@ -213,6 +207,7 @@ const Teams = () => {
                         <a
                           href={director.linkedin}
                           className="text-primary hover:text-accent transition-colors duration-300"
+                          target="_blank"
                         >
                           <LinkedinIcon size={24} />
                         </a>
@@ -262,6 +257,7 @@ const Teams = () => {
                         <a
                           href={consultant.linkedin}
                           className="text-primary hover:text-accent transition-colors duration-300"
+                          target="_blank"
                         >
                           <LinkedinIcon size={20} />
                         </a>
@@ -311,7 +307,6 @@ const Teams = () => {
                     <p className="text-accent font-medium text-sm mb-1">
                       {student.role}
                     </p>
-                    <p className="text-charcoal text-sm">{student.program}</p>
                   </div>
                 </div>
               </ScrollAnimation>
