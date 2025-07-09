@@ -98,10 +98,10 @@ const ChristLoadingScreen: React.FC<ChristLoadingScreenProps> = ({
 
   if (isLoading) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
-        <div className="text-center">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white px-4 py-8">
+        <div className="text-center w-full max-w-4xl mx-auto">
           <motion.div
-            className="flex justify-center mb-8"
+            className="flex flex-wrap justify-center items-center gap-1 sm:gap-2 mb-4 sm:mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5 }}
@@ -109,9 +109,9 @@ const ChristLoadingScreen: React.FC<ChristLoadingScreenProps> = ({
             {letters.map((letter, index) => (
               <motion.span
                 key={index}
-                className="text-4xl md:text-6xl font-bold text-primary"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-primary leading-tight"
                 animate={{
-                  y: [0, -15, 0],
+                  y: [0, -10, 0],
                   opacity: [0.5, 1, 0.5],
                 }}
                 transition={{
@@ -119,10 +119,40 @@ const ChristLoadingScreen: React.FC<ChristLoadingScreenProps> = ({
                   repeat: Infinity,
                   delay: index * 0.1,
                 }}
+                style={{
+                  display: letter === " " ? "block" : "inline-block",
+                  width: letter === " " ? "0.5em" : "auto",
+                }}
               >
                 {letter === " " ? "\u00A0" : letter}
               </motion.span>
             ))}
+          </motion.div>
+
+          {/* Optional loading indicator for mobile */}
+          <motion.div
+            className="flex justify-center items-center mt-4 sm:mt-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.5 }}
+          >
+            <div className="flex space-x-1">
+              {[0, 1, 2].map((i) => (
+                <motion.div
+                  key={i}
+                  className="w-2 h-2 sm:w-3 sm:h-3 bg-primary rounded-full"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.5, 1, 0.5],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    delay: i * 0.2,
+                  }}
+                />
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>
