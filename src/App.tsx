@@ -11,6 +11,7 @@ import Team from "./pages/TeamsPage";
 import Service from "./pages/ServicesPage";
 import Lab from "./pages/LabsPage";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import EventRecapPage from "./pages/EventsRecapPage";
 
 function App() {
   const location = useLocation();
@@ -32,6 +33,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/clients" element={<Client />} />
               <Route path="/events" element={<Event />} />
+              <Route path="/events/:id" element={<EventRecapPage />} />
               <Route path="/teams" element={<Team />} />
               <Route path="/services" element={<Service />} />
               <Route path="/labs" element={<Lab />} />

@@ -1,155 +1,16 @@
-import { useState, useEffect, useRef } from "react";
 import SectionTitle from "../ui/SectionTitle";
 import ScrollAnimation from "../ui/ScrollAnimation";
 import { LinkedinIcon, Mail } from "lucide-react";
+import {
+  directorData,
+  facultyConsultantsData,
+  studentLeadersData,
+} from "../../data/TeamsData";
 
 const Teams = () => {
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const testimonialRef = useRef<HTMLDivElement>(null);
-  const autoScrollRef = useRef<number>();
-
-  const director = {
-    name: "Dr Fr Jossy P George",
-    role: "Director",
-    image: "/images/teams/consultants/FR Jossy.png",
-    expertise:
-      "Dr Fr Jossy P George is a visionary academic leader with extensive experience in computer science, research, and institutional development. Under his guidance, CHRIST University continues to expand its impact, offering diverse opportunities for research, education, and holistic student development.",
-    linkedin: "https://www.linkedin.com/in/frjossy/",
-    email: "",
-  };
-
-  const facultyConsultants = [
-    {
-      name: "Ms Kiran Mariam",
-      role: "Lead Consultant",
-      image: "/images/teams/consultants/Kiran.png",
-      expertise:
-        "Ms Kiran Mariam is a postgraduate in Commerce and has previously served as the Senior Associate at Manipal Hospitals, Finance Manager in Environ Technologies Pvt Ltd and as Tax senior, in E&Y.",
-      linkedin: "https://www.linkedin.com/in/kiran-mariam-1b4543248/",
-      email: "kiran.mariam@christuniversity.in",
-    },
-    {
-      name: "Mr Alexander Porinchu",
-      role: "Business Development Manager",
-      image: "/images/teams/consultants/Alexander.png",
-      expertise:
-        "Business Development Professional with sound knowledge in Finance with professional expertise in multiple industries. Actively engaged in the Educational sector with focus on Institutional Revenue Growth.",
-      linkedin: "https://www.linkedin.com/in/alexander-porinchu-a90a17120/",
-      email: "alexander.thalakottour@christuniversity.in",
-    },
-    {
-      name: "Ms Maria Divya",
-      role: "Lead Consultant",
-      image: "/images/teams/consultants/Maria.png",
-      expertise:
-        "Ms Maria Divya is a postgraduate in Business Administration (Tourism) and has previously served as the sales & operations manager for Thomas Cook India Ltd and the Serai group.",
-      linkedin: "https://www.linkedin.com/in/maria-divya-3503961bb/",
-      email: "mariadivya.chethana@christuniversity.in",
-    },
-    {
-      name: "Mr Suman Thomas",
-      role: "Lead Consultant",
-      image: "/images/teams/consultants/Suman.png",
-      expertise:
-        "Mr Suman Thomas has over 10 years of experience in sales and marketing at KUONI Global Travel Services.",
-      linkedin: "https://www.linkedin.com/in/suman-thomas-8412bb201/",
-      email: "suman.thomas@christuniversity.in",
-    },
-    {
-      name: "Ms Sharanya",
-      role: "Consultant",
-      image: "/images/teams/consultants/Sharanya.png",
-      expertise:
-        "Ms Sai Sharanya is consultant with a postgraduate degree in Ancient History and Archaeology, she combines analytical depth with creative strategy. Formerly a social media strategist at Pathika Technologies and an ex-Christite.",
-
-      email: "saisharanya.n@christuniversity.in",
-    },
-  ];
-
-  const studentLeaders = [
-    {
-      name: "Adharsh Jolly",
-      role: "Student Head - Tech and Innovation",
-      image: "/images/teams/students/Adharsh.png",
-    },
-    {
-      name: "Srinath S P",
-      role: "Student Head - Branding and Strategy",
-      image: "/images/teams/students/Srinath.jpg",
-    },
-    {
-      name: "Arnav Paul",
-      role: "Student Head - Creative and Social Media Strategy",
-      image: "/images/teams/students/Arnav.png",
-    },
-  ];
-
-  const studentTestimonials = [
-    {
-      name: "Ananya Patel",
-      program: "MBA Business Analytics",
-      image:
-        "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg",
-      testimonial:
-        "CHRIST Consulting gave me a platform to lead real-world projects and grow beyond the classroom.",
-      project: "Market Research Lead, 2024",
-    },
-    {
-      name: "James Wilson",
-      program: "MSc Data Science",
-      image:
-        "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
-      testimonial:
-        "The mentorship and hands-on experience helped me secure my dream role in consulting.",
-      project: "Analytics Project Lead, 2024",
-    },
-    {
-      name: "Sneha Reddy",
-      program: "MCA",
-      image:
-        "https://images.pexels.com/photos/1587009/pexels-photo-1587009.jpeg",
-      testimonial:
-        "Working with industry experts shaped my understanding of technology consulting.",
-      project: "Tech Solutions Team, 2024",
-    },
-    {
-      name: "Raj Malhotra",
-      program: "MBA Finance",
-      image:
-        "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg",
-      testimonial:
-        "The exposure to diverse projects and industries helped me develop a holistic business perspective.",
-      project: "Financial Analysis Team, 2024",
-    },
-  ];
-
-  useEffect(() => {
-    const startAutoScroll = () => {
-      autoScrollRef.current = setInterval(() => {
-        setActiveTestimonial((prev) => (prev + 1) % studentTestimonials.length);
-      }, 5000);
-    };
-
-    startAutoScroll();
-
-    return () => {
-      if (autoScrollRef.current) {
-        clearInterval(autoScrollRef.current);
-      }
-    };
-  }, []);
-
-  const handleTestimonialMouseEnter = () => {
-    if (autoScrollRef.current) {
-      clearInterval(autoScrollRef.current);
-    }
-  };
-
-  const handleTestimonialMouseLeave = () => {
-    autoScrollRef.current = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % studentTestimonials.length);
-    }, 5000);
-  };
+  const director = directorData;
+  const facultyConsultants = facultyConsultantsData;
+  const studentLeaders = studentLeadersData;
 
   return (
     <section id="teams">
@@ -295,7 +156,7 @@ const Teams = () => {
                     <img
                       src={student.image}
                       alt={student.name}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover bg-blue-50/50 transform group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
@@ -313,81 +174,6 @@ const Teams = () => {
             ))}
           </div>
         </div>
-
-        {/* Student Testimonials Carousel */}
-        {/* <div className="mt-20 bg-secondary py-16">
-          <div className="section-container">
-            <ScrollAnimation>
-              <SectionTitle
-                title="What Our Student Leaders Say"
-                subtitle="Real experiences. Real impact."
-                centered={true}
-              />
-            </ScrollAnimation>
-
-            <div
-              className="relative mt-12 overflow-hidden"
-              onMouseEnter={handleTestimonialMouseEnter}
-              onMouseLeave={handleTestimonialMouseLeave}
-              ref={testimonialRef}
-            >
-              <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{
-                  transform: `translateX(-${activeTestimonial * 100}%)`,
-                }}
-              >
-                {studentTestimonials.map((testimonial, index) => (
-                  <div
-                    key={index}
-                    className="w-full flex-shrink-0 px-4"
-                    style={{ minWidth: "100%" }}
-                  >
-                    <div className="bg-white rounded-xl shadow-md p-8 mx-auto max-w-2xl hover:shadow-xl transition-all duration-500">
-                      <div className="flex items-center mb-6">
-                        <div className="w-20 h-20 rounded-full overflow-hidden mr-6">
-                          <img
-                            src={testimonial.image}
-                            alt={testimonial.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h4 className="text-xl font-bold text-primary font-heading">
-                            {testimonial.name}
-                          </h4>
-                          <p className="text-charcoal">{testimonial.program}</p>
-                          <p className="text-accent text-sm mt-1">
-                            {testimonial.project}
-                          </p>
-                        </div>
-                      </div>
-
-                      <blockquote className="text-lg text-charcoal italic">
-                        "{testimonial.testimonial}"
-                      </blockquote>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex justify-center mt-8 space-x-2">
-                {studentTestimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === activeTestimonial
-                        ? "bg-primary scale-125"
-                        : "bg-gray-300 hover:bg-gray-400"
-                    }`}
-                    onClick={() => setActiveTestimonial(index)}
-                    aria-label={`Go to testimonial ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div> */}
 
         <ScrollAnimation>
           <div className="mt-20 bg-white rounded-2xl p-8 py-20 md:p-12">
