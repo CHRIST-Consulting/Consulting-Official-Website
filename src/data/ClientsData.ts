@@ -40,23 +40,23 @@ export const clientLogosData: ClientLogo[] = [
 export const testimonialsData: Testimonial[] = [
   {
     quote:
-      "CHRIST Consulting's expertise in educational technology and strategic planning has been instrumental in transforming our digital learning initiatives. Their research-backed approach delivered measurable improvements in student engagement.",
-    author: "Dr. Rajesh Kumar",
-    position: "Director of Innovation, Skoolz Education",
+      "We are privileged to have a great partnership with CHRIST Consulting and have the opportunity to work together on training for various competitive exams. Kudos to the small but mighty consulting team for all the efforts they put into co-creating solutions that are designed around student success and aspirations.",
+    author: "Mr Kunkala Krishnaiah",
+    position: "Founder & Director, Land Optimizer International Pvt. Ltd",
     rating: 5,
   },
   {
     quote:
-      "The consultancy team provided exceptional support in modernizing our administrative processes and implementing data-driven decision making frameworks. Their professionalism and expertise exceeded our expectations.",
-    author: "Commissioner Priya Sharma",
-    position: "Bangalore Police Department",
+      "The one-year collaboration with team Christ was a perfect blend of learning and sharing expert knowledge. We highly acknowledge the contribution of the Christ team in developing an exclusive curriculum for virtual socio-emotional wellbeing sessions under Project Prerana.",
+    author: "Ms. Monica Dhawan",
+    position: "India Vision Foundation",
     rating: 5,
   },
   {
     quote:
-      "Working with CHRIST Consulting has been transformative for our research initiatives. Their multi-disciplinary approach and academic rigor helped us develop innovative solutions for complex healthcare challenges.",
-    author: "Dr. Anil Patel",
-    position: "Senior Research Director, ICMR",
+      "We engaged CHRIST Consulting to deliver two short courses for women executives. We were very happy with their partnership, their willingness to customise their interventions and their expertise. Their domain expertise in strategic planning, design thinking and marketing was deep and received very well by our leaders.",
+    author: "Mr. Prashant Michael",
+    position: "Vice President & Head Organization Development, [24]7.ai",
     rating: 5,
   },
 ];

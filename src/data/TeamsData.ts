@@ -72,14 +72,14 @@ export const facultyConsultantsData: TeamMember[] = [
 
 export const studentLeadersData: StudentLeader[] = [
   {
-    name: "Adharsh Jolly",
-    role: "Student Head - Tech and Innovation",
-    image: "/images/teams/students/Adharsh.png",
-  },
-  {
     name: "Srinath S P",
     role: "Student Head - Branding and Strategy",
     image: "/images/teams/students/Srinath.png",
+  },
+  {
+    name: "Adharsh Jolly",
+    role: "Student Head - Tech and Innovation",
+    image: "/images/teams/students/Adharsh.png",
   },
   {
     name: "Arnav Paul",
