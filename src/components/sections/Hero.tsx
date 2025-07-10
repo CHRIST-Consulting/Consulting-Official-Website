@@ -166,7 +166,7 @@ const Hero = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-sky-blue to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </a>
 
-              <a
+              {/* <a
                 href="#"
                 className="group relative bg-white/90 backdrop-blur-sm border-2 border-primary text-primary font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 sm:gap-3 hover:bg-primary hover:text-white text-sm sm:text-base"
               >
@@ -179,7 +179,7 @@ const Hero = () => {
                   className="group-hover:animate-bounce hidden sm:block"
                 />
                 <span>Download Brochure</span>
-              </a>
+              </a> */}
             </div>
           </div>
 
