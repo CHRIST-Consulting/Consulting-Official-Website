@@ -96,7 +96,7 @@ const EventsPage = () => {
                     <h2 className="text-3xl font-bold text-primary mb-4 font-heading">
                       {featuredEvent.title}
                     </h2>
-                    <p className="text-charcoal mb-6">
+                    <p className="text-charcoal mb-6 line-clamp-2">
                       {featuredEvent.description}
                     </p>
 
@@ -113,7 +113,9 @@ const EventsPage = () => {
                       </div>
                     </div>
 
-                    <button className="btn-primary">Register Now</button>
+                    {featuredEvent.isUpcoming && (
+                      <button className="btn-primary">Register Now</button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -155,7 +157,7 @@ const EventsPage = () => {
                 <div className="bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition-all duration-500">
                   <div className="relative h-48 overflow-hidden">
                     <img
-                      src={event.image}
+                      src={event.images[0]}
                       alt={event.title}
                       className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                     />
@@ -215,7 +217,7 @@ const EventsPage = () => {
                 <div className="bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition-all duration-500">
                   <div className="relative h-48 overflow-hidden">
                     <img
-                      src={event.image}
+                      src={event.images[0]}
                       alt={event.title}
                       className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                     />
@@ -231,7 +233,7 @@ const EventsPage = () => {
                       <span className="text-sm">{event.date}</span>
                     </div>
                     <p className="text-accent mb-4">{event.impact}</p>
-                    <p className="text-charcoal text-sm mb-4">
+                    <p className="text-charcoal text-sm mb-4 line-clamp-3">
                       {event.description}
                     </p>
                     <Link

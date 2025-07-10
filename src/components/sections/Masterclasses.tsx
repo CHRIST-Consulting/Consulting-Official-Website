@@ -61,7 +61,7 @@ const EventsSection = () => {
                 <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col hover:shadow-xl transition-all duration-300 group">
                   <div className="relative overflow-hidden">
                     <img
-                      src={event.image}
+                      src={event.images[0]}
                       alt={event.title}
                       className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105"
                     />

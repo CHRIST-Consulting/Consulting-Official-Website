@@ -92,10 +92,12 @@ const EventRecapPage = () => {
                 <MapPin size={20} className="mr-2" />
                 <span>{event.venue}</span>
               </div>
-              <div className="flex items-center">
-                <Users size={20} className="mr-2" />
-                <span>{event.attendees}+ Attendees</span>
-              </div>
+              {event.attendees && (
+                <div className="flex items-center">
+                  <Users size={20} className="mr-2" />
+                  <span>{event.attendees}+ Attendees</span>
+                </div>
+              )}
             </div>
           </ScrollAnimation>
         </div>
@@ -114,40 +116,46 @@ const EventRecapPage = () => {
                   {event.description}
                 </p>
 
-                <h3 className="text-2xl font-bold text-primary mb-4 font-heading">
-                  Key Highlights
-                </h3>
-                <ul className="space-y-3">
-                  {event.highlights.map((highlight, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="inline-block w-2 h-2 bg-accent rounded-full mt-2 mr-3"></span>
-                      <span className="text-charcoal">{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
+                {event.highlights && (
+                  <>
+                    <h3 className="text-2xl font-bold text-primary mb-4 font-heading">
+                      Key Highlights
+                    </h3>
+                    <ul className="space-y-3">
+                      {event.highlights.map((highlight, index) => (
+                        <li key={index} className="flex items-start">
+                          <span className="inline-block w-2 h-2 bg-accent rounded-full mt-2 mr-3"></span>
+                          <span className="text-charcoal">{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </ScrollAnimation>
             </div>
 
             <div>
               <ScrollAnimation delay={200}>
-                <div className="bg-secondary rounded-xl p-6">
-                  <h3 className="text-xl font-bold text-primary mb-4 font-heading">
-                    Event Stats
-                  </h3>
-                  <div className="space-y-4">
-                    {event.stats.map((stat, index) => (
-                      <div
-                        key={index}
-                        className="flex justify-between items-center"
-                      >
-                        <span className="text-charcoal">{stat.label}</span>
-                        <span className="font-bold text-primary">
-                          {stat.value}
-                        </span>
-                      </div>
-                    ))}
+                {event.statsAvailable && (
+                  <div className="bg-secondary rounded-xl p-6">
+                    <h3 className="text-xl font-bold text-primary mb-4 font-heading">
+                      Event Stats
+                    </h3>
+                    <div className="space-y-4">
+                      {event.stats?.map((stat, index) => (
+                        <div
+                          key={index}
+                          className="flex justify-between items-center"
+                        >
+                          <span className="text-charcoal">{stat.label}</span>
+                          <span className="font-bold text-primary">
+                            {stat.value}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {event.downloads && (
                   <div className="bg-white rounded-xl shadow-md p-6 mt-6">
@@ -176,7 +184,7 @@ const EventRecapPage = () => {
       </section>
 
       {/* Event Gallery */}
-      <section className="py-20 bg-secondary">
+      <section className="py-20 bg-white">
         <div className="section-container">
           <ScrollAnimation>
             <SectionTitle
@@ -225,45 +233,47 @@ const EventRecapPage = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20">
-        <div className="section-container">
-          <ScrollAnimation>
-            <SectionTitle
-              title="What Attendees Said"
-              subtitle="Feedback from our participants"
-              centered={true}
-            />
-          </ScrollAnimation>
+      {event.testimonials && (
+        <section className="py-20">
+          <div className="section-container">
+            <ScrollAnimation>
+              <SectionTitle
+                title="What Attendees Said"
+                subtitle="Feedback from our participants"
+                centered={true}
+              />
+            </ScrollAnimation>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-            {event.testimonials.map((testimonial, index) => (
-              <ScrollAnimation key={index} delay={index * 200}>
-                <div className="bg-white rounded-xl shadow-md p-8 hover:shadow-xl transition-all duration-500">
-                  <div className="flex items-center mb-6">
-                    <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
-                      <img
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        className="w-full h-full object-cover"
-                      />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+              {event.testimonials.map((testimonial, index) => (
+                <ScrollAnimation key={index} delay={index * 200}>
+                  <div className="bg-white rounded-xl shadow-md p-8 hover:shadow-xl transition-all duration-500">
+                    <div className="flex items-center mb-6">
+                      <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
+                        <img
+                          src={testimonial.image}
+                          alt={testimonial.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-bold text-primary font-heading">
+                          {testimonial.name}
+                        </h4>
+                        <p className="text-charcoal">{testimonial.role}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-lg font-bold text-primary font-heading">
-                        {testimonial.name}
-                      </h4>
-                      <p className="text-charcoal">{testimonial.role}</p>
-                    </div>
+
+                    <blockquote className="text-charcoal italic">
+                      "{testimonial.quote}"
+                    </blockquote>
                   </div>
-
-                  <blockquote className="text-charcoal italic">
-                    "{testimonial.quote}"
-                  </blockquote>
-                </div>
-              </ScrollAnimation>
-            ))}
+                </ScrollAnimation>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="py-20 bg-secondary text-primary">
