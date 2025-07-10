@@ -1,6 +1,6 @@
-import React from 'react';
-import { Phone, Mail, MapPin, Linkedin, Instagram } from 'lucide-react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React from "react";
+import { Phone, Mail, MapPin, Linkedin, Instagram } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -8,23 +8,23 @@ const Footer = () => {
   const navigate = useNavigate();
 
   const scrollToSection = (href: string) => {
-    if (href.startsWith('/#')) {
+    if (href.startsWith("/#")) {
       const sectionId = href.substring(2);
       const section = document.getElementById(sectionId);
       if (section) {
         section.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-          inline: 'nearest'
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest",
         });
       }
     }
   };
 
   const handleLinkClick = (href: string) => {
-    if (href.startsWith('/#')) {
-      if (location.pathname !== '/') {
-        navigate('/');
+    if (href.startsWith("/#")) {
+      if (location.pathname !== "/") {
+        navigate("/");
         setTimeout(() => scrollToSection(href), 100);
       } else {
         scrollToSection(href);
@@ -39,9 +39,11 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4 font-heading">CHRIST Consulting</h3>
+            <h3 className="text-xl font-bold mb-4 font-heading">
+              CHRIST Incubation and Consultancy Foundation
+            </h3>
             <p className="text-gray-300 mb-4">
-              The business consultancy arm of CHRIST (Deemed to be University), 
+              The business consultancy arm of CHRIST (Deemed to be University),
               bridging academia and industry through research-driven solutions.
             </p>
             <div className="flex space-x-4">
@@ -65,16 +67,16 @@ const Footer = () => {
               </Link>
             </div>
           </div>
-          
+
           <div>
             <h3 className="text-xl font-bold mb-4 font-heading">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link 
-                  to="/#about" 
+                <Link
+                  to="/#about"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleLinkClick('/#about');
+                    handleLinkClick("/#about");
                   }}
                   className="text-gray-300 hover:text-sky-blue transition-colors duration-300"
                 >
@@ -82,11 +84,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/services" 
+                <Link
+                  to="/services"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleLinkClick('/services');
+                    handleLinkClick("/services");
                   }}
                   className="text-gray-300 hover:text-sky-blue transition-colors duration-300"
                 >
@@ -94,11 +96,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/teams" 
+                <Link
+                  to="/teams"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleLinkClick('/teams');
+                    handleLinkClick("/teams");
                   }}
                   className="text-gray-300 hover:text-sky-blue transition-colors duration-300"
                 >
@@ -106,11 +108,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/#labs" 
+                <Link
+                  to="/#labs"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleLinkClick('/#labs');
+                    handleLinkClick("/#labs");
                   }}
                   className="text-gray-300 hover:text-sky-blue transition-colors duration-300"
                 >
@@ -118,11 +120,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/#contact" 
+                <Link
+                  to="/#contact"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleLinkClick('/#contact');
+                    handleLinkClick("/#contact");
                   }}
                   className="text-gray-300 hover:text-sky-blue transition-colors duration-300"
                 >
@@ -131,7 +133,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
+
           <div>
             <h3 className="text-xl font-bold mb-4 font-heading">Contact Us</h3>
             <div className="space-y-3">
@@ -146,18 +148,19 @@ const Footer = () => {
               </div>
               <div className="flex items-start">
                 <Phone size={18} className="mr-2 mt-1 flex-shrink-0" />
-                <span className="text-gray-300">080 4012 9157 / 9958 / 9700</span>
+                <span className="text-gray-300">080 4012 9958</span>
               </div>
               <div className="flex items-start">
                 <MapPin size={18} className="mr-2 mt-1 flex-shrink-0" />
                 <span className="text-gray-300">
-                  CHRIST (Deemed to be University), Hosur Road, Bengaluru - 560029
+                  CHRIST (Deemed to be University), Hosur Road, Bengaluru -
+                  560029
                 </span>
               </div>
             </div>
           </div>
         </div>
-        
+
         <div className="mt-10 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
           <p>&copy; {currentYear} CHRIST Consulting. All rights reserved.</p>
         </div>

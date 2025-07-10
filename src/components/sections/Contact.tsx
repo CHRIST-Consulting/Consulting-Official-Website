@@ -85,7 +85,7 @@ const Contact = () => {
               <h3 className="text-xl font-bold text-charcoal mb-3 font-heading">
                 Phone
               </h3>
-              <p className="text-primary font-medium">080 4012 9157</p>
+              <p className="text-primary font-medium">080 4012 9958</p>
               <p className="text-slate-blue text-sm">Mon-Fri 9AM-6PM</p>
             </div>
           </ScrollAnimation>
