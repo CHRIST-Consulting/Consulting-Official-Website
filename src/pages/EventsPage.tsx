@@ -61,7 +61,7 @@ const EventsPage = () => {
               </a>
             </ScrollAnimation>
 
-            <ScrollAnimation delay={200}>
+            {/* <ScrollAnimation delay={200}>
               <div className="relative hidden lg:flex rounded-lg overflow-hidden shadow-2xl">
                 <img
                   src="/images/events/past/investiture-2025/4.jpg"
@@ -70,7 +70,7 @@ const EventsPage = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent"></div>
               </div>
-            </ScrollAnimation>
+            </ScrollAnimation> */}
           </div>
         </div>
       </section>
