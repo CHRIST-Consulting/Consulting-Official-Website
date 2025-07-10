@@ -64,7 +64,7 @@ const EventsPage = () => {
             <ScrollAnimation delay={200}>
               <div className="relative hidden lg:flex rounded-lg overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg"
+                  src="/images/events/past/investiture-2025/4.jpg"
                   alt="Event Networking"
                   className="w-full h-[400px] object-cover"
                 />
