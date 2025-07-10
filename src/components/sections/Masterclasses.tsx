@@ -87,9 +87,7 @@ const EventsSection = () => {
                     </p>
 
                     <a
-                      href={
-                        showUpcoming ? "/events" : `/events/recap/${event.id}`
-                      }
+                      href={showUpcoming ? "/events" : `/events/${event.id}`}
                       className="text-primary font-medium flex items-center hover:text-accent transition-colors duration-300 mt-auto"
                     >
                       {showUpcoming ? "Learn More" : "View Recap"}
