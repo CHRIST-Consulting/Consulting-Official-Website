@@ -85,14 +85,14 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/services"
+                  to="/expertise"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleLinkClick("/services");
+                    handleLinkClick("/expertise");
                   }}
                   className="text-gray-300 hover:text-sky-blue transition-colors duration-300"
                 >
-                  Services
+                  Expertise
                 </Link>
               </li>
               <li>

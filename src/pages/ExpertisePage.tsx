@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { ChevronRight } from "lucide-react";
 import ScrollAnimation from "../components/ui/ScrollAnimation";
 import { getDetailedServicesData } from "../data/DetailedServicesData";
 
-const ServicesPage = () => {
-  const services = getDetailedServicesData();
+const ExpertisePage = () => {
+  const expertise = getDetailedServicesData();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -18,7 +18,7 @@ const ServicesPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <ScrollAnimation>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 font-heading">
-                Our Consulting <span className="text-accent">Services</span>
+                Our Consulting <span className="text-accent">Expertise</span>
               </h1>
               <p className="text-xl md:text-2xl text-white/90">
                 Student-powered consulting solutions backed by academic
@@ -40,11 +40,11 @@ const ServicesPage = () => {
         </div>
       </section>
 
-      {/* Services Grid */}
+      {/* Expertise Grid */}
       <section className="py-20">
         <div className="section-container">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
+            {expertise.map((service, index) => (
               <ScrollAnimation key={index} delay={index * 100}>
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1">
                   <div className="relative h-48 overflow-hidden">
@@ -97,4 +97,4 @@ const ServicesPage = () => {
   );
 };
 
-export default ServicesPage;
+export default ExpertisePage;

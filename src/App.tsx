@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import Client from "./pages/ClientsPage";
 import Event from "./pages/EventsPage";
 import Team from "./pages/TeamsPage";
-import Service from "./pages/ServicesPage";
+import Expertise from "./pages/ExpertisePage";
 import Lab from "./pages/LabsPage";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import EventRecapPage from "./pages/EventsRecapPage";
@@ -35,7 +35,7 @@ function App() {
               <Route path="/events" element={<Event />} />
               <Route path="/events/:id" element={<EventRecapPage />} />
               <Route path="/teams" element={<Team />} />
-              <Route path="/services" element={<Service />} />
+              <Route path="/expertise" element={<Expertise />} />
               <Route path="/labs" element={<Lab />} />
             </Routes>
           </ChristLoadingScreen>

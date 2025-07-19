@@ -1,4 +1,3 @@
-import React from "react";
 import SectionTitle from "../ui/SectionTitle";
 import ScrollAnimation from "../ui/ScrollAnimation";
 import { ArrowRight } from "lucide-react";
@@ -15,7 +14,7 @@ const Services = () => {
       <div className="section-container">
         <ScrollAnimation>
           <SectionTitle
-            title="Our Core Expertise"
+            title="Our Services"
             subtitle="Specialized consulting services backed by academic rigor and industry experience"
             centered={true}
           />
@@ -68,9 +67,9 @@ const Services = () => {
 
         <div className="mt-16 text-center">
           <ScrollAnimation>
-            <a href="/services">
+            <a href="/expertise">
               <button className="btn-primary flex items-center justify-center gap-2 mx-auto">
-                Have a look at our Services
+                Have a look at our Expertise
                 <ArrowRight size={18} />
               </button>
             </a>

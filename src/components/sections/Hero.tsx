@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
-  Download,
   ArrowDown,
   BookOpen,
   GraduationCap,
@@ -151,10 +150,10 @@ const Hero = () => {
               style={{ animationDelay: "600ms" }}
             >
               <a
-                href="#services"
+                href="#expertise"
                 className="group relative overflow-hidden bg-gradient-to-r from-primary to-sky-blue text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
               >
-                <span className="relative z-10">Explore Our Services</span>
+                <span className="relative z-10">Explore Our Expertise</span>
                 <ChevronRight
                   size={16}
                   className="group-hover:translate-x-1 transition-transform duration-300 sm:hidden"
