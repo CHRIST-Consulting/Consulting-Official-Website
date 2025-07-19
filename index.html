@@ -27,6 +27,59 @@
     />
     <meta name="robots" content="index, follow" />
     <meta name="language" content="en" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="distribution" content="global" />
+    <meta name="rating" content="general" />
+
+    <!-- Additional SEO Meta Tags -->
+    <meta
+      name="subject"
+      content="Business Consulting and University Research"
+    />
+    <meta name="coverage" content="Worldwide" />
+    <meta
+      name="identifier-URL"
+      content="https://consulting-microsite.vercel.app/"
+    />
+    <meta name="category" content="Business, Education, Consulting" />
+    <meta name="classification" content="Business Services" />
+    <meta name="target" content="all" />
+    <meta
+      name="audience"
+      content="Business professionals, Organizations, Government entities"
+    />
+
+    <!-- Geo Meta Tags -->
+    <meta name="geo.region" content="IN-KA" />
+    <meta name="geo.placename" content="Bengaluru, Karnataka, India" />
+    <meta name="geo.position" content="12.9716;77.5946" />
+    <meta name="ICBM" content="12.9716, 77.5946" />
+
+    <!-- Additional Business Info -->
+    <meta name="contact" content="consultancy@christuniversity.in" />
+    <meta
+      name="copyright"
+      content="CHRIST Incubation and Consultancy Foundation"
+    />
+    <meta name="designer" content="CHRIST University" />
+    <meta name="reply-to" content="consultancy@christuniversity.in" />
+    <meta name="owner" content="CHRIST (Deemed to be University)" />
+
+    <!-- AI Crawler Friendly Meta Tags -->
+    <meta
+      name="ai-content-declaration"
+      content="This website contains comprehensive information about CHRIST Incubation and Consultancy Foundation"
+    />
+    <meta name="content-type" content="Business Website" />
+    <meta
+      name="page-topic"
+      content="Business Consulting, University Research, Academic Industry Bridge"
+    />
+    <meta name="page-type" content="Organization Homepage" />
+    <meta
+      name="content-summary"
+      content="CHRIST Incubation and Consultancy Foundation - Business consultancy arm of CHRIST University providing research-driven solutions across multiple sectors"
+    />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -105,6 +158,20 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://consulting-microsite.vercel.app/" />
 
+    <!-- Alternative format links -->
+    <link
+      rel="alternate"
+      type="application/json"
+      href="/structured-data.json"
+      title="Structured Data"
+    />
+    <link
+      rel="alternate"
+      type="text/plain"
+      href="/about.txt"
+      title="About Us - Text Format"
+    />
+
     <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -145,7 +212,100 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Fallback content for crawlers and users with JavaScript disabled -->
+    <noscript>
+      <div
+        style="padding: 20px; font-family: Arial, sans-serif; line-height: 1.6"
+      >
+        <h1>CHRIST Incubation and Consultancy Foundation</h1>
+        <h2>Bridging Academia and Industry Excellence</h2>
+        <p>
+          CHRIST Incubation and Consultancy Foundation is the result-driven
+          business consultancy arm of CHRIST University. We partner with public
+          and private sector organizations to craft actionable, sustainable
+          solutions with over 5 years of cross-functional impact.
+        </p>
+
+        <h3>Our Services</h3>
+        <ul>
+          <li>Business Solutions & Strategy</li>
+          <li>Digital Transformation</li>
+          <li>Education & Training</li>
+          <li>Research & Development</li>
+          <li>Sustainability Consulting</li>
+          <li>Commercial Management</li>
+          <li>Legal Expertise</li>
+          <li>Architectural Excellence</li>
+          <li>Hotel & Culinary Management</li>
+          <li>Performing Arts</li>
+        </ul>
+
+        <h3>Contact Information</h3>
+        <p>Email: consultancy@christuniversity.in</p>
+        <p>Phone: 080 4012 9958</p>
+        <p>
+          Address: CHRIST (Deemed to be University), Hosur Road, Bengaluru -
+          560029
+        </p>
+
+        <p>
+          Please enable JavaScript to access the full interactive website
+          experience.
+        </p>
+      </div>
+    </noscript>
+
+    <div id="root">
+      <!-- Initial content for crawlers -->
+      <div style="visibility: hidden; position: absolute; top: -9999px">
+        <h1>
+          CHRIST Incubation and Consultancy Foundation - Business Consulting
+          Excellence
+        </h1>
+        <p>
+          Leading business consultancy arm of CHRIST University providing
+          research-driven solutions across multiple sectors including
+          government, private, and social organizations.
+        </p>
+        <div>
+          <h2>About CHRIST Consulting</h2>
+          <p>
+            CHRIST Incubation and Consultancy Foundation (CICF) is the
+            consultancy arm of CHRIST (Deemed to be University), established to
+            bridge the gap between academic excellence and industry innovation.
+            With over 5 years of cross-functional impact, we specialize in
+            providing result-driven business solutions.
+          </p>
+
+          <h2>Our Expertise Areas</h2>
+          <p>
+            Business Solutions, Digital Transformation, Education Training,
+            Research & Development, Sustainability Consulting, Commercial
+            Management, Legal Expertise, Architectural Excellence, Hotel &
+            Culinary Management, Performing Arts
+          </p>
+
+          <h2>Client Sectors</h2>
+          <p>
+            Government Organizations, Private Sector Companies, Educational
+            Institutions, Social Organizations, Research Bodies, Training &
+            Development Firms
+          </p>
+
+          <h2>Research Labs</h2>
+          <p>
+            Innovation Labs, Business Research Centers, Technology Development
+            Units, Academic Research Facilities
+          </p>
+
+          <h2>Team</h2>
+          <p>
+            Expert consultants, Research professionals, Academic faculty,
+            Industry specialists, Student researchers
+          </p>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

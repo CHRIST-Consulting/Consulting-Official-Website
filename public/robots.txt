@@ -2,10 +2,20 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://christ-consulting.vercel.app/sitemap.xml
+Sitemap: https://consulting-microsite.vercel.app/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1
+
+# Additional directives for AI crawlers
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
 
 # Disallow admin or private areas (add if any)
 # Disallow: /admin/

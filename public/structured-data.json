@@ -1,0 +1,93 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://consulting-microsite.vercel.app/#organization",
+      "name": "CHRIST Incubation and Consultancy Foundation",
+      "alternateName": "CICF",
+      "url": "https://consulting-microsite.vercel.app/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://consulting-microsite.vercel.app/images/CICF_LOGO.png",
+        "width": 1200,
+        "height": 630
+      },
+      "description": "CHRIST Incubation and Consultancy Foundation is the result-driven business consultancy arm of CHRIST University, built on research, integrity, and innovation.",
+      "foundingDate": "2019",
+      "parentOrganization": {
+        "@type": "EducationalOrganization",
+        "name": "CHRIST (Deemed to be University)",
+        "url": "https://christuniversity.in/"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Hosur Road",
+        "addressLocality": "Bengaluru",
+        "addressRegion": "Karnataka",
+        "postalCode": "560029",
+        "addressCountry": "IN"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-80-4012-9958",
+        "email": "consultancy@christuniversity.in",
+        "contactType": "Business inquiries"
+      },
+      "serviceArea": {
+        "@type": "Country",
+        "name": "India"
+      },
+      "knowsAbout": [
+        "Business Consulting",
+        "Digital Transformation",
+        "Education Training",
+        "Research and Development",
+        "Sustainability Consulting",
+        "Commercial Management",
+        "Legal Expertise",
+        "Architectural Excellence"
+      ],
+      "sameAs": [
+        "https://christuniversity.in/",
+        "https://www.linkedin.com/company/christ-consulting",
+        "https://www.instagram.com/christ_consulting"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://consulting-microsite.vercel.app/#website",
+      "url": "https://consulting-microsite.vercel.app/",
+      "name": "CHRIST Incubation and Consultancy Foundation",
+      "description": "Official website of CHRIST Incubation and Consultancy Foundation - Bridging Academia and Industry Excellence",
+      "publisher": {
+        "@id": "https://consulting-microsite.vercel.app/#organization"
+      },
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://consulting-microsite.vercel.app/#webpage",
+      "url": "https://consulting-microsite.vercel.app/",
+      "name": "CHRIST Incubation and Consultancy Foundation - Home",
+      "isPartOf": {
+        "@id": "https://consulting-microsite.vercel.app/#website"
+      },
+      "about": {
+        "@id": "https://consulting-microsite.vercel.app/#organization"
+      },
+      "description": "CHRIST Incubation and Consultancy Foundation - The business consultancy arm of CHRIST University providing research-driven solutions",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://consulting-microsite.vercel.app/"
+          }
+        ]
+      }
+    }
+  ]
+}
