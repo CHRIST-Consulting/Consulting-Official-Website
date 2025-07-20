@@ -6,15 +6,36 @@ import {
   UserCheck,
   Sparkles,
   ChevronRight,
+  Play,
 } from "lucide-react";
 
 const Hero = () => {
   const [currentStatIndex, setCurrentStatIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const stats = [
     { number: "100+", label: "Student Interns", icon: GraduationCap },
     { number: "1500+", label: "Teaching Faculties", icon: UserCheck },
     { number: "32+", label: "Specialisms", icon: BookOpen },
+  ];
+
+  const heroImages = [
+    {
+      src: "/images/home/hero.png",
+      title: "Excellence in Action",
+      subtitle: "Where expertise meets innovation",
+    },
+    {
+      src: "/images/home/hero1.png",
+      title: "Leading Consultancy",
+      subtitle: "Transforming businesses worldwide",
+    },
+    {
+      src: "/images/services/hero-consulting-team.jpg",
+      title: "Expert Team",
+      subtitle: "Professional consulting at its finest",
+    },
   ];
 
   useEffect(() => {
@@ -24,91 +45,118 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section
       id="hero"
-      className="min-h-screen relative overflow-hidden flex items-center bg-gradient-to-br from-gray-50 via-white to-blue-50"
+      className="max-h-screen relative overflow-hidden flex items-center"
     >
-      {/* Enhanced Background Elements */}
-      <div className="absolute -z-10 inset-0 overflow-hidden">
-        {/* Primary gradient blob */}
-        <div className="absolute top-1/4 left-1/6 w-3/5 h-3/5 rounded-full bg-gradient-to-br from-primary/10 via-sky-blue/8 to-transparent opacity-60 blob-animation blur-3xl"></div>
-
-        {/* Secondary accent blob */}
-        <div
-          className="absolute top-1/3 right-1/4 w-2/5 h-2/5 rounded-full bg-gradient-to-br from-accent/15 via-primary/10 to-transparent opacity-40 blob-animation blur-2xl"
-          style={{ animationDelay: "2s" }}
-        ></div>
-
-        {/* Tertiary small blob */}
-        <div
-          className="absolute bottom-1/4 left-1/3 w-1/3 h-1/3 rounded-full bg-gradient-to-br from-sky-blue/12 via-primary/8 to-transparent opacity-30 blob-animation blur-xl"
-          style={{ animationDelay: "4s" }}
-        ></div>
-
-        {/* Geometric patterns */}
-        <div className="absolute top-20 right-20 w-32 h-32 border border-primary/10 rounded-full animate-pulse"></div>
-        <div
-          className="absolute bottom-32 left-16 w-24 h-24 border border-accent/15 rounded-full animate-pulse"
-          style={{ animationDelay: "1s" }}
-        ></div>
-        <div
-          className="absolute top-1/2 left-8 w-16 h-16 border border-sky-blue/20 rounded-full animate-pulse"
-          style={{ animationDelay: "3s" }}
-        ></div>
+      {/* Full-screen Image Background with Carousel */}
+      <div className="absolute inset-0 z-0">
+        {heroImages.map((image, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentImageIndex ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <img
+              src={image.src}
+              alt={image.title}
+              className="w-full h-full object-cover"
+              loading={index === 0 ? "eager" : "lazy"}
+              decoding="async"
+              fetchPriority={index === 0 ? "high" : "low"}
+            />
+            {/* Enhanced dark overlay for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/50"></div>
+            {/* Additional gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+          </div>
+        ))}
       </div>
 
       {/* Enhanced Particle Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 15 }).map((_, i) => (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
+        {Array.from({ length: 20 }).map((_, i) => (
           <div
             key={i}
-            className={`particle particle-${i + 1} opacity-30`}
+            className={`particle particle-${i + 1} opacity-20`}
             style={{
               background: `radial-gradient(circle, ${
-                i % 3 === 0
-                  ? "rgb(14, 165, 233)"
-                  : i % 3 === 1
-                  ? "rgb(59, 130, 246)"
-                  : "rgb(99, 102, 241)"
+                i % 4 === 0
+                  ? "rgba(255, 255, 255, 0.8)"
+                  : i % 4 === 1
+                  ? "rgba(120, 189, 242, 0.6)"
+                  : i % 4 === 2
+                  ? "rgba(59, 130, 246, 0.5)"
+                  : "rgba(255, 215, 0, 0.4)"
               } 0%, transparent 70%)`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${15 + i * 2}s`,
+              animationDelay: `${i * 0.3}s`,
+              animationDuration: `${12 + i * 1.5}s`,
             }}
           />
         ))}
       </div>
 
-      <div className="section-container pt-16 sm:pt-20 lg:pt-32 relative z-10 px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-center">
-          <div className="lg:pr-8 text-center lg:text-left">
-            {/* Main Heading */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4 sm:mb-6 leading-tight animate-fade-in">
-              Where{" "}
-              <span className="bg-gradient-to-r from-sky-blue to-primary bg-clip-text text-transparent">
-                Experience
-              </span>{" "}
-              Meets{" "}
-              <span className="text-gradient bg-gradient-to-r from-primary via-sky-blue to-accent bg-clip-text text-transparent">
-                Excellence
+      {/* Floating geometric elements */}
+      <div className="absolute inset-0 pointer-events-none z-10">
+        <div className="absolute top-20 right-20 w-32 h-32 border-2 border-white/20 rounded-full animate-pulse"></div>
+        <div
+          className="absolute bottom-32 left-16 w-24 h-24 border-2 border-accent/30 rounded-full animate-pulse"
+          style={{ animationDelay: "1s" }}
+        ></div>
+        <div
+          className="absolute top-1/2 right-8 w-16 h-16 border border-white/25 rounded-full animate-pulse"
+          style={{ animationDelay: "2s" }}
+        ></div>
+        <div
+          className="absolute top-1/3 left-8 w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full animate-bounce"
+          style={{ animationDelay: "3s", animationDuration: "3s" }}
+        ></div>
+      </div>
+
+      <div className="section-container pt-8 sm:pt-12 lg:pt-16 relative z-20 px-4 sm:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-center h-screen max-h-screen overflow-hidden">
+          {/* Left Content - Original Content with Better Visibility */}
+          <div className="lg:col-span-6 xl:col-span-5 text-center lg:text-left flex flex-col justify-center">
+            {/* Main Heading - Enhanced Typography */}
+            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-10 sm:mb-8 leading-tight animate-fade-in">
+              <span className="block drop-shadow-2xl">
+                Where{" "}
+                <span className="bg-gradient-to-r from-accent via-sky-blue to-white bg-clip-text text-transparent font-extrabold">
+                  Experience
+                </span>
+              </span>
+              <span className="block drop-shadow-2xl">
+                Meets{" "}
+                <span className="bg-gradient-to-r from-white via-accent to-sky-blue bg-clip-text text-transparent font-extrabold">
+                  Excellence
+                </span>
               </span>
             </h1>
 
-            {/* Enhanced Statistics Section */}
+            {/* Enhanced Statistics Section - Compact Layout */}
             <div
-              className="mb-6 sm:mb-8 animate-slide-up"
+              className="mb-4 sm:mb-6 animate-slide-up"
               style={{ animationDelay: "400ms" }}
             >
-              <div className="grid grid-cols-3 gap-1 sm:gap-3 p-2 sm:p-4 bg-white/80 backdrop-blur-lg rounded-lg sm:rounded-xl shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 max-w-md mx-auto lg:max-w-none">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 p-2 sm:p-3 bg-white/40 backdrop-blur-xl rounded-lg sm:rounded-xl shadow-2xl border border-white/30 hover:shadow-3xl hover:bg-white/50 transition-all duration-500 max-w-md mx-auto lg:max-w-none">
                 {stats.map((stat, index) => {
                   const Icon = stat.icon;
                   return (
                     <div
                       key={index}
-                      className={`text-center transition-all duration-500 transform hover:scale-105 p-2 sm:p-3 rounded-md sm:rounded-lg group ${
+                      className={`text-center transition-all duration-500 transform hover:scale-105 p-2 sm:p-3 rounded-lg group ${
                         index === currentStatIndex
-                          ? "bg-gradient-to-br from-primary/10 to-sky-blue/5 text-primary shadow-md scale-105"
-                          : "text-charcoal/80 hover:bg-gradient-to-br hover:from-accent/5 hover:to-primary/5"
+                          ? "bg-gradient-to-br from-primary/30 to-sky-blue/20 text-white shadow-xl scale-105 ring-2 ring-accent/30"
+                          : "text-white hover:bg-gradient-to-br hover:from-accent/20 hover:to-primary/20"
                       }`}
                     >
                       <div className="relative">
@@ -116,26 +164,26 @@ const Hero = () => {
                           size={16}
                           className={`mx-auto mb-1 transition-all duration-300 ${
                             index === currentStatIndex
-                              ? "text-sky-blue drop-shadow-sm"
-                              : "text-charcoal/60 group-hover:text-primary"
+                              ? "text-accent drop-shadow-lg"
+                              : "text-white/90 group-hover:text-accent"
                           } sm:hidden`}
                         />
                         <Icon
                           size={20}
-                          className={`mx-auto mb-1 sm:mb-2 transition-all duration-300 ${
+                          className={`mx-auto mb-2 transition-all duration-300 ${
                             index === currentStatIndex
-                              ? "text-sky-blue drop-shadow-sm"
-                              : "text-charcoal/60 group-hover:text-primary"
+                              ? "text-accent drop-shadow-lg"
+                              : "text-white/90 group-hover:text-accent"
                           } hidden sm:block`}
                         />
                         {index === currentStatIndex && (
-                          <div className="absolute -top-1 -right-1 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-sky-blue rounded-full animate-ping"></div>
+                          <div className="absolute -top-1 -right-1 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-accent rounded-full animate-ping shadow-lg"></div>
                         )}
                       </div>
-                      <div className="font-bold text-sm sm:text-base lg:text-lg text-primary mb-0.5 sm:mb-1">
+                      <div className="font-black text-sm sm:text-base lg:text-lg text-white mb-1 drop-shadow-lg tracking-wide">
                         {stat.number}
                       </div>
-                      <div className="text-xs text-charcoal/70 leading-tight font-medium">
+                      <div className="text-xs sm:text-xs text-white/95 leading-tight font-semibold drop-shadow-md tracking-wide">
                         {stat.label}
                       </div>
                     </div>
@@ -146,122 +194,119 @@ const Hero = () => {
 
             {/* Enhanced CTA Buttons */}
             <div
-              className="flex flex-col sm:flex-row gap-3 sm:gap-6 animate-slide-up max-w-md mx-auto lg:max-w-none"
+              className="flex flex-col sm:flex-row gap-4 sm:gap-6 animate-slide-up max-w-md mx-auto lg:max-w-none"
               style={{ animationDelay: "600ms" }}
             >
               <a
-                href="#expertise"
-                className="group relative overflow-hidden bg-gradient-to-r from-primary to-sky-blue text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
+                href="#services"
+                className="group relative overflow-hidden bg-gradient-to-r from-primary via-sky-blue to-accent text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl sm:rounded-2xl shadow-2xl hover:shadow-accent/25 transition-all duration-500 transform hover:scale-105 flex items-center justify-center gap-3 text-base sm:text-lg tracking-wide"
               >
-                <span className="relative z-10">Explore Our Expertise</span>
+                <span className="relative z-10 drop-shadow-sm">
+                  Explore Our Services
+                </span>
                 <ChevronRight
-                  size={16}
+                  size={18}
                   className="group-hover:translate-x-1 transition-transform duration-300 sm:hidden"
                 />
                 <ChevronRight
-                  size={18}
+                  size={20}
                   className="group-hover:translate-x-1 transition-transform duration-300 hidden sm:block"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-sky-blue to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-accent via-primary to-sky-blue opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </a>
-
-              {/* <a
-                href="#"
-                className="group relative bg-white/90 backdrop-blur-sm border-2 border-primary text-primary font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 sm:gap-3 hover:bg-primary hover:text-white text-sm sm:text-base"
-              >
-                <Download
-                  size={16}
-                  className="group-hover:animate-bounce sm:hidden"
-                />
-                <Download
-                  size={18}
-                  className="group-hover:animate-bounce hidden sm:block"
-                />
-                <span>Download Brochure</span>
-              </a> */}
             </div>
           </div>
 
-          {/* Enhanced Mobile Image */}
-          <div className="block lg:hidden mt-8 sm:mt-12 px-2 sm:px-0">
+          {/* Right Content - Image Showcase */}
+          <div className="lg:col-span-6 xl:col-span-7 flex items-center justify-center h-full -mt-80 sm:mt-0">
             <div
-              className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl sm:shadow-2xl animate-fade-in transform hover:scale-105 transition-all duration-500"
-              style={{ animationDelay: "700ms" }}
+              className="relative animate-fade-in w-full max-w-2xl"
+              style={{ animationDelay: "1600ms" }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-sky-blue/20 z-10"></div>
-              <img
-                src="/images/home/hero.png"
-                alt="CICF Team"
-                className="w-full h-auto rounded-2xl sm:rounded-3xl"
-                loading="eager"
-                decoding="async"
-                width="400"
-                height="300"
-                fetchPriority="high"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent z-20"></div>
+              {/* Main Image Container */}
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl transform hover:scale-[1.02] transition-all duration-700 group">
+                {/* Current Image */}
+                <div className="relative h-[280px] sm:h-[350px] lg:h-[400px] xl:h-[480px]">
+                  {heroImages.map((image, index) => (
+                    <div
+                      key={index}
+                      className={`absolute inset-0 transition-opacity duration-1000 ${
+                        index === currentImageIndex
+                          ? "opacity-100"
+                          : "opacity-0"
+                      }`}
+                    >
+                      <img
+                        src={image.src}
+                        alt={image.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading={index === 0 ? "eager" : "lazy"}
+                        decoding="async"
+                      />
+                    </div>
+                  ))}
 
-              {/* Floating elements - mobile optimized */}
-              <div className="absolute top-2 sm:top-4 right-2 sm:right-4 w-8 sm:w-12 h-8 sm:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center z-30">
-                <Sparkles size={16} className="text-white sm:hidden" />
-                <Sparkles size={20} className="text-white hidden sm:block" />
+                  {/* Enhanced Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-accent/20"></div>
+
+                  {/* Floating Info Card with Original Content */}
+                  {/* <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md rounded-xl p-3 sm:p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 shadow-xl border border-white/20">
+                    <h3 className="text-base sm:text-lg font-bold text-primary mb-1">
+                      Excellence in Action
+                    </h3>
+                    <p className="text-charcoal/80 text-xs sm:text-sm">
+                      Where Experience Meets Excellence
+                    </p>
+                  </div> */}
+
+                  {/* Enhanced Corner Decorations */}
+                  <div className="absolute top-4 right-4 w-12 h-12 sm:w-14 sm:h-14 bg-white/30 backdrop-blur-xl rounded-full flex items-center justify-center border-2 border-white/40 group-hover:scale-110 transition-transform duration-300 shadow-xl">
+                    <Sparkles
+                      size={18}
+                      className="text-white animate-pulse drop-shadow-lg sm:hidden"
+                    />
+                    <Sparkles
+                      size={22}
+                      className="text-white animate-pulse drop-shadow-lg hidden sm:block"
+                    />
+                  </div>
+
+                  {/* Additional Corner Elements for Visual Interest */}
+                  <div className="absolute top-4 left-4 w-3 h-3 sm:w-4 sm:h-4 bg-accent rounded-full animate-ping shadow-lg"></div>
+                  <div
+                    className="absolute bottom-4 right-12 sm:right-16 w-2 h-2 sm:w-3 sm:h-3 bg-sky-blue rounded-full animate-bounce shadow-lg"
+                    style={{ animationDelay: "1s" }}
+                  ></div>
+                </div>
+
+                {/* Enhanced Image Navigation Dots */}
+                <div className="absolute bottom-16 sm:bottom-20 left-1/2 transform -translate-x-1/2 flex gap-2 sm:gap-3">
+                  {heroImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 border ${
+                        index === currentImageIndex
+                          ? "bg-white border-white scale-125 shadow-lg"
+                          : "bg-white/30 border-white/50 hover:bg-white/75 hover:border-white/75"
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 px-2 sm:px-4 py-1 sm:py-2 bg-white/90 backdrop-blur-sm rounded-md sm:rounded-lg z-30">
-                <span className="text-xs sm:text-sm font-semibold text-primary">
-                  Excellence in Action
-                </span>
-              </div>
+
+              {/* Floating Elements Around Main Image */}
+              <div
+                className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-accent/30 to-transparent rounded-full animate-bounce"
+                style={{ animationDelay: "2s", animationDuration: "3s" }}
+              ></div>
+              <div
+                className="absolute -bottom-4 -right-4 w-16 h-16 bg-gradient-to-tl from-sky-blue/30 to-transparent rounded-full animate-bounce"
+                style={{ animationDelay: "3s", animationDuration: "4s" }}
+              ></div>
             </div>
           </div>
-
-          {/* Enhanced Desktop Image */}
-          <div className="hidden lg:block">
-            <div
-              className="relative rounded-3xl overflow-hidden shadow-2xl animate-fade-in transform hover:scale-105 transition-all duration-500 group"
-              style={{ animationDelay: "900ms" }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-sky-blue/20 z-10 group-hover:from-primary/30 group-hover:to-sky-blue/30 transition-all duration-500"></div>
-              <img
-                src="/images/home/hero.png"
-                alt="CICF Team"
-                className="w-full h-auto rounded-3xl"
-                loading="eager"
-                decoding="async"
-                width="600"
-                height="400"
-                fetchPriority="high"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent z-20"></div>
-
-              {/* Enhanced floating elements */}
-              <div className="absolute top-6 right-6 w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center z-30 group-hover:scale-110 transition-transform duration-300">
-                <Sparkles size={24} className="text-white animate-pulse" />
-              </div>
-              <div className="absolute bottom-6 left-6 px-6 py-3 bg-white/90 backdrop-blur-md rounded-xl z-30 group-hover:bg-white transition-colors duration-300">
-                <span className="text-base font-bold text-primary">
-                  Excellence in Action
-                </span>
-              </div>
-
-              {/* Decorative corner elements */}
-              <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-sky-blue/30 to-transparent rounded-br-3xl z-20"></div>
-              <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-primary/30 to-transparent rounded-tl-3xl z-20"></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Enhanced Scroll Indicator */}
-        <div
-          className="bottom-4 sm:bottom-8 lg:bottom-12 left-0 right-0 flex flex-col items-center animate-fade-in"
-          style={{ animationDelay: "1000ms" }}
-        >
-          <a
-            href="#about"
-            className="group relative p-2 sm:p-3 bg-white/80 backdrop-blur-sm border border-primary/20 rounded-full text-primary opacity-80 hover:opacity-100 hover:bg-primary/90 hover:text-white transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
-          >
-            <ArrowDown size={16} className="animate-bounce sm:hidden" />
-            <ArrowDown size={20} className="animate-bounce hidden sm:block" />
-          </a>
         </div>
       </div>
     </section>
