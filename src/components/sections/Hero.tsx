@@ -218,7 +218,7 @@ const Hero = () => {
           </div>
 
           {/* Right Content - Image Showcase */}
-          <div className="lg:col-span-6 xl:col-span-7 flex items-center justify-center h-full -mt-80 sm:mt-0">
+          <div className="lg:col-span-6 xl:col-span-7 flex items-center justify-center h-full -mt-40 sm:mt-0">
             <div
               className="relative animate-fade-in w-full max-w-2xl"
               style={{ animationDelay: "1600ms" }}
