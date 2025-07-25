@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ScrollAnimation from "../ui/ScrollAnimation";
-import Button from "../ui/Button";
+import { Button } from "@/components/ui/button";
 import {
   Send,
   CheckCircle,

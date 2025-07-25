@@ -21,6 +21,86 @@
     font-family: "Titillium Web", sans-serif;
     font-weight: 600;
   }
+  :root {
+    --background: 240 100% 99%; /* ice-blue */
+    --foreground: 210 13% 13%; /* charcoal */
+    --card: 0 0% 100%; /* white */
+    --card-foreground: 210 13% 13%; /* charcoal */
+    --popover: 0 0% 100%; /* white */
+    --popover-foreground: 210 13% 13%; /* charcoal */
+    --primary: 209 65% 25%; /* navy-blue */
+    --primary-foreground: 0 0% 100%; /* white */
+    --secondary: 240 100% 99%; /* ice-blue */
+    --secondary-foreground: 210 13% 13%; /* charcoal */
+    --muted: 220 13% 91%; /* light gray */
+    --muted-foreground: 220 9% 46%; /* slate-blue */
+    --accent: 203 61% 67%; /* sky-blue */
+    --accent-foreground: 0 0% 100%; /* white */
+    --destructive: 0 84.2% 60.2%; /* red */
+    --destructive-foreground: 0 0% 98%; /* white */
+    --border: 220 13% 91%; /* light border */
+    --input: 220 13% 91%; /* light input background */
+    --ring: 203 61% 67%; /* sky-blue for focus ring */
+    --chart-1: 203 61% 67%; /* sky-blue */
+    --chart-2: 209 65% 25%; /* navy-blue */
+    --chart-3: 207 44% 49%; /* royal-blue */
+    --chart-4: 210 54% 65%; /* steel-blue */
+    --chart-5: 220 9% 46%; /* slate-blue */
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 209 65% 25%; /* navy-blue */
+    --foreground: 240 100% 99%; /* ice-blue */
+    --card: 210 13% 13%; /* charcoal */
+    --card-foreground: 240 100% 99%; /* ice-blue */
+    --popover: 210 13% 13%; /* charcoal */
+    --popover-foreground: 240 100% 99%; /* ice-blue */
+    --primary: 203 61% 67%; /* sky-blue */
+    --primary-foreground: 209 65% 25%; /* navy-blue */
+    --secondary: 220 9% 46%; /* slate-blue */
+    --secondary-foreground: 240 100% 99%; /* ice-blue */
+    --muted: 220 9% 46%; /* slate-blue */
+    --muted-foreground: 220 13% 91%; /* light gray */
+    --accent: 203 61% 67%; /* sky-blue */
+    --accent-foreground: 209 65% 25%; /* navy-blue */
+    --destructive: 0 84.2% 60.2%; /* red */
+    --destructive-foreground: 0 0% 98%; /* white */
+    --border: 220 9% 46%; /* slate-blue */
+    --input: 220 9% 46%; /* slate-blue */
+    --ring: 203 61% 67%; /* sky-blue */
+    --chart-1: 203 61% 67%; /* sky-blue */
+    --chart-2: 240 100% 99%; /* ice-blue */
+    --chart-3: 207 44% 49%; /* royal-blue */
+    --chart-4: 210 54% 65%; /* steel-blue */
+    --chart-5: 220 13% 91%; /* light gray */
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
 }
 
 @layer components {
@@ -113,9 +193,16 @@
 
   /* Labs Section Enhancements */
   .labs-background-pattern {
-    background-image: 
-      radial-gradient(circle at 25% 25%, rgba(15, 42, 77, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(120, 189, 242, 0.1) 0%, transparent 50%),
+    background-image: radial-gradient(
+        circle at 25% 25%,
+        rgba(15, 42, 77, 0.1) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 75% 75%,
+        rgba(120, 189, 242, 0.1) 0%,
+        transparent 50%
+      ),
       linear-gradient(45deg, rgba(240, 248, 255, 0.3) 25%, transparent 25%),
       linear-gradient(-45deg, rgba(240, 248, 255, 0.3) 25%, transparent 25%);
     background-size: 100px 100px, 150px 150px, 50px 50px, 50px 50px;
@@ -136,12 +223,12 @@
     animation: float 6s ease-in-out infinite;
     animation-delay: 1s;
   }
-  
+
   .float-delayed-2 {
     animation: float 6s ease-in-out infinite;
     animation-delay: 2s;
   }
-  
+
   .float-delayed-3 {
     animation: float 6s ease-in-out infinite;
     animation-delay: 3s;
@@ -161,5 +248,29 @@
       transform: scale(1.2);
       opacity: 0;
     }
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }

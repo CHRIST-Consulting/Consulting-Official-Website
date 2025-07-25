@@ -1,11 +1,25 @@
-import React from "react";
+import { useState } from "react";
 import SectionTitle from "../ui/SectionTitle";
 import ScrollAnimation from "../ui/ScrollAnimation";
-import { MapPin, ExternalLink, Sparkles } from "lucide-react";
-import { campusesData } from "../../data/CampusesData";
+import CampusModal from "../ui/CampusModal";
+import { MapPin, ExternalLink } from "lucide-react";
+import { campusesData, Campus } from "../../data/CampusesData";
+import { calculateCampusStats } from "../../utils/campusUtils";
 
 const Campuses = () => {
   const campuses = campusesData;
+  const [selectedCampus, setSelectedCampus] = useState<Campus | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (campus: Campus) => {
+    setSelectedCampus(campus);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedCampus(null);
+    setIsModalOpen(false);
+  };
 
   return (
     <section
@@ -63,7 +77,10 @@ const Campuses = () => {
           {campuses.map((campus, index) => (
             <ScrollAnimation key={index} delay={index * 100}>
               <div className="group relative h-full">
-                <a href={campus.link} className="block h-full">
+                <div
+                  className="block h-full cursor-pointer"
+                  onClick={() => openModal(campus)}
+                >
                   <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden group-hover:shadow-2xl transition-all duration-700 transform group-hover:-translate-y-2 border border-white/50 h-full flex flex-col">
                     {/* Image Container with Enhanced Overlay */}
                     <div className="relative h-48 overflow-hidden">
@@ -83,6 +100,16 @@ const Campuses = () => {
                       <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                         <div className="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-lg">
                           <ExternalLink className="w-4 h-4 text-primary" />
+                        </div>
+                      </div>
+
+                      {/* Project count badge */}
+                      <div className="absolute bottom-3 left-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                        <div className="bg-accent/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-lg">
+                          <span className="text-white text-xs font-semibold">
+                            {calculateCampusStats(campus).activeProjects} Active
+                            Projects
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -123,11 +150,18 @@ const Campuses = () => {
                     {/* Bottom accent line */}
                     <div className="h-1 bg-gradient-to-r from-accent via-sky-blue to-primary-light transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                   </div>
-                </a>
+                </div>
               </div>
             </ScrollAnimation>
           ))}
         </div>
+
+        {/* Campus Modal */}
+        <CampusModal
+          campus={selectedCampus}
+          isOpen={isModalOpen}
+          onClose={closeModal}
+        />
       </div>
     </section>
   );
