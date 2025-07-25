@@ -172,9 +172,9 @@ const About = () => {
                       </svg>
                     </div>
                     <p className="text-xs sm:text-sm text-charcoal leading-relaxed">
-                      Empowering institutions and industries through
-                      transformative consultancy rooted in academic excellence
-                      and societal responsibility.
+                      Transform CHRIST Consulting into a highly profitable
+                      centre, bring visibility and create impact in academia
+                      globally.
                     </p>
                   </div>
                 </div>
@@ -202,9 +202,8 @@ const About = () => {
                       </svg>
                     </div>
                     <p className="text-xs sm:text-sm text-charcoal leading-relaxed">
-                      To bridge academia and industry through research-driven
-                      solutions, fostering innovation and sustainable growth
-                      across organizations.
+                      Generating business, growing aggressively and supporting
+                      overall revenues of CHRIST University.
                     </p>
                   </div>
                 </div>
