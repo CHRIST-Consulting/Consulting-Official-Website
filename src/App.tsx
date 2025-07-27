@@ -1,27 +1,22 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Suspense, lazy } from "react";
 import { AnimatePresence } from "framer-motion";
 import ChristLoadingScreen from "./components/ChristLoadingScreen";
 import Navbar from "./components/Navbar";
-import Home from "./pages/HomePage";
 import Footer from "./components/Footer";
-import Client from "./pages/ClientsPage";
-import Event from "./pages/EventsPage";
-import Team from "./pages/TeamsPage";
-import Expertise from "./pages/ExpertisePage";
-import Lab from "./pages/LabsPage";
 import ScrollToTopButton from "./components/ScrollToTopButton";
-import EventRecapPage from "./pages/EventsRecapPage";
+
+// Lazy load pages
+const Home = lazy(() => import("./pages/HomePage"));
+const Client = lazy(() => import("./pages/ClientsPage"));
+const Event = lazy(() => import("./pages/EventsPage"));
+const Team = lazy(() => import("./pages/TeamsPage"));
+const Expertise = lazy(() => import("./pages/ExpertisePage"));
+const Lab = lazy(() => import("./pages/LabsPage"));
+const EventRecapPage = lazy(() => import("./pages/EventsRecapPage"));
 
 function App() {
   const location = useLocation();
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => setIsLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, [location.pathname]);
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -29,15 +24,23 @@ function App() {
       <main className="flex-grow">
         <AnimatePresence>
           <ChristLoadingScreen cacheKey={`app-cache-${location.pathname}`}>
-            <Routes location={location} key={location.pathname}>
-              <Route path="/" element={<Home />} />
-              <Route path="/clients" element={<Client />} />
-              <Route path="/events" element={<Event />} />
-              <Route path="/events/:id" element={<EventRecapPage />} />
-              <Route path="/teams" element={<Team />} />
-              <Route path="/expertise" element={<Expertise />} />
-              <Route path="/labs" element={<Lab />} />
-            </Routes>
+            <Suspense
+              fallback={
+                <div className="min-h-screen flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                </div>
+              }
+            >
+              <Routes location={location} key={location.pathname}>
+                <Route path="/" element={<Home />} />
+                <Route path="/clients" element={<Client />} />
+                <Route path="/events" element={<Event />} />
+                <Route path="/events/:id" element={<EventRecapPage />} />
+                <Route path="/teams" element={<Team />} />
+                <Route path="/expertise" element={<Expertise />} />
+                <Route path="/labs" element={<Lab />} />
+              </Routes>
+            </Suspense>
           </ChristLoadingScreen>
         </AnimatePresence>
       </main>
