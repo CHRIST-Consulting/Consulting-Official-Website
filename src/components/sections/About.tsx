@@ -45,7 +45,7 @@ const About = () => {
 
       <div className="section-container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 xl:gap-16 items-start lg:items-center">
-          <ScrollAnimation>
+          <ScrollAnimation animation="slide-in-from-left">
             <div className="space-y-6 sm:space-y-8">
               <div className="relative">
                 {/* Decorative Element Behind Title */}
@@ -99,7 +99,7 @@ const About = () => {
             </div>
           </ScrollAnimation>
 
-          <ScrollAnimation delay={300}>
+          <ScrollAnimation delay={300} animation="slide-in-from-right">
             <div className="space-y-6 sm:space-y-8">
               <div className="relative w-full max-w-sm mx-auto sm:max-w-md md:max-w-lg lg:max-w-none lg:ml-4 xl:ml-8">
                 {/* Decorative Background */}
