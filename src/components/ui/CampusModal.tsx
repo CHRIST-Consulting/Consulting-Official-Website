@@ -15,17 +15,17 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog";
+} from "./dialog";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+} from "./card";
+import { Badge } from "./badge";
+import { Button } from "./Button";
+import { ScrollArea } from "./scroll-area";
 import {
   calculateCampusStats,
   getActiveProjects,
