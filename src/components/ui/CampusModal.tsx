@@ -15,17 +15,17 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "./dialog.tsx";
+} from "./dialog";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./card.tsx";
-import { Badge } from "./badge.tsx";
-import { Button } from "./button.tsx";
-import { ScrollArea } from "./scroll-area.tsx";
+} from "./card";
+import { Badge } from "./badge";
+import { Button } from "./Button";
+import { ScrollArea } from "./scroll-area";
 import {
   calculateCampusStats,
   getActiveProjects,
