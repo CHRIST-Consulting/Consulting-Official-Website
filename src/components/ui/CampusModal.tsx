@@ -22,10 +22,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+} from "./card";
+import { Badge } from "./badge";
+import { Button } from "./button";
+import { ScrollArea } from "./scroll-area";
 import {
   calculateCampusStats,
   getActiveProjects,
