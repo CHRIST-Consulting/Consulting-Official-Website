@@ -21,16 +21,14 @@ export default {
         "navy-blue": "#0f2a4d",
         "slate-blue": "#4b5563",
         "steel-blue": "#4682b4",
-        "golden-yellow": "#FFDF00",
-        "lemon-yellow": "#FFFACD",
-        "mustard-yellow": "#FFDB58",
+        "vibrant-yellow": "#FFC700",
         primary: "#0f2a4d", // Navy Blue as primary
         "primary-dark": "#0a1f3d",
         "primary-light": "#2267b5", // Royal Blue as light variant
         secondary: "#f0f8ff", // Ice Blue as secondary
         charcoal: "#222222",
-        accent: "#FFDF00", // Golden Yellow as accent
-        "accent-dark": "#FFDB58",
+        accent: "#FFC700", // Vibrant Yellow as accent
+        "accent-dark": "#F5B800",
         success: "#10B981",
         warning: "#F59E0B",
         error: "#EF4444",
@@ -70,9 +68,6 @@ export default {
       animation: {
         "fade-in": "fadeIn 0.5s ease-out forwards",
         "slide-up": "slideUp 0.5s ease-out forwards",
-        "slide-in-from-left": "slideInFromLeft 0.5s ease-out forwards",
-        "slide-in-from-right": "slideInFromRight 0.5s ease-out forwards",
-        "zoom-in": "zoomIn 0.5s ease-out forwards",
         float: "float 6s ease-in-out infinite",
       },
       keyframes: {
@@ -91,36 +86,6 @@ export default {
           },
           "100%": {
             transform: "translateY(0)",
-            opacity: "1",
-          },
-        },
-        slideInFromLeft: {
-          "0%": {
-            transform: "translateX(-20px)",
-            opacity: "0",
-          },
-          "100%": {
-            transform: "translateX(0)",
-            opacity: "1",
-          },
-        },
-        slideInFromRight: {
-          "0%": {
-            transform: "translateX(20px)",
-            opacity: "0",
-          },
-          "100%": {
-            transform: "translateX(0)",
-            opacity: "1",
-          },
-        },
-        zoomIn: {
-          "0%": {
-            transform: "scale(0.95)",
-            opacity: "0",
-          },
-          "100%": {
-            transform: "scale(1)",
             opacity: "1",
           },
         },

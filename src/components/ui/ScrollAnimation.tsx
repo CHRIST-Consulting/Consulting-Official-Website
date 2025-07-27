@@ -4,14 +4,12 @@ interface ScrollAnimationProps {
   children: ReactNode;
   className?: string;
   delay?: number;
-  animation?: string;
 }
 
 const ScrollAnimation = ({
   children,
   className = "",
   delay = 0,
-  animation = "fade-in",
 }: ScrollAnimationProps) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -41,7 +39,7 @@ const ScrollAnimation = ({
   }, [delay]);
 
   return (
-    <div ref={elementRef} className={`${animation} ${className}`}>
+    <div ref={elementRef} className={`fade-in ${className}`}>
       {children}
     </div>
   );

@@ -10,7 +10,6 @@
   body {
     font-family: "Source Sans Pro", sans-serif;
     color: #222222;
-    line-height: 1.6;
   }
 
   h1,
@@ -35,18 +34,18 @@
     --secondary-foreground: 210 13% 13%; /* charcoal */
     --muted: 220 13% 91%; /* light gray */
     --muted-foreground: 220 9% 46%; /* slate-blue */
-    --accent: 54 100% 50%; /* golden-yellow */
+    --accent: 47 100% 50%; /* vibrant-yellow */
     --accent-foreground: 0 0% 100%; /* white */
     --destructive: 0 84.2% 60.2%; /* red */
     --destructive-foreground: 0 0% 98%; /* white */
     --border: 220 13% 91%; /* light border */
     --input: 220 13% 91%; /* light input background */
-    --ring: 54 100% 50%; /* golden-yellow for focus ring */
+    --ring: 47 100% 50%; /* vibrant-yellow for focus ring */
     --chart-1: 203 61% 67%; /* sky-blue */
     --chart-2: 209 65% 25%; /* navy-blue */
-    --chart-3: 54 100% 50%; /* golden-yellow */
-    --chart-4: 56 100% 90%; /* lemon-yellow */
-    --chart-5: 54 100% 67%; /* mustard-yellow */
+    --chart-3: 207 44% 49%; /* royal-blue */
+    --chart-4: 210 54% 65%; /* steel-blue */
+    --chart-5: 220 9% 46%; /* slate-blue */
     --radius: 0.5rem;
   }
 
@@ -63,18 +62,18 @@
     --secondary-foreground: 240 100% 99%; /* ice-blue */
     --muted: 220 9% 46%; /* slate-blue */
     --muted-foreground: 220 13% 91%; /* light gray */
-    --accent: 54 100% 50%; /* golden-yellow */
+    --accent: 47 100% 50%; /* vibrant-yellow */
     --accent-foreground: 209 65% 25%; /* navy-blue */
     --destructive: 0 84.2% 60.2%; /* red */
     --destructive-foreground: 0 0% 98%; /* white */
     --border: 220 9% 46%; /* slate-blue */
     --input: 220 9% 46%; /* slate-blue */
-    --ring: 54 100% 50%; /* golden-yellow */
+    --ring: 47 100% 50%; /* vibrant-yellow */
     --chart-1: 203 61% 67%; /* sky-blue */
     --chart-2: 240 100% 99%; /* ice-blue */
-    --chart-3: 54 100% 50%; /* golden-yellow */
-    --chart-4: 56 100% 90%; /* lemon-yellow */
-    --chart-5: 54 100% 67%; /* mustard-yellow */
+    --chart-3: 207 44% 49%; /* royal-blue */
+    --chart-4: 210 54% 65%; /* steel-blue */
+    --chart-5: 220 13% 91%; /* light gray */
   }
 }
 
@@ -100,11 +99,11 @@
   }
 
   .prime-item {
-    @apply p-6 rounded-lg shadow-lg bg-white transition-all duration-300 hover:shadow-xl hover:scale-105;
+    @apply p-6 rounded-lg shadow-md bg-white transition-all duration-300 hover:shadow-xl hover:scale-105;
   }
 
   .service-card {
-    @apply p-6 bg-white rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl;
+    @apply p-6 bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-xl;
   }
 
   /* Bullet point animations */

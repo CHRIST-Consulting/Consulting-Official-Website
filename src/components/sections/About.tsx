@@ -12,30 +12,13 @@ const About = () => {
       className="bg-secondary py-12 lg:py-16 relative overflow-hidden"
     >
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <svg
-          className="w-full h-full"
-          viewBox="0 0 100 100"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <pattern
-              id="grid"
-              width="10"
-              height="10"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 10 0 L 0 0 0 10"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="0.5"
-              />
-            </pattern>
-          </defs>
-          <rect width="100" height="100" fill="url(#grid)" />
-        </svg>
-      </div>
+      <div
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        }}
+      ></div>
 
       {/* Floating Geometric Shapes */}
       <div className="absolute top-10 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
@@ -45,7 +28,7 @@ const About = () => {
 
       <div className="section-container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 xl:gap-16 items-start lg:items-center">
-          <ScrollAnimation animation="slide-in-from-left">
+          <ScrollAnimation>
             <div className="space-y-6 sm:space-y-8">
               <div className="relative">
                 {/* Decorative Element Behind Title */}
@@ -99,7 +82,7 @@ const About = () => {
             </div>
           </ScrollAnimation>
 
-          <ScrollAnimation delay={300} animation="slide-in-from-right">
+          <ScrollAnimation delay={300}>
             <div className="space-y-6 sm:space-y-8">
               <div className="relative w-full max-w-sm mx-auto sm:max-w-md md:max-w-lg lg:max-w-none lg:ml-4 xl:ml-8">
                 {/* Decorative Background */}

@@ -127,7 +127,7 @@ const Hero = () => {
           {/* Left Content - Original Content with Better Visibility */}
           <div className="lg:col-span-6 xl:col-span-5 text-center lg:text-left flex flex-col justify-center">
             {/* Main Heading - Enhanced Typography */}
-            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-10 sm:mb-8 leading-tight animate-zoom-in">
+            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-10 sm:mb-8 leading-tight animate-fade-in">
               <span className="block drop-shadow-2xl">
                 Where{" "}
                 <span className="bg-gradient-to-r from-accent via-sky-blue to-white bg-clip-text text-transparent font-extrabold">
