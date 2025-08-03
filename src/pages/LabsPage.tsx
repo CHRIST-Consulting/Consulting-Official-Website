@@ -76,25 +76,8 @@ const Lab = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary/5 to-primary/10 py-32">
-        <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/256559/pexels-photo-256559.jpeg')] bg-cover bg-center opacity-10"></div>
-        <div className="section-container relative">
-          <ScrollAnimation>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-primary mb-6 text-center">
-              A Peek into Our Labs
-            </h1>
-            <p className="text-xl md:text-2xl text-charcoal opacity-80 max-w-3xl mx-auto text-center">
-              Where innovation meets impact. Explore the cutting-edge facilities
-              at CHRIST Consulting that are shaping the future of research and
-              enterprise.
-            </p>
-          </ScrollAnimation>
-        </div>
-      </section>
-
       {/* Labs Grid */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20">
         <div className="section-container">
           <ScrollAnimation>
             <SectionTitle

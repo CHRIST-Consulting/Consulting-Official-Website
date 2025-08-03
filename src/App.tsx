@@ -14,14 +14,20 @@ const Team = lazy(() => import("./pages/TeamsPage"));
 const Expertise = lazy(() => import("./pages/ExpertisePage"));
 const Lab = lazy(() => import("./pages/LabsPage"));
 const EventRecapPage = lazy(() => import("./pages/EventsRecapPage"));
+import AnimatedBackground from "./components/ui/AnimatedBackground";
+import CursorTrail from "./components/ui/CursorTrail";
+import MouseFollower from "./components/ui/MouseFollower";
 
 function App() {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col relative overflow-hidden">
+      <AnimatedBackground />
+      <CursorTrail />
+      <MouseFollower />
       <Navbar />
-      <main className="flex-grow">
+      <main className="flex-grow relative z-10">
         <AnimatePresence>
           <ChristLoadingScreen cacheKey={`app-cache-${location.pathname}`}>
             <Suspense

@@ -49,7 +49,7 @@ const About = () => {
             <div className="space-y-6 sm:space-y-8">
               <div className="relative">
                 {/* Decorative Element Behind Title */}
-                <div className="absolute -top-2 -left-2 sm:-top-3 sm:-left-3 lg:-top-4 lg:-left-4 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-primary/15 to-accent/15 sm:from-primary/20 sm:to-accent/20 rounded-full blur-xl lg:blur-2xl"></div>
+                <div className="absolute -top-2 -left-2 sm:-top-3 sm:-left-3 lg:-top-4 lg:-left-4 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-bright-blue/20 to-azure/15 sm:from-bright-blue/25 sm:to-azure/20 rounded-full blur-xl lg:blur-2xl animate-pulse-glow"></div>
 
                 <SectionTitle
                   title="About CHRIST Incubation and Consultancy Foundation"
@@ -59,8 +59,8 @@ const About = () => {
 
               <div className="relative">
                 {/* Text Content with Background Accent */}
-                <div className="absolute -top-1 -left-1 sm:-top-2 sm:-left-2 w-full h-full bg-gradient-to-r from-primary/3 to-accent/3 sm:from-primary/5 sm:to-accent/5 rounded-lg sm:rounded-xl blur-sm"></div>
-                <div className="relative bg-white/50 sm:bg-white/60 backdrop-blur-sm rounded-lg sm:rounded-xl p-4 sm:p-5 lg:p-6 border border-white/15 sm:border-white/20 shadow-md lg:shadow-lg">
+                <div className="absolute -top-1 -left-1 sm:-top-2 sm:-left-2 w-full h-full bg-gradient-to-r from-bright-blue/5 to-azure/5 sm:from-bright-blue/8 sm:to-azure/8 rounded-lg sm:rounded-xl blur-sm animate-shimmer"></div>
+                <div className="relative glass-card-blue rounded-lg sm:rounded-xl p-4 sm:p-5 lg:p-6 border-glow-blue shadow-blue-soft lg:shadow-blue-medium transition-all duration-500 hover:shadow-blue-strong">
                   <p className="text-sm sm:text-base mb-3 sm:mb-4 text-charcoal leading-relaxed">
                     CHRIST Incubation and Consultancy Foundation is the
                     result-driven business consultancy arm of CHRIST (Deemed to
@@ -81,7 +81,7 @@ const About = () => {
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-1 sm:pt-2">
                 <a
                   href="/teams"
-                  className="btn-primary flex items-center justify-center gap-2 text-sm px-5 sm:px-6 py-2.5 sm:py-3 w-full sm:w-auto relative overflow-hidden group"
+                  className="btn-primary flex items-center justify-center gap-2 text-sm px-5 sm:px-6 py-2.5 sm:py-3 w-full sm:w-auto relative overflow-hidden group hover:animate-wiggle"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-white/20 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                   <Users size={14} className="sm:w-4 sm:h-4 relative z-10" />
@@ -89,7 +89,7 @@ const About = () => {
                 </a>
                 <button
                   onClick={() => setShowVideo(true)}
-                  className="btn-secondary flex items-center justify-center gap-2 text-sm px-5 sm:px-6 py-2.5 sm:py-3 w-full sm:w-auto relative overflow-hidden group"
+                  className="btn-secondary flex items-center justify-center gap-2 text-sm px-5 sm:px-6 py-2.5 sm:py-3 w-full sm:w-auto relative overflow-hidden group hover:animate-wiggle"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-accent/0 via-white/20 to-accent/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                   <Play size={14} className="sm:w-4 sm:h-4 relative z-10" />

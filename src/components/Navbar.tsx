@@ -81,7 +81,9 @@ const Navbar = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-md py-2" : "bg-white py-2"
+        isScrolled
+          ? "glass-card-blue shadow-blue-soft py-2 border-b border-sky-blue/20"
+          : "bg-gradient-to-r from-white/95 to-ice-blue/95 backdrop-blur-md py-2 border-b border-white/20"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -113,13 +115,18 @@ const Navbar = () => {
                   e.preventDefault();
                   handleLinkClick(link.href);
                 }}
-                className={`font-medium transition-colors duration-300 ${
+                className={`font-medium transition-all duration-300 relative group ${
                   isLinkActive(link.href)
-                    ? "text-accent"
-                    : "text-gray-700 hover:text-accent"
+                    ? "text-bright-blue font-semibold"
+                    : "text-gray-700 hover:text-dodger-blue"
                 }`}
               >
                 {link.name}
+                <span
+                  className={`absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-bright-blue to-dodger-blue transition-all duration-300 group-hover:w-full ${
+                    isLinkActive(link.href) ? "w-full" : ""
+                  }`}
+                ></span>
               </Link>
             ))}
           </div>

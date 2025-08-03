@@ -41,8 +41,8 @@ const EventsPage = () => {
   return (
     <main className="pt-16">
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center bg-gradient-to-r from-[#4682b4] to-[#78bdf2] overflow-hidden">
-        <div className="absolute inset-0 bg-white"></div>
+      <section className="relative min-h-[60vh] flex items-center  overflow-hidden">
+        <div className="absolute inset-0 "></div>
         <div className="section-container relative z-10 py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <ScrollAnimation>
@@ -283,7 +283,7 @@ const EventsPage = () => {
               Are you an expert or organization looking to host with CHRIST
               Consulting?
             </h2>
-            <button className="btn-primary bg-white text-primary hover:bg-white/90">
+            <button className="btn-primary bg-white text-white hover:bg-white/90">
               Contact Us
             </button>
           </ScrollAnimation>
