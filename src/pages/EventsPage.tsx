@@ -283,9 +283,7 @@ const EventsPage = () => {
               Are you an expert or organization looking to host with CHRIST
               Consulting?
             </h2>
-            <button className="btn-primary bg-white text-white hover:bg-white/90">
-              Contact Us
-            </button>
+            <button className="btn-primary text-white">Contact Us</button>
           </ScrollAnimation>
         </div>
       </section>
