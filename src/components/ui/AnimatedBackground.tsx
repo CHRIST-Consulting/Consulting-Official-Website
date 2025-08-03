@@ -130,16 +130,6 @@ const AnimatedBackground = () => {
         </div>
       </div>
 
-      {/* Debug: Mouse position indicator (remove in production) */}
-      <div
-        className="absolute w-4 h-4 bg-red-500 rounded-full z-50 pointer-events-none"
-        style={{
-          left: mousePosition.x - 8,
-          top: mousePosition.y - 8,
-          opacity: 0.5,
-        }}
-      />
-
       {/* Particle system */}
       <svg className="absolute inset-0 w-full h-full">
         {particles.map((particle) => (
