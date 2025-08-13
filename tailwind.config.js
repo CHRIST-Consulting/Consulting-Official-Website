@@ -28,6 +28,10 @@ export default {
         charcoal: "#222222",
         accent: "#78bdf2", // Sky Blue as accent
         "accent-dark": "#3b82f6",
+        // CHRIST University Golden colors
+        "christ-gold": "#DAA520",
+        "christ-gold-light": "#F7DC6F",
+        "christ-gold-dark": "#B8860B",
         success: "#10B981",
         warning: "#F59E0B",
         error: "#EF4444",
@@ -68,6 +72,7 @@ export default {
         "fade-in": "fadeIn 0.5s ease-out forwards",
         "slide-up": "slideUp 0.5s ease-out forwards",
         float: "float 6s ease-in-out infinite",
+        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
       keyframes: {
         fadeIn: {
@@ -90,10 +95,13 @@ export default {
         },
         float: {
           "0%, 100%": {
-            transform: "translateY(0px)",
+            transform: "translateY(0px) rotate(0deg)",
           },
-          "50%": {
-            transform: "translateY(-10px)",
+          "33%": {
+            transform: "translateY(-10px) rotate(1deg)",
+          },
+          "66%": {
+            transform: "translateY(-5px) rotate(-1deg)",
           },
         },
       },

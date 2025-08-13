@@ -1,236 +1,318 @@
-import React, { useState } from "react";
-import SectionTitle from "../ui/SectionTitle";
-import ScrollAnimation from "../ui/ScrollAnimation";
-import { Users, Play, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Users, Play, X, Award, Target, TrendingUp, Globe, BookOpen, Lightbulb } from "lucide-react";
 
 const About = () => {
   const [showVideo, setShowVideo] = useState(false);
+  const [counters, setCounters] = useState({
+    years: 0,
+    projects: 0,
+    clients: 0,
+    impact: 0
+  });
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  // Enhanced scroll animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const target = entry.target as HTMLElement;
+          const delay = parseInt(target.getAttribute('data-delay') || '0');
+          
+          setTimeout(() => {
+            target.style.opacity = '1';
+            target.style.transform = 'translateY(0)';
+            target.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+          }, delay);
+          
+          // Trigger counter animation when stats section is visible
+          if (target.classList.contains('stats-section') && !isVisible) {
+            setIsVisible(true);
+            animateCounters();
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements after component mounts
+    setTimeout(() => {
+      const animatedElements = document.querySelectorAll('[data-animate="true"]');
+      animatedElements.forEach((el) => {
+        const element = el as HTMLElement;
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(32px)';
+        observer.observe(element);
+      });
+    }, 100);
+
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  const animateCounters = () => {
+    const duration = 2500;
+    const targets = { years: 5, projects: 150, clients: 50, impact: 95 };
+    const startTime = Date.now();
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      
+      setCounters({
+        years: Math.floor(targets.years * easeOutQuart),
+        projects: Math.floor(targets.projects * easeOutQuart),
+        clients: Math.floor(targets.clients * easeOutQuart),
+        impact: Math.floor(targets.impact * easeOutQuart)
+      });
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    animate();
+  };
 
   return (
     <section
+      ref={sectionRef}
       id="about"
-      className="bg-secondary py-12 lg:py-16 relative overflow-hidden"
+      className="relative py-6 lg:py-8 bg-gradient-to-br from-secondary via-white to-ice-blue overflow-hidden"
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <svg
-          className="w-full h-full"
-          viewBox="0 0 100 100"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <pattern
-              id="grid"
-              width="10"
-              height="10"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 10 0 L 0 0 0 10"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="0.5"
-              />
-            </pattern>
-          </defs>
-          <rect width="100" height="100" fill="url(#grid)" />
-        </svg>
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0">
+        {/* Golden gradient orbs */}
+        <div className="absolute top-10 -left-20 w-64 h-64 bg-gradient-to-br from-yellow-400/20 via-amber-300/15 to-transparent rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-10 -right-20 w-80 h-80 bg-gradient-to-br from-primary/20 via-royal-blue/15 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        
+        {/* Floating particles */}
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-yellow-400 rounded-full animate-float opacity-60" style={{ animationDelay: '0s' }}></div>
+        <div className="absolute top-1/3 right-1/3 w-1.5 h-1.5 bg-amber-300 rounded-full animate-float opacity-40" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-1/4 left-1/3 w-2.5 h-2.5 bg-primary rounded-full animate-float opacity-50" style={{ animationDelay: '2s' }}></div>
       </div>
 
-      {/* Floating Geometric Shapes */}
-      <div className="absolute top-10 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
-      <div className="absolute top-1/3 right-20 w-32 h-32 bg-accent/10 rounded-lg rotate-45 blur-lg animate-pulse delay-1000"></div>
-      <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-primary/10 rounded-full blur-lg animate-pulse delay-500"></div>
-      <div className="absolute bottom-1/3 right-10 w-24 h-24 bg-accent/10 rounded-lg rotate-12 blur-xl animate-pulse delay-1500"></div>
+      <div className="section-container relative z-10 w-full">
+        {/* Compact Header */}
+        <div data-animate="true" data-delay="0">
+          <div className="text-center mb-6">
+            <div className="relative inline-block mb-2">
+              <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400/30 via-amber-300/20 to-yellow-400/30 rounded-lg blur-lg"></div>
+              <h2 className="relative text-3xl md:text-4xl font-heading font-bold bg-gradient-to-r from-primary via-royal-blue to-primary bg-clip-text text-transparent">
+                About CHRIST Consulting
+              </h2>
+            </div>
+            <div className="w-16 h-0.5 bg-gradient-to-r from-yellow-400 to-amber-300 mx-auto rounded-full mb-3"></div>
+            <p className="text-lg text-charcoal/80 max-w-2xl mx-auto">
+              Excellence in consultancy since 2019 • Research-driven solutions • Industry innovation
+            </p>
+          </div>
+        </div>
 
-      <div className="section-container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 xl:gap-16 items-start lg:items-center">
-          <ScrollAnimation>
-            <div className="space-y-6 sm:space-y-8">
-              <div className="relative">
-                {/* Decorative Element Behind Title */}
-                <div className="absolute -top-2 -left-2 sm:-top-3 sm:-left-3 lg:-top-4 lg:-left-4 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-primary/15 to-accent/15 sm:from-primary/20 sm:to-accent/20 rounded-full blur-xl lg:blur-2xl"></div>
+        {/* Main Content Grid - Tighter Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start">
+          
+          {/* Stats Column - More compact */}
+          <div data-animate="true" data-delay="200" className="lg:col-span-1 stats-section">
+            <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
+              {[
+                { value: counters.years, suffix: '+', label: 'Years', icon: Award, gradient: 'from-yellow-400 to-amber-500' },
+                { value: counters.projects, suffix: '+', label: 'Projects', icon: TrendingUp, gradient: 'from-primary to-royal-blue' },
+                { value: counters.clients, suffix: '+', label: 'Clients', icon: Globe, gradient: 'from-accent to-sky-blue' },
+                { value: counters.impact, suffix: '%', label: 'Success', icon: Target, gradient: 'from-amber-400 to-yellow-500' }
+              ].map((stat, index) => (
+                <div key={index} className="group relative" data-animate="true" data-delay={300 + index * 50}>
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-white/20 rounded-lg blur-sm group-hover:blur-none transition-all duration-300"></div>
+                  <div className="relative bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-white/30 hover:border-yellow-400/50 hover:shadow-lg hover:shadow-yellow-400/20 transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                    <div className="flex lg:flex-col items-center lg:items-center gap-2 lg:gap-1">
+                      <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${stat.gradient} flex items-center justify-center`}>
+                        <stat.icon className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1 lg:text-center">
+                        <div className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary to-royal-blue bg-clip-text text-transparent">
+                          {stat.value}{stat.suffix}
+                        </div>
+                        <p className="text-sm font-medium text-charcoal/60">{stat.label}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-                <SectionTitle
-                  title="About CHRIST Incubation and Consultancy Foundation"
-                  subtitle="Building bridges between academic excellence and industry innovation since 2019"
-                />
-              </div>
-
-              <div className="relative">
-                {/* Text Content with Background Accent */}
-                <div className="absolute -top-1 -left-1 sm:-top-2 sm:-left-2 w-full h-full bg-gradient-to-r from-primary/3 to-accent/3 sm:from-primary/5 sm:to-accent/5 rounded-lg sm:rounded-xl blur-sm"></div>
-                <div className="relative bg-white/50 sm:bg-white/60 backdrop-blur-sm rounded-lg sm:rounded-xl p-4 sm:p-5 lg:p-6 border border-white/15 sm:border-white/20 shadow-md lg:shadow-lg">
-                  <p className="text-sm sm:text-base mb-3 sm:mb-4 text-charcoal leading-relaxed">
-                    CHRIST Incubation and Consultancy Foundation is the
-                    result-driven business consultancy arm of CHRIST (Deemed to
-                    be University), built on research, integrity, and
-                    innovation. With over five years of cross-functional impact,
-                    we partner with organizations to craft actionable,
-                    sustainable solutions.
+          {/* Content Column - Expanded */}
+          <div data-animate="true" data-delay="400" className="lg:col-span-3">
+            <div className="space-y-5">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-yellow-400/5 rounded-xl blur-sm group-hover:blur-none transition-all duration-300"></div>
+                <div className="relative bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-white/40 hover:border-yellow-400/40 hover:shadow-lg hover:shadow-yellow-400/10 transition-all duration-300">
+                  <h3 className="text-2xl font-bold text-primary mb-4">Transforming Ideas Into Strategic Solutions</h3>
+                  <p className="text-base text-charcoal/80 leading-relaxed mb-4">
+                    CHRIST Incubation and Consultancy Foundation is the result-driven business consultancy arm of 
+                    <span className="font-semibold text-primary"> CHRIST (Deemed to be University)</span>, 
+                    built on research, integrity, and innovation.
                   </p>
-
-                  <p className="text-sm sm:text-base mb-0 text-charcoal leading-relaxed">
-                    Our team combines academic expertise with practical industry
-                    knowledge, delivering insights that drive measurable
-                    results.
+                  <p className="text-base text-charcoal/70 leading-relaxed">
+                    Our team combines academic expertise with practical industry knowledge, delivering insights that drive measurable results across diverse sectors.
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-1 sm:pt-2">
-                <a
-                  href="/teams"
-                  className="btn-primary flex items-center justify-center gap-2 text-sm px-5 sm:px-6 py-2.5 sm:py-3 w-full sm:w-auto relative overflow-hidden group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-white/20 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                  <Users size={14} className="sm:w-4 sm:h-4 relative z-10" />
-                  <span className="relative z-10">Meet the Team</span>
-                </a>
-                <button
-                  onClick={() => setShowVideo(true)}
-                  className="btn-secondary flex items-center justify-center gap-2 text-sm px-5 sm:px-6 py-2.5 sm:py-3 w-full sm:w-auto relative overflow-hidden group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-accent/0 via-white/20 to-accent/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                  <Play size={14} className="sm:w-4 sm:h-4 relative z-10" />
-                  <span className="relative z-10">Watch Video</span>
-                </button>
+              <div className="grid grid-cols-1 gap-4">
+                {/* Core Values - Horizontal */}
+                <div className="grid grid-cols-3 gap-4">
+                  {[
+                    { icon: BookOpen, title: 'Research-Driven', desc: 'Evidence-based solutions', gradient: 'from-primary to-royal-blue' },
+                    { icon: Target, title: 'Result-Oriented', desc: 'Measurable outcomes', gradient: 'from-yellow-400 to-amber-500' },
+                    { icon: Lightbulb, title: 'Innovation-Led', desc: 'Future-ready strategies', gradient: 'from-accent to-sky-blue' }
+                  ].map((value, index) => (
+                    <div key={index} data-animate="true" data-delay={600 + index * 50} className="group relative cursor-pointer">
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/60 to-white/30 rounded-lg blur-sm group-hover:blur-none transition-all duration-300"></div>
+                      <div className="relative bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-white/40 hover:border-yellow-400/50 hover:shadow-lg hover:shadow-yellow-400/20 transition-all duration-300 hover:-translate-y-1 text-center">
+                        <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${value.gradient} flex items-center justify-center mb-3 mx-auto`}>
+                          <value.icon className="w-5 h-5 text-white" />
+                        </div>
+                        <h4 className="text-sm font-bold text-primary mb-1">{value.title}</h4>
+                        <p className="text-xs text-charcoal/60">{value.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Action Buttons */}
+                <div data-animate="true" data-delay="750" className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <a
+                    href="/teams"
+                    className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-royal-blue hover:from-royal-blue hover:to-primary text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 hover:-translate-y-1 group relative overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/0 via-yellow-400/20 to-yellow-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                    <Users className="w-4 h-4 relative z-10" />
+                    <span className="relative z-10">Meet Our Team</span>
+                  </a>
+                  
+                  <button
+                    onClick={() => setShowVideo(true)}
+                    className="flex items-center justify-center gap-2 bg-white/90 backdrop-blur-sm hover:bg-white text-primary border-2 border-primary/20 hover:border-yellow-400/50 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/20 hover:-translate-y-1 group relative overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/0 via-yellow-400/10 to-yellow-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                    <Play className="w-4 h-4 relative z-10" />
+                    <span className="relative z-10">Watch Our Story</span>
+                  </button>
+                </div>
               </div>
             </div>
-          </ScrollAnimation>
+          </div>
 
-          <ScrollAnimation delay={300}>
-            <div className="space-y-6 sm:space-y-8">
-              <div className="relative w-full max-w-sm mx-auto sm:max-w-md md:max-w-lg lg:max-w-none lg:ml-4 xl:ml-8">
-                {/* Decorative Background */}
-                <div className="absolute -inset-6 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20 rounded-3xl blur-2xl opacity-60"></div>
+          {/* Video & Vision/Mission Column - Reduced width */}
+          <div data-animate="true" data-delay="500" className="lg:col-span-1">
+            <div className="space-y-4">
+              {/* Compact Video */}
+              <div className="relative group">
+                <div className="absolute -inset-2 bg-gradient-to-br from-yellow-400/20 via-primary/15 to-accent/20 rounded-xl blur-lg opacity-60"></div>
+                
+                <div className="relative">
+                  <div className="absolute -top-2 -left-2 w-6 h-6 bg-gradient-to-br from-yellow-400/50 to-amber-400/40 rounded-lg rotate-12 animate-float shadow-lg"></div>
+                  <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-primary/50 to-royal-blue/40 rounded-full animate-float delay-1000 shadow-lg"></div>
 
-                {/* Floating Geometric Shapes */}
-                <div
-                  className="absolute -top-4 -left-4 w-20 h-20 bg-gradient-to-br from-accent/40 to-accent/25 rounded-xl rotate-12 animate-bounce shadow-xl"
-                  style={{ animationDuration: "3s" }}
-                ></div>
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-primary/40 to-primary/25 rounded-full animate-pulse delay-1000 shadow-xl"></div>
-
-                {/* Main Image Container */}
-                <div className="relative bg-white/20 backdrop-blur-sm rounded-xl lg:rounded-2xl p-3 border border-white/30 shadow-2xl">
-                  <div className="relative overflow-hidden rounded-lg lg:rounded-xl">
-                    <img
-                      src="/images/home/about.png"
-                      alt="CHRIST Consulting Team"
-                      className="w-full h-auto shadow-2xl aspect-[4/3] sm:aspect-[3/2] lg:aspect-auto lg:max-h-96 object-cover"
-                      loading="lazy"
-                      decoding="async"
-                      width="600"
-                      height="384"
-                    />
-
-                    {/* Video Play Overlay */}
-                    <button
-                      onClick={() => setShowVideo(true)}
-                      className="absolute inset-0 flex items-center justify-center bg-black/2 hover:bg-black/8 transition-all duration-300 rounded-lg lg:rounded-xl group backdrop-blur-[1px]"
-                    >
-                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 flex items-center justify-center bg-white rounded-full shadow-xl transform group-hover:scale-110 transition-all duration-300">
-                        <Play
-                          size={20}
-                          className="sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-primary ml-1"
-                        />
-                      </div>
-
-                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span className="text-white text-sm font-medium">
-                          Watch Video
-                        </span>
-                      </div>
-                    </button>
+                  <div className="relative bg-white/40 backdrop-blur-sm rounded-xl p-2 border border-white/50 shadow-xl">
+                    <div className="relative overflow-hidden rounded-lg group-hover:scale-[1.02] transition-transform duration-500">
+                      <img
+                        src="/images/home/about.png"
+                        alt="CHRIST Consulting Excellence"
+                        className="w-full h-auto aspect-[4/3] object-cover"
+                        loading="lazy"
+                      />
+                      
+                      <button
+                        onClick={() => setShowVideo(true)}
+                        className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/10 transition-all duration-300 group-video"
+                      >
+                        <div className="relative w-10 h-10 flex items-center justify-center bg-white/95 backdrop-blur-sm rounded-full shadow-xl transform group-video-hover:scale-110 transition-all duration-300 border-2 border-yellow-400/30 hover:border-yellow-400/60">
+                          <Play className="w-4 h-4 text-primary ml-1" />
+                          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400/30 to-amber-400/30 animate-ping"></div>
+                        </div>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Vision and Mission - Positioned Below Video */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:ml-4 xl:ml-8">
-                <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-primary/8 sm:from-primary/20 sm:to-primary/10 rounded-lg sm:rounded-xl blur-sm group-hover:blur-none transition-all duration-300"></div>
-                  <div className="relative bg-white/70 sm:bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl p-4 sm:p-5 border border-primary/25 sm:border-primary/30 hover:border-primary/40 sm:hover:border-primary/50 transition-all duration-300 hover:shadow-lg sm:hover:shadow-xl hover:-translate-y-0.5 sm:hover:-translate-y-1">
-                    <div className="flex items-center justify-between mb-2 sm:mb-3">
-                      <div className="flex items-center">
-                        <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-gradient-to-r from-primary to-primary/70 rounded-full mr-2 sm:mr-3 shadow-md lg:shadow-lg"></div>
-                        <h3 className="text-base sm:text-lg font-bold text-primary">
-                          Vision
-                        </h3>
+              {/* Compact Vision & Mission */}
+              <div className="grid grid-cols-1 gap-3">
+                <div data-animate="true" data-delay="600" className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-yellow-400/10 rounded-lg blur-sm group-hover:blur-none transition-all duration-300"></div>
+                  <div className="relative bg-white/80 backdrop-blur-sm rounded-lg p-3 border border-white/40 hover:border-yellow-400/50 hover:shadow-lg hover:shadow-yellow-400/20 transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-6 h-6 rounded-md bg-gradient-to-br from-primary to-royal-blue flex items-center justify-center">
+                        <Target className="w-3 h-3 text-white" />
                       </div>
-                      <svg
-                        className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary/40"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832L14 10.202a1 1 0 000-1.664l-4.445-2.37z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      <h4 className="text-sm font-bold text-primary">Vision</h4>
                     </div>
-                    <p className="text-xs sm:text-sm text-charcoal leading-relaxed">
-                      Transform CHRIST Consulting into a highly profitable
-                      centre, bring visibility and create impact in academia
-                      globally.
+                    <p className="text-xs text-charcoal/70 leading-relaxed">
+                      Transform CHRIST Consulting into a highly profitable centre with global academic impact.
                     </p>
                   </div>
                 </div>
 
-                <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent/15 to-accent/8 sm:from-accent/20 sm:to-accent/10 rounded-lg sm:rounded-xl blur-sm group-hover:blur-none transition-all duration-300"></div>
-                  <div className="relative bg-white/70 sm:bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl p-4 sm:p-5 border border-accent/25 sm:border-accent/30 hover:border-accent/40 sm:hover:border-accent/50 transition-all duration-300 hover:shadow-lg sm:hover:shadow-xl hover:-translate-y-0.5 sm:hover:-translate-y-1">
-                    <div className="flex items-center justify-between mb-2 sm:mb-3">
-                      <div className="flex items-center">
-                        <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-gradient-to-r from-accent to-accent/70 rounded-full mr-2 sm:mr-3 shadow-md lg:shadow-lg"></div>
-                        <h3 className="text-base sm:text-lg font-bold text-accent">
-                          Mission
-                        </h3>
+                <div data-animate="true" data-delay="650" className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-amber-400/10 rounded-lg blur-sm group-hover:blur-none transition-all duration-300"></div>
+                  <div className="relative bg-white/80 backdrop-blur-sm rounded-lg p-3 border border-white/40 hover:border-yellow-400/50 hover:shadow-lg hover:shadow-yellow-400/20 transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-6 h-6 rounded-md bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center">
+                        <TrendingUp className="w-3 h-3 text-white" />
                       </div>
-                      <svg
-                        className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent/40"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      <h4 className="text-sm font-bold text-yellow-600">Mission</h4>
                     </div>
-                    <p className="text-xs sm:text-sm text-charcoal leading-relaxed">
-                      Generating business, growing aggressively and supporting
-                      overall revenues of CHRIST University.
+                    <p className="text-xs text-charcoal/70 leading-relaxed">
+                      Generate business growth and support CHRIST University's revenues through innovation.
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-          </ScrollAnimation>
+          </div>
         </div>
       </div>
 
-      {/* Video Modal - Mobile Optimized */}
+      {/* Enhanced Video Modal */}
       {showVideo && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-3 sm:p-4">
-          <div className="relative w-full max-w-sm sm:max-w-2xl lg:max-w-4xl bg-white rounded-lg sm:rounded-xl overflow-hidden shadow-xl lg:shadow-2xl">
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-4xl">
+            {/* Close button */}
             <button
               onClick={() => setShowVideo(false)}
-              className="absolute top-2 right-2 sm:top-3 sm:right-3 lg:top-4 lg:right-4 w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 flex items-center justify-center bg-black/50 hover:bg-black/70 text-white hover:text-accent transition-all duration-300 z-10 rounded-full backdrop-blur-sm"
+              className="absolute -top-12 right-0 w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white hover:text-accent transition-all duration-300 z-10 rounded-full backdrop-blur-sm border border-white/20"
             >
-              <X size={16} className="sm:w-5 sm:h-5 lg:w-5 lg:h-5" />
+              <X className="w-5 h-5" />
             </button>
-            <div className="relative pt-[56.25%]">
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/ubt6AoAT7Rk?autoplay=1"
-                title="CHRIST Incubation and Consultancy Foundation"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+            
+            {/* Video container */}
+            <div className="relative bg-black rounded-2xl overflow-hidden shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20 rounded-2xl blur-xl"></div>
+              <div className="relative">
+                <div className="aspect-video">
+                  <iframe
+                    className="w-full h-full rounded-2xl"
+                    src="https://www.youtube.com/embed/ubt6AoAT7Rk?autoplay=1&rel=0&modestbranding=1"
+                    title="CHRIST Incubation and Consultancy Foundation - Our Story"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+            
+            {/* Video description */}
+            <div className="mt-6 text-center">
+              <h3 className="text-xl font-semibold text-white mb-2">Our Journey of Excellence</h3>
+              <p className="text-white/80">Discover how CHRIST Consulting transforms ideas into impactful solutions</p>
             </div>
           </div>
         </div>
