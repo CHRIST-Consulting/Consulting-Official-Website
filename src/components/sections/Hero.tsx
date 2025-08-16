@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { BookOpen, GraduationCap, UserCheck, ArrowRight, Sparkles, Target } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+
+// Stable typing words array (module scope to avoid changing refs per render)
+const TYPING_WORDS = ["Smarter", "Faster", "Better", "Stronger"];
 
 const Hero = () => {
   //this part is for typing effect
-  const typingWords = ["Smarter", "Faster", "Better", "Stronger"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -12,7 +14,7 @@ const Hero = () => {
 
   // Typing effect logic
   useEffect(() => {
-    const currentWord = typingWords[currentWordIndex];
+  const currentWord = TYPING_WORDS[currentWordIndex];
     
     const timeout = setTimeout(() => {
       if (!isDeleting) {
@@ -33,14 +35,14 @@ const Hero = () => {
         } else {
           
           setIsDeleting(false);
-          setCurrentWordIndex((prev) => (prev + 1) % typingWords.length);
+          setCurrentWordIndex((prev) => (prev + 1) % TYPING_WORDS.length);
           setTypingSpeed(500);
         }
       }
     }, typingSpeed);
 
     return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentWordIndex, typingWords, typingSpeed]);
+  }, [currentText, isDeleting, currentWordIndex, typingSpeed]);
   //sliding carousel
   const heroImages = [
     {
