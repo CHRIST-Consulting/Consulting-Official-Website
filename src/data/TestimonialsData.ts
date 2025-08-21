@@ -9,7 +9,7 @@ export interface Testimonial {
   rating: number;
 }
 
-export const testimonialsData: Testimonial[] = [
+export const testimonialsData = [
   {
     id: "1",
     name: "Mr Kunkala Krishnaiah",
@@ -19,6 +19,7 @@ export const testimonialsData: Testimonial[] = [
       "We are privileged to have a great partnership with CHRIST Consulting and have the opportunity to work together on training for various competitive exams. Kudos to the small but mighty consulting team for all the efforts they put into co-creating solutions that are designed around student success and aspirations. We appreciate the level of collaboration and integrity the team demonstrates in driving initiatives to closure.",
     cluster: "core",
     rating: 5,
+    photo: "https://ui-avatars.com/api/?name=Kunkala+Krishnaiah" // Add real URL if you have it
   },
   {
     id: "2",
@@ -29,6 +30,7 @@ export const testimonialsData: Testimonial[] = [
       "The one-year collaboration with team Christ was a perfect blend of learning and sharing expert knowledge. We highly acknowledge the contribution of the Christ team in the field of developing an exclusive curriculum and workbook for the virtual socio-emotional wellbeing sessions for the age group 9-12 years old children under the Project Prerana. We appreciate your efforts in the completion of all the agreed points mentioned in the MoU.",
     cluster: "government",
     rating: 5,
+    photo: "https://ui-avatars.com/api/?name=Monica+Dhawan"
   },
   {
     id: "3",
@@ -40,6 +42,7 @@ export const testimonialsData: Testimonial[] = [
       "We engaged CHRIST Consulting to deliver two short courses for women executives. We were very happy with their partnership, their willingness to customise their interventions and their expertise. Their domain expertise in strategic planning, design thinking and marketing was deep and received very well by our leaders.",
     cluster: "research",
     rating: 5,
+    photo: "https://ui-avatars.com/api/?name=Prashant+Michael"
   },
   {
     id: "4",
@@ -51,5 +54,7 @@ export const testimonialsData: Testimonial[] = [
       "It was great collaborating with CHRIST Consulting on German culture training and thanks for providing the team a great learning experience.",
     cluster: "training",
     rating: 5,
+    photo: "https://ui-avatars.com/api/?name=Abhishek+K+Mathew"
   },
+  // Add more testimonials as needed, with .photo
 ];
