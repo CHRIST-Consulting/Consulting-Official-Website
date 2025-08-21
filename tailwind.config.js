@@ -26,6 +26,7 @@ export default {
         "primary-light": "#2267b5", // Royal Blue as light variant
         secondary: "#f0f8ff", // Ice Blue as secondary
         charcoal: "#222222",
+  "charcoal-light": "#4a5568",
         accent: "#78bdf2", // Sky Blue as accent
         "accent-dark": "#3b82f6",
         success: "#10B981",

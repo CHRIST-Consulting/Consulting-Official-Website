@@ -125,7 +125,7 @@ const Navbar = () => {
         ref={containerRef}
         className={`mx-auto motion-safe:transition-all motion-safe:duration-600 motion-safe:ease-in-out transform ${
           isScrolled
-            ? "bg-white/85 backdrop-blur-xl shadow-2xl shadow-black/20 rounded-full px-6 py-3 border border-white/30 scale-[0.985] hover:scale-100" 
+            ? "bg-white/80 backdrop-blur-xl shadow-2xl shadow-black/10 rounded-full px-6 py-3 border border-white/40 scale-[0.985] hover:scale-100" 
             : "bg-white shadow-sm px-4 sm:px-6 lg:px-8 py-4 scale-100"
         }`}
         style={{
@@ -143,7 +143,7 @@ const Navbar = () => {
                 handleLinkClick("/#home");
               }}
               className={`font-heading font-bold text-xl md:text-2xl text-primary motion-safe:transition-all motion-safe:duration-600 motion-safe:ease-in-out transform ${
-                isScrolled ? "pt-1 scale-90" : "pt-2 scale-100"
+                isScrolled ? "pt-1 scale-100" : "pt-2 scale-100"
               }`}
             >
               <img
@@ -151,10 +151,10 @@ const Navbar = () => {
                 alt="CHRIST Consulting Logo"
                 className={`object-cover motion-safe:transition-all motion-safe:duration-600 motion-safe:ease-in-out transform ${
                   isScrolled 
-                    ? "max-h-[32px] w-auto scale-95" 
+                    ? "max-h-[44px] w-auto scale-100" 
                     : "max-h-[50px] scale-100"
                 }`}
-                width={isScrolled ? 160 : 250}
+                width={isScrolled ? 200 : 250}
               />
             </Link>
           </div>
@@ -170,12 +170,12 @@ const Navbar = () => {
                 }}
                 className={`font-medium motion-safe:transition-all motion-safe:duration-500 motion-safe:ease-in-out transform hover:scale-105 ${
                   isScrolled 
-                    ? "text-sm lg:text-base px-3 py-2 rounded-full hover:bg-gray-100/50" 
+                    ? "text-sm lg:text-base px-3 py-2 rounded-full hover:bg-white/60" 
                     : "text-base px-2 py-1"
                 } ${
                   isLinkActive(link.href)
-                    ? "text-accent font-semibold"
-                    : "text-gray-700 hover:text-accent"
+                    ? "text-royal-blue font-semibold"
+                    : "text-charcoal-light hover:text-royal-blue"
                 }`}
                 style={{
                   transitionDelay: isScrolled ? `${index * 50}ms` : '0ms'
@@ -187,8 +187,8 @@ const Navbar = () => {
           </div>
 
           <button
-            className={`md:hidden p-2 rounded-full text-gray-700 hover:text-accent focus:outline-none motion-safe:transition-all motion-safe:duration-500 motion-safe:ease-in-out transform hover:scale-110 focus:scale-110 ${
-              isScrolled ? "scale-90 hover:bg-gray-100/50" : "scale-100"
+            className={`md:hidden p-2 rounded-full text-charcoal hover:text-royal-blue focus:outline-none motion-safe:transition-all motion-safe:duration-500 motion-safe:ease-in-out transform hover:scale-110 focus:scale-110 ${
+              isScrolled ? "scale-90 hover:bg-white/60" : "scale-100"
             }`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
@@ -210,7 +210,7 @@ const Navbar = () => {
               : "-translate-y-full opacity-0 pointer-events-none"
           } ${
             isScrolled 
-              ? "bg-white/90 backdrop-blur-xl border border-white/30 rounded-3xl mx-4 shadow-2xl"
+              ? "bg-white/90 backdrop-blur-xl border border-white/40 rounded-3xl mx-4 shadow-2xl"
               : "bg-white/95 backdrop-blur-md"
           }`}
           style={{ 
@@ -229,10 +229,10 @@ const Navbar = () => {
                     e.preventDefault();
                     handleLinkClick(link.href);
                   }}
-                  className={`text-lg font-medium motion-safe:transition-all motion-safe:duration-300 motion-safe:ease-in-out px-4 py-3 rounded-2xl hover:bg-gray-100/50 transform hover:scale-[1.02] ${
+                  className={`text-lg font-medium motion-safe:transition-all motion-safe:duration-300 motion-safe:ease-in-out px-4 py-3 rounded-2xl hover:bg-white/60 transform hover:scale-[1.02] ${
                     isLinkActive(link.href)
-                      ? "text-accent bg-gray-50/80 font-semibold"
-                      : "text-gray-700 hover:text-accent"
+                      ? "text-royal-blue bg-white/70 font-semibold"
+                      : "text-charcoal hover:text-royal-blue"
                   }`}
                   style={{
                     transitionDelay: isMenuOpen ? `${index * 80}ms` : '0ms'

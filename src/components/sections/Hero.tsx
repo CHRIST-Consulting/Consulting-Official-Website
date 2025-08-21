@@ -110,42 +110,26 @@ const Hero = () => {
   }, [transitionEnabled]);
 
   return (
-    <section id="hero" className="relative flex w-full min-h-[90vh] items-center has-navbar-offset overflow-hidden">
+  <section id="hero" className="relative flex w-full min-h-[90vh] items-center has-navbar-offset overflow-hidden bg-gradient-to-br from-secondary via-white to-ice-blue">
   
       <div aria-hidden className="absolute inset-0 z-0">
-        {/* Base background image (ued bg-1.jpg from public folder) */}
+        {/* Subtle background image with light masks */}
         <div className="absolute inset-0 bg-[url('/images/home/bg-1.jpg')] bg-cover bg-center select-none pointer-events-none" />
-        
-        { /* Gradient filter is used here to reduce the contrast of the background image */ }
-        <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/60 to-white/50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-white/15 via-transparent to-transparent" />
-        
-        
+        {/* Section gradient veil */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/70 to-white/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white/20 via-transparent to-transparent" />
+
+        {/* Floating orbs per design system */}
         <motion.div
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-accent/10 to-primary/10 rounded-full blur-3xl"
+          animate={{ x: [0, 100, 0], y: [0, -50, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-10 -left-10 w-32 h-32 bg-gradient-to-br from-yellow-400/15 via-amber-300/10 to-transparent rounded-full blur-2xl"
         />
         <motion.div
-          animate={{
-            x: [0, -80, 0],
-            y: [0, 100, 0],
-            rotate: [360, 180, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-primary/8 to-accent/8 rounded-full blur-3xl"
+          animate={{ x: [0, -80, 0], y: [0, 100, 0] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-20 -right-10 w-40 h-40 bg-gradient-to-br from-primary/15 via-royal-blue/10 to-transparent rounded-full blur-2xl"
+          style={{ animationDelay: "2s" }}
         />
       </div>
 
@@ -252,13 +236,13 @@ const Hero = () => {
                     transition={{ duration: 0.8, delay: 0.6 }}
                     className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-none"
                   >
-                    <span className="text-[#0e111b]">Empowering</span>{" "}
-                    <span className="bg-gradient-to-r from-primary via-primary-light to-accent bg-clip-text text-transparent">
+                    <span className="text-charcoal">Empowering</span>{" "}
+                    <span className="bg-gradient-to-r from-primary via-royal-blue to-primary bg-clip-text text-transparent">
                       Businesses
                     </span>{" "}
-                    <span className="text-[#0e111b]">to Scale</span>{" "}
+                    <span className="text-charcoal">to Scale</span>{" "}
                     <span className="relative inline-block min-w-[200px] sm:min-w-[240px] lg:min-w-[280px]">
-                      <span className="bg-gradient-to-r from-accent to-primary-light bg-clip-text text-transparent">
+                      <span className="bg-gradient-to-r from-accent to-royal-blue bg-clip-text text-transparent">
                         {currentText}
                         <motion.span
                           animate={{ opacity: [1, 0] }}
@@ -271,7 +255,7 @@ const Hero = () => {
                       <motion.div
                         animate={{ scale: [1, 1.1, 1] }}
                         transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-                        className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-accent to-primary-light rounded-full"
+                        className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full"
                       />
                     </span>
                   </motion.h1>
@@ -281,11 +265,11 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.8 }}
-                    className="text-lg sm:text-xl lg:text-2xl text-[#0e111b]/80 font-medium leading-relaxed max-w-2xl"
+                    className="text-lg sm:text-xl lg:text-2xl text-charcoal/80 font-medium leading-relaxed max-w-2xl"
                   >
                     We help <span className="font-bold text-primary">startups and enterprises</span> unlock 
                     exponential growth with <span className="font-bold text-accent-dark">tailored strategies</span>, 
-                    data-driven decisions, and <span className="font-bold text-primary-light">innovative solutions</span>.
+                    data-driven decisions, and <span className="font-bold text-royal-blue">innovative solutions</span>.
                   </motion.p>
 
                   {/* Key benefits with icons */}
@@ -319,23 +303,20 @@ const Hero = () => {
                     href="#contact"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.98 }}
-                    className="group inline-flex items-center justify-center h-14 px-12 px-8 rounded-xl bg-gradient-to-r from-primary to-primary-light text-white font-bold text-lg tracking-wide shadow-2xl hover:shadow-primary/30 transition-all duration-300 relative overflow-hidden"
+                    className="group inline-flex items-center justify-center h-14 px-12 rounded-xl text-white font-bold text-lg tracking-wide transition-all duration-300 relative overflow-hidden btn-primary shadow-[0_4px_15px_rgba(15,42,77,0.3)] bg-gradient-to-r from-primary to-royal-blue hover:from-royal-blue hover:to-primary"
                   >
                     <span className="relative z-10 flex items-center gap-2">
                       Book Free Consultation
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </span>
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-primary-light to-accent opacity-0 group-hover:opacity-100 transition-opacity"
-                      whileHover={{ scale: 1.1 }}
-                    />
+                    <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" whileHover={{ scale: 1.05 }} />
                   </motion.a>
                   
                   <motion.a
                     href="#clients"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.98 }}
-                    className="group inline-flex items-center justify-center h-14 px-12 rounded-xl bg-white/90 backdrop-blur-sm text-primary font-bold text-lg tracking-wide border-2 border-primary/20 hover:border-primary/40 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl"
+                    className="group inline-flex items-center justify-center h-14 px-12 rounded-xl bg-white/90 backdrop-blur-sm text-primary font-bold text-lg tracking-wide border-2 border-white/40 hover:border-yellow-400/50 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-yellow-400/20"
                   >
                     <span className="flex items-center gap-2">
                       See Our Success Stories
