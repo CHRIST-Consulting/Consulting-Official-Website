@@ -29,7 +29,7 @@ const cardVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-const TestimonialCard = ({ testimonial, isCenter }) => (
+const TestimonialCard = ({ testimonial }) => (
   <motion.div
     variants={cardVariants}
     initial="hidden"
@@ -40,9 +40,7 @@ const TestimonialCard = ({ testimonial, isCenter }) => (
       boxShadow: "0 12px 36px rgba(30,58,138,0.13)",
     }}
     transition={{ type: "spring", stiffness: 235, damping: 22 }}
-    className={`group relative cursor-pointer bg-white border border-gray-200 shadow-lg rounded-2xl flex items-center w-full md:w-[320px] max-w-[360px] min-h-[74px] px-5 py-3 transition-all duration-300 ${
-      isCenter ? "md:-mt-2" : ""
-    }`}
+    className={`group relative cursor-pointer bg-white border border-gray-200 shadow-lg rounded-2xl flex items-center w-full md:w-[320px] max-w-[360px] min-h-[74px] px-5 py-3 transition-all duration-300`}
     style={{ minWidth: 180 }}
   >
     <img
@@ -135,13 +133,11 @@ const Clients = () => (
       </div>
     </section>
 
-    {/* Structured Testimonials Section */}
+    {/* Testimonials Section */}
     <section className="w-full flex flex-col items-center py-7 z-20">
-      <div className="max-w-7xl w-[90vw] mx-auto relative">
-        {/* Gradient Glow Behind Container */}
-        <div className="absolute right-10 top-1/2 -translate-y-1/2 w-56 h-56 bg-[#FBF1BD] opacity-40 blur-3xl rounded-full z-0 pointer-events-none"></div>
+      <div className="max-w-7xl w-[90vw] mx-auto">
         {/* Opening quote mark */}
-        <div className="flex justify-center mb-1 -mt-5 relative z-10">
+        <div className="flex justify-center mb-1 -mt-5">
           <span className="text-5xl text-yellow-400 opacity-60">“</span>
         </div>
         <motion.h2
@@ -172,12 +168,12 @@ const Clients = () => (
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/90 to-[#EEF6FA]/70 pointer-events-none"></div>
           <div className="relative z-10 flex flex-row justify-center items-stretch gap-8 w-full">
             {testimonialsData.slice(0, 3).map((testimonial, i) => (
-              <TestimonialCard testimonial={testimonial} key={i} isCenter={i === 1} />
+              <TestimonialCard testimonial={testimonial} key={i} />
             ))}
           </div>
         </motion.div>
-        {/* Closing quote mark (moved further down with mt-8) */}
-        <div className="flex justify-center mt-8 relative z-10">
+        {/* Closing quote mark */}
+        <div className="flex justify-center mt-1">
           <span className="text-5xl text-yellow-400 opacity-60">”</span>
         </div>
       </div>
