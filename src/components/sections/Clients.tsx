@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { clientLogosData, testimonialsData } from "../../data/ClientsData";
 
-// Helpers for infinite marquee
+// Helpers for infinite marquee (unchanged)
 const getSeamlessLogos = (arr) => [...arr, ...arr, ...arr, ...arr];
 const LOGO_SIZE = 128;
 const GAP = 48;
@@ -12,16 +12,11 @@ const slideDistance = (LOGO_SIZE + GAP) * clientLogosData.length;
 const getAvatar = (author) =>
   `https://ui-avatars.com/api/?name=${encodeURIComponent(
     author
-  )}&background=dae6f3&color=283c54&rounded=true&format=svg`;
+  )}&background=f9fafb&color=283c54&rounded=true&format=svg`;
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.18,
-    },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.18 } },
 };
 
 const cardVariants = {
@@ -34,39 +29,26 @@ const TestimonialCard = ({ testimonial }) => (
     variants={cardVariants}
     initial="hidden"
     animate="visible"
-    whileHover={{
-      scale: 1.07,
-      zIndex: 40,
-      boxShadow: "0 12px 36px rgba(30,58,138,0.13)",
-    }}
-    transition={{ type: "spring", stiffness: 235, damping: 22 }}
-    className={`group relative cursor-pointer bg-white border border-gray-200 shadow-lg rounded-2xl flex items-center w-full md:w-[320px] max-w-[360px] min-h-[74px] px-5 py-3 transition-all duration-300`}
-    style={{ minWidth: 180 }}
+    className="relative bg-white border border-gray-200 rounded-2xl flex flex-col items-center w-full md:w-[320px] max-w-[360px] min-h-[440px] pt-8 px-8 pb-2 transition-all duration-300 hover:border-yellow-400 shadow-lg"
   >
-    <img
-      src={getAvatar(testimonial.author)}
-      alt={testimonial.author}
-      className="w-10 h-10 min-w-[40px] rounded-full border border-blue-200 object-cover shadow"
-    />
-    <div className="ml-3 flex-1">
-      <div className="font-semibold text-[#162944] text-sm leading-tight">
+    <div className="flex flex-col items-center">
+      <div className="bg-blue-100 w-20 h-20 flex items-center justify-center rounded-full border-2 border-blue-200 shadow-md -mt-12 mb-4">
+        <img
+          src={getAvatar(testimonial.author)}
+          alt={testimonial.author}
+          className="w-14 h-14 rounded-full object-cover"
+        />
+      </div>
+      <div className="font-bold text-lg text-[#162944] text-center mb-1 border-b-2 border-blue-100 pb-1 w-full">
         {testimonial.author}
       </div>
-      <div className="text-blue-700 text-xs">{testimonial.position}</div>
-    </div>
-    <div className="hidden group-hover:flex flex-col items-center justify-center z-50 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-5 py-6 bg-white rounded-2xl shadow-xl ring-2 ring-yellow-300/60 w-[92vw] max-w-sm">
-      <img
-        src={getAvatar(testimonial.author)}
-        alt={testimonial.author}
-        className="w-10 h-10 rounded-full mb-2 border border-blue-200 object-cover shadow"
-      />
-      <div className="font-semibold text-[#162944] text-base mb-1 text-center">
-        {testimonial.author}
-      </div>
-      <div className="text-blue-700 text-xs mb-2 text-center">
+      <div className="text-blue-700 text-xs text-center mb-4">
         {testimonial.position}
       </div>
-      <blockquote className="italic text-gray-700 text-sm leading-snug text-center">
+    </div>
+    {/* Testimonial content centered vertically and horizontally */}
+    <div className="flex-1 flex items-center justify-center">
+      <blockquote className="italic text-blue-900 text-[1rem] leading-snug text-center px-1">
         {testimonial.quote}
       </blockquote>
     </div>
@@ -75,12 +57,12 @@ const TestimonialCard = ({ testimonial }) => (
 
 const Clients = () => (
   <div className="relative bg-gradient-to-br from-[#EEF6FA] via-[#DBEAF3] to-[#B7D6E7] w-full min-h-screen flex flex-col items-center pb-24 overflow-x-hidden">
-    {/* Decorative shapes */}
-    <div className="absolute top-32 left-12 w-40 h-40 rounded-full bg-blue-200 opacity-30 blur-2xl pointer-events-none"></div>
-    <div className="absolute top-[54%] right-28 w-32 h-32 rounded-full bg-yellow-200 blur-2xl opacity-40 pointer-events-none"></div>
-    <div className="absolute top-0 left-1/2 w-24 h-24 rounded-full bg-[#FFB400] opacity-20 blur-2xl pointer-events-none"></div>
+    {/* Decorative shapes for subtle effect */}
+    <div className="absolute top-28 left-10 w-36 h-36 rounded-full bg-blue-200 opacity-20 blur-3xl pointer-events-none"></div>
+    <div className="absolute top-[60%] right-20 w-24 h-24 rounded-full bg-yellow-100 blur-2xl opacity-30 pointer-events-none"></div>
+    <div className="absolute top-0 left-1/2 w-24 h-24 rounded-full bg-yellow-300 opacity-20 blur-xl pointer-events-none"></div>
 
-    {/* Logos Marquee Section */}
+    {/* Logos Marquee Section - unchanged */}
     <section className="w-full flex flex-col items-center py-10 z-20">
       <div className="max-w-7xl w-[90vw] mx-auto">
         <motion.h2
@@ -97,7 +79,7 @@ const Clients = () => (
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.15 }}
-          className="text-base md:text-lg text-center mb-2 text-blue-900 font-medium"
+          className="text-base md:text-lg text-center mb-3 text-blue-900 font-medium"
         >
           Celebrating our Remarkable Partners and their trust in our Journey of Impact
         </motion.p>
@@ -134,10 +116,10 @@ const Clients = () => (
     </section>
 
     {/* Testimonials Section */}
-    <section className="w-full flex flex-col items-center py-7 z-20">
+    <section className="w-full flex flex-col items-center py-10 z-20">
       <div className="max-w-7xl w-[90vw] mx-auto">
         {/* Opening quote mark */}
-        <div className="flex justify-center mb-1 -mt-5">
+        <div className="flex justify-center mt-4 mb-2">
           <span className="text-5xl text-yellow-400 opacity-60">“</span>
         </div>
         <motion.h2
@@ -156,24 +138,25 @@ const Clients = () => (
           transition={{ duration: 1, delay: 0.15 }}
           className="text-base md:text-lg text-center mb-3 text-blue-900 font-medium"
         >
-          Real voices from our trusted collaborators sharing their impactful journey with us
+          Real Voices from Our Trusted Collaborators Sharing Their Impactful Journey with us
         </motion.p>
         <motion.div
-          className="relative mt-2 rounded-3xl shadow-xl bg-white flex justify-center items-center py-6 px-6"
+          className="relative mt-2 rounded-3xl shadow-xl bg-white/80 flex justify-center items-end py-8 px-6"
           style={{ background: "linear-gradient(90deg, #f6fbff 0%, #f9fbfc 100%)" }}
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/90 to-[#EEF6FA]/70 pointer-events-none"></div>
-          <div className="relative z-10 flex flex-row justify-center items-stretch gap-8 w-full">
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/90 to-[#EEF6FA]/90 pointer-events-none"></div>
+          {/* Flexbox row for testimonials, align to bottom */}
+          <div className="relative z-10 flex flex-row justify-center items-end gap-8 w-full">
             {testimonialsData.slice(0, 3).map((testimonial, i) => (
               <TestimonialCard testimonial={testimonial} key={i} />
             ))}
           </div>
         </motion.div>
         {/* Closing quote mark */}
-        <div className="flex justify-center mt-1">
+        <div className="flex justify-center mt-2 mb-8">
           <span className="text-5xl text-yellow-400 opacity-60">”</span>
         </div>
       </div>
