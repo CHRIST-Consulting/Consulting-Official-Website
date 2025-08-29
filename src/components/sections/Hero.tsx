@@ -143,8 +143,9 @@ const Hero = () => {
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
-                className="w-full lg:w-1/2"
+                className="w-full lg:w-1/2 flex flex-col gap-6"
               >
+                {/* Featured Image Card */}
                 <div className="hero-card group">
                   <div
                     className={`hero-carousel-track ${
@@ -208,6 +209,85 @@ const Hero = () => {
                   
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                 </div>
+
+                {/* Impact Stats Cards - Compact Row Layout */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 1.0 }}
+                  className="flex flex-col gap-3"
+                >
+                  {/* Section Title - Compact */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 1.2 }}
+                    className="flex items-center gap-2"
+                  >
+                    <div className="h-px bg-gradient-to-r from-transparent via-primary/30 to-primary/30 flex-1" />
+                    <p className="text-primary/80 text-xs sm:text-sm font-semibold tracking-wide flex items-center gap-1.5">
+                      <Target className="w-3 h-3 sm:w-4 sm:h-4 text-accent" />
+                      <span className="hidden sm:inline">Our Impact at a Glance</span>
+                      <span className="sm:hidden">Impact</span>
+                    </p>
+                    <div className="h-px bg-gradient-to-l from-transparent via-primary/30 to-primary/30 flex-1" />
+                  </motion.div>
+
+                  {/* Stats Cards - Single Row Layout */}
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                    {stats.map((stat, idx) => {
+                      const Icon = stat.icon;
+                      return (
+                        <motion.div 
+                          key={idx} 
+                          initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          transition={{ duration: 0.6, delay: 1.4 + idx * 0.1 }}
+                          whileHover={{ y: -2, scale: 1.02 }}
+                          className="group cursor-pointer w-full"
+                        >
+                          <div className="w-full h-[80px] sm:h-[90px] rounded-lg sm:rounded-xl bg-white/95 backdrop-blur-sm border border-primary/10 shadow-sm hover:shadow-lg hover:shadow-primary/15 p-2 sm:p-3 transition-all duration-300 relative overflow-hidden flex flex-col items-center justify-center">
+                            {/* Background gradient on hover */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            
+                            <div className="relative z-10 flex flex-col items-center text-center gap-1 sm:gap-1.5 w-full">
+                              <motion.div 
+                                whileHover={{ rotate: 360 }}
+                                transition={{ duration: 0.6 }}
+                                className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md bg-gradient-to-br from-primary/10 to-accent/10 group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-300 flex-shrink-0"
+                              >
+                                <Icon size={12} className="sm:w-3.5 sm:h-3.5 text-primary group-hover:text-primary-light transition-colors" />
+                              </motion.div>
+                              <div className="w-full flex flex-col items-center min-h-0">
+                                <motion.div 
+                                  className="text-base sm:text-lg font-black text-primary leading-none whitespace-nowrap"
+                                  whileHover={{ scale: 1.05 }}
+                                  transition={{ type: "spring", stiffness: 300 }}
+                                >
+                                  {stat.number}
+                                </motion.div>
+                                <div className="text-[10px] sm:text-xs text-primary/70 font-medium mt-0.5 group-hover:text-primary transition-colors leading-tight text-center px-1 overflow-hidden">
+                                  <div className="truncate w-full">
+                                    {stat.label}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Animated border */}
+                            <motion.div
+                              className="absolute inset-0 rounded-lg sm:rounded-xl border-2 border-transparent"
+                              whileHover={{
+                                borderColor: "rgba(15, 42, 77, 0.2)",
+                              }}
+                              transition={{ duration: 0.3 }}
+                            />
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </motion.div>
               </motion.div>
 
               
@@ -331,79 +411,6 @@ const Hero = () => {
                 </motion.div>
               </div>
             </div>
-
-            {/* Enhanced subtitle with animated elements */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.4 }}
-              className="flex items-center gap-3 mt-8 px-1"
-            >
-              <div className="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent flex-1" />
-              <p className="text-primary/80 text-lg font-semibold tracking-wide flex items-center gap-2">
-                <Target className="w-5 h-5 text-accent" />
-                Our Impact at a Glance
-              </p>
-              <div className="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent flex-1" />
-            </motion.div>
-
-            {/* Enhanced stats cards with animations */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.6 }}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6"
-            >
-              {stats.map((stat, idx) => {
-                const Icon = stat.icon;
-                return (
-                  <motion.div 
-                    key={idx} 
-                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 1.8 + idx * 0.1 }}
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    className="group cursor-pointer"
-                  >
-                    <div className="rounded-2xl bg-white/95 backdrop-blur-sm border border-primary/10 shadow-lg hover:shadow-2xl hover:shadow-primary/20 p-6 transition-all duration-300 relative overflow-hidden">
-                      {/* Background gradient on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      
-                      <div className="relative z-10 flex items-center gap-4">
-                        <motion.div 
-                          whileHover={{ rotate: 360 }}
-                          transition={{ duration: 0.6 }}
-                          className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-300"
-                        >
-                          <Icon size={28} className="text-primary group-hover:text-primary-light transition-colors" />
-                        </motion.div>
-                        <div>
-                          <motion.div 
-                            className="text-3xl sm:text-4xl font-black text-primary leading-none"
-                            whileHover={{ scale: 1.1 }}
-                            transition={{ type: "spring", stiffness: 300 }}
-                          >
-                            {stat.number}
-                          </motion.div>
-                          <div className="text-sm sm:text-base text-primary/70 font-semibold mt-1 group-hover:text-primary transition-colors">
-                            {stat.label}
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Animated border */}
-                      <motion.div
-                        className="absolute inset-0 rounded-2xl border-2 border-transparent"
-                        whileHover={{
-                          borderColor: "rgba(15, 42, 77, 0.2)",
-                        }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
           </div>
         </div>
       </div>
