@@ -417,11 +417,11 @@ const Hero = () => {
                     href="#contact"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.98 }}
-                    className="group inline-flex items-center justify-center h-14 px-12 rounded-xl text-white font-bold text-lg tracking-wide transition-all duration-300 relative overflow-hidden btn-primary shadow-[0_4px_15px_rgba(15,42,77,0.3)] bg-gradient-to-r from-primary to-royal-blue hover:from-royal-blue hover:to-primary"
+                    className="group inline-flex items-center justify-center h-14 px-12 rounded-xl text-white font-bold text-lg tracking-wide transition-all duration-300 relative overflow-hidden btn-primary shadow-[0_4px_15px_rgba(15,42,77,0.3)] bg-gradient-to-r from-primary to-royal-blue hover:from-royal-blue hover:to-primary whitespace-nowrap"
                   >
-                    <span className="relative z-10 flex items-center gap-2">
-                      Book Free Consultation
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    <span className="relative z-10 flex items-center gap-2 whitespace-nowrap">
+                      Contact Us
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
                     </span>
                     <motion.div
                       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
@@ -433,13 +433,14 @@ const Hero = () => {
                     href="#clients"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.98 }}
-                    className="group inline-flex items-center justify-center h-14 px-12 rounded-xl bg-white/90 backdrop-blur-sm text-primary font-bold text-lg tracking-wide border-2 border-white/40 hover:border-yellow-400/50 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-yellow-400/20"
+                    className="group inline-flex items-center justify-center h-14 px-12 rounded-xl bg-white/90 backdrop-blur-sm text-primary font-bold text-lg tracking-wide border-2 border-white/40 hover:border-yellow-400/50 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-yellow-400/20 whitespace-nowrap"
                   >
-                    <span className="flex items-center gap-2">
+                    <span className="flex items-center gap-2 whitespace-nowrap">
                       See Our Success Stories
                       <motion.div
                         animate={{ x: [0, 4, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity }}
+                        className="flex-shrink-0"
                       >
                         <ArrowRight className="w-5 h-5" />
                       </motion.div>
