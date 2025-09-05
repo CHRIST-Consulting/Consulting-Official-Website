@@ -13,36 +13,37 @@ const Hero = () => {
   const [typingSpeed, setTypingSpeed] = useState(150);
 
   // Typing effect logic
-  useEffect(() => {
-  const currentWord = TYPING_WORDS[currentWordIndex];
-    
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        
-        if (currentText.length < currentWord.length) {
-          setCurrentText(currentWord.slice(0, currentText.length + 1));
-          setTypingSpeed(150);
-        } else {
-          // starts deleting
-          setTypingSpeed(2000);
-          setIsDeleting(true);
-        }
-      } else {
-        // deleting
-        if (currentText.length > 0) {
-          setCurrentText(currentWord.slice(0, currentText.length - 1));
-          setTypingSpeed(100);
-        } else {
-          
-          setIsDeleting(false);
-          setCurrentWordIndex((prev) => (prev + 1) % TYPING_WORDS.length);
-          setTypingSpeed(500);
-        }
-      }
-    }, typingSpeed);
+  const currentWord = useMemo(() => TYPING_WORDS[currentWordIndex], [currentWordIndex]);
 
+  const handleTyping = useCallback(() => {
+    if (!isDeleting) {
+      if (currentText.length < currentWord.length) {
+        setCurrentText(currentWord.slice(0, currentText.length + 1));
+        setTypingSpeed(150);
+      } else {
+        // starts deleting
+        setTypingSpeed(2000);
+        setIsDeleting(true);
+      }
+    } else {
+      // deleting
+      if (currentText.length > 0) {
+        setCurrentText(currentWord.slice(0, currentText.length - 1));
+        setTypingSpeed(100);
+      } else {
+        setIsDeleting(false);
+        setCurrentWordIndex((prev) => (prev + 1) % TYPING_WORDS.length);
+        setTypingSpeed(500);
+      }
+    }
+  }, [isDeleting, currentText, currentWord, setCurrentText, setTypingSpeed, setIsDeleting, setCurrentWordIndex]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      handleTyping();
+    }, typingSpeed);
     return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentWordIndex, typingSpeed]);
+  }, [handleTyping, typingSpeed]);
   //sliding carousel
   const heroImages = [
     {
