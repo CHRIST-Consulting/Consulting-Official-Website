@@ -1,0 +1,27 @@
+Overview
+- Reworked Hero section visuals and motion:
+  - Added animated image carousel with seamless looping, slide indicators, and caption overlays.
+  - Introduced moving gradient orbs and layered background gradients for depth.
+  - Implemented typing effect; stabilized word list (module scope) and removed unused import to satisfy ESLint.
+  - Improved headlines, subtitle typography, icon badges, CTAs, and stat cards with motion/hover interactions and accessible semantics.
+
+- Navbar improvements:
+  - Sticky header transitions to compact, blurred, rounded style on scroll with smoother motion.
+  - Active section highlighting on the home page based on viewport position.
+  - Mobile menu opens anchored under the header using measured position (ResizeObserver + scroll/resize handling).
+  - Refined logo sizing, link spacing, hover/scale effects, and backdrop/shadow treatments.
+
+- Campuses section refinements:
+  - Polished campus cards: consistent rounding, shadows, hover scale, and image zoom-in animation.
+  - Clearer location pill with icon, improved title/description hierarchy, and "Explore Campus" affordance.
+  - Maintained modal flow with accessible button semantics and keyboard/focus-friendly attributes.
+
+Quality
+- Lint: 0 errors (3 non-blocking warnings remain elsewhere)
+- Type-check: pass
+- Production build: pass
+
+Files
+- src/components/sections/Hero.tsx
+- src/components/Navbar.tsx
+- src/components/sections/Campuses.tsx
