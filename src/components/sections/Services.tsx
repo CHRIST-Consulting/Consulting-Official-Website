@@ -2,9 +2,11 @@ import { useState, useEffect, SetStateAction } from "react";
 import { ArrowRight, Sparkles, CheckCircle, ExternalLink, X, Zap, Star, ChevronRight } from "lucide-react";
 import { getServicesData, Service } from "../../data/ServicesData";
 
+type SelectedService = Service & { index: number };
+
 const Services = () => {
   const services = getServicesData();
-  const [selectedService, setSelectedService] = useState<(Service & { index: number }) | null>(null);
+  const [selectedService, setSelectedService] = useState<SelectedService | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   // Create duplicated services for seamless loop when sliding
