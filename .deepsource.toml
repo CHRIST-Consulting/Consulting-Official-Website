@@ -1,0 +1,16 @@
+version = 1
+
+exclude_patterns = [
+  "tests/**",
+  "build/**",
+  "dist/**",
+  "node_modules/**",
+  "public/**"
+]
+
+[[analyzers]]
+name = "javascript"
+
+  [analyzers.meta]
+  plugins = ["react"]
+  environment = ["nodejs"]
