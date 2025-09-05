@@ -36,7 +36,7 @@ const Hero = () => {
         setTypingSpeed(500);
       }
     }
-  }, [isDeleting, currentText, currentWord, setCurrentText, setTypingSpeed, setIsDeleting, setCurrentWordIndex]);
+  }, [isDeleting, currentText, currentWord]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
