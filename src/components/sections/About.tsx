@@ -296,7 +296,7 @@ const About = () => {
                       <h4 className="text-sm font-bold text-yellow-600">Mission</h4>
                     </div>
                     <p className="text-xs text-charcoal/70 leading-relaxed">
-                      Generate business growth and support CHRIST University's revenues through innovation.
+                      Generate business growth and support CHRIST University revenues through innovation.
                     </p>
                   </div>
                 </div>
