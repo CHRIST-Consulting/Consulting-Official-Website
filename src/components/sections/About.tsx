@@ -1,5 +1,20 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Users, Play, X, Award, Target, TrendingUp, Globe, BookOpen, Lightbulb } from "lucide-react";
+
+// Stats data with unique IDs
+const STATS_DATA = [
+  { id: 'years', value: 'years', suffix: '+', label: 'Years', icon: Award, gradient: 'from-yellow-400 to-amber-500' },
+  { id: 'projects', value: 'projects', suffix: '+', label: 'Projects', icon: TrendingUp, gradient: 'from-primary to-royal-blue' },
+  { id: 'clients', value: 'clients', suffix: '+', label: 'Clients', icon: Globe, gradient: 'from-accent to-sky-blue' },
+  { id: 'impact', value: 'impact', suffix: '%', label: 'Success', icon: Target, gradient: 'from-amber-400 to-yellow-500' }
+];
+
+// Core values data with unique IDs
+const CORE_VALUES_DATA = [
+  { id: 'research', icon: BookOpen, title: 'Research-Driven', desc: 'Evidence-based solutions', gradient: 'from-primary to-royal-blue' },
+  { id: 'results', icon: Target, title: 'Result-Oriented', desc: 'Measurable outcomes', gradient: 'from-yellow-400 to-amber-500' },
+  { id: 'innovation', icon: Lightbulb, title: 'Innovation-Led', desc: 'Future-ready strategies', gradient: 'from-accent to-sky-blue' }
+];
 
 const About = () => {
   const [showVideo, setShowVideo] = useState(false);
@@ -10,51 +25,10 @@ const About = () => {
     impact: 0
   });
   const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  // Enhanced scroll animations
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const target = entry.target as HTMLElement;
-          const delay = parseInt(target.getAttribute('data-delay') || '0');
-          
-          setTimeout(() => {
-            target.style.opacity = '1';
-            target.style.transform = 'translateY(0)';
-            target.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-          }, delay);
-          
-          // Trigger counter animation when stats section is visible
-          if (target.classList.contains('stats-section') && !isVisible) {
-            setIsVisible(true);
-            animateCounters();
-          }
-        }
-      });
-    }, observerOptions);
-
-    // Observe all animated elements after component mounts
-    setTimeout(() => {
-      const animatedElements = document.querySelectorAll('[data-animate="true"]');
-      animatedElements.forEach((el) => {
-        const element = el as HTMLElement;
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(32px)';
-        observer.observe(element);
-      });
-    }, 100);
-
-    return () => observer.disconnect();
-  }, [isVisible]);
-
-  const animateCounters = () => {
+  // Move animateCounters before useEffect to fix "variables before they are defined"
+  const animateCounters = useCallback(() => {
     const duration = 2500;
     const targets = { years: 5, projects: 150, clients: 50, impact: 95 };
     const startTime = Date.now();
@@ -78,7 +52,56 @@ const About = () => {
     };
 
     animate();
-  };
+  }, []);
+
+  // Handler functions to avoid inline functions in JSX
+  const handleVideoOpen = useCallback(() => setShowVideo(true), []);
+  const handleVideoClose = useCallback(() => setShowVideo(false), []);
+
+  // Enhanced scroll animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const target = entry.target as HTMLElement;
+          const delay = parseInt(target.getAttribute('data-delay') || '0', 10);
+          
+          setTimeout(() => {
+            target.style.opacity = '1';
+            target.style.transform = 'translateY(0)';
+            target.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+          }, delay);
+          
+          // Trigger counter animation when stats section is visible
+          if (target.classList.contains('stats-section') && !isVisible) {
+            setIsVisible(true);
+            animateCounters();
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements after component mounts
+    const timeoutId = setTimeout(() => {
+      const animatedElements = document.querySelectorAll('[data-animate="true"]');
+      animatedElements.forEach((el) => {
+        const element = el as HTMLElement;
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(32px)';
+        observer.observe(element);
+      });
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, [isVisible, animateCounters]);
 
   return (
     <section
@@ -121,29 +144,29 @@ const About = () => {
           {/* Stats Column - More compact */}
           <div data-animate="true" data-delay="200" className="lg:col-span-1 stats-section">
             <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
-              {[
-                { value: counters.years, suffix: '+', label: 'Years', icon: Award, gradient: 'from-yellow-400 to-amber-500' },
-                { value: counters.projects, suffix: '+', label: 'Projects', icon: TrendingUp, gradient: 'from-primary to-royal-blue' },
-                { value: counters.clients, suffix: '+', label: 'Clients', icon: Globe, gradient: 'from-accent to-sky-blue' },
-                { value: counters.impact, suffix: '%', label: 'Success', icon: Target, gradient: 'from-amber-400 to-yellow-500' }
-              ].map((stat, index) => (
-                <div key={index} className="group relative" data-animate="true" data-delay={300 + index * 50}>
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-white/20 rounded-lg blur-sm group-hover:blur-none transition-all duration-300"></div>
-                  <div className="relative bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-white/30 hover:border-yellow-400/50 hover:shadow-lg hover:shadow-yellow-400/20 transition-all duration-300 hover:-translate-y-1 cursor-pointer">
-                    <div className="flex lg:flex-col items-center lg:items-center gap-2 lg:gap-1">
-                      <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${stat.gradient} flex items-center justify-center`}>
-                        <stat.icon className="w-4 h-4 text-white" />
-                      </div>
-                      <div className="flex-1 lg:text-center">
-                        <div className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary to-royal-blue bg-clip-text text-transparent">
-                          {stat.value}{stat.suffix}
+              {STATS_DATA.map((stat, index) => {
+                const IconComponent = stat.icon;
+                const counterValue = counters[stat.value as keyof typeof counters];
+                
+                return (
+                  <div key={stat.id} className="group relative" data-animate="true" data-delay={300 + index * 50}>
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-white/20 rounded-lg blur-sm group-hover:blur-none transition-all duration-300"></div>
+                    <div className="relative bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-white/30 hover:border-yellow-400/50 hover:shadow-lg hover:shadow-yellow-400/20 transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                      <div className="flex lg:flex-col items-center lg:items-center gap-2 lg:gap-1">
+                        <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${stat.gradient} flex items-center justify-center`}>
+                          <IconComponent className="w-4 h-4 text-white" />
                         </div>
-                        <p className="text-sm font-medium text-charcoal/60">{stat.label}</p>
+                        <div className="flex-1 lg:text-center">
+                          <div className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary to-royal-blue bg-clip-text text-transparent">
+                            {counterValue}{stat.suffix}
+                          </div>
+                          <p className="text-sm font-medium text-charcoal/60">{stat.label}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -168,22 +191,22 @@ const About = () => {
               <div className="grid grid-cols-1 gap-4">
                 {/* Core Values - Horizontal */}
                 <div className="grid grid-cols-3 gap-4">
-                  {[
-                    { icon: BookOpen, title: 'Research-Driven', desc: 'Evidence-based solutions', gradient: 'from-primary to-royal-blue' },
-                    { icon: Target, title: 'Result-Oriented', desc: 'Measurable outcomes', gradient: 'from-yellow-400 to-amber-500' },
-                    { icon: Lightbulb, title: 'Innovation-Led', desc: 'Future-ready strategies', gradient: 'from-accent to-sky-blue' }
-                  ].map((value, index) => (
-                    <div key={index} data-animate="true" data-delay={600 + index * 50} className="group relative cursor-pointer">
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/60 to-white/30 rounded-lg blur-sm group-hover:blur-none transition-all duration-300"></div>
-                      <div className="relative bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-white/40 hover:border-yellow-400/50 hover:shadow-lg hover:shadow-yellow-400/20 transition-all duration-300 hover:-translate-y-1 text-center">
-                        <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${value.gradient} flex items-center justify-center mb-3 mx-auto`}>
-                          <value.icon className="w-5 h-5 text-white" />
+                  {CORE_VALUES_DATA.map((value, index) => {
+                    const IconComponent = value.icon;
+                    
+                    return (
+                      <div key={value.id} data-animate="true" data-delay={600 + index * 50} className="group relative cursor-pointer">
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/60 to-white/30 rounded-lg blur-sm group-hover:blur-none transition-all duration-300"></div>
+                        <div className="relative bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-white/40 hover:border-yellow-400/50 hover:shadow-lg hover:shadow-yellow-400/20 transition-all duration-300 hover:-translate-y-1 text-center">
+                          <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${value.gradient} flex items-center justify-center mb-3 mx-auto`}>
+                            <IconComponent className="w-5 h-5 text-white" />
+                          </div>
+                          <h4 className="text-sm font-bold text-primary mb-1">{value.title}</h4>
+                          <p className="text-xs text-charcoal/60">{value.desc}</p>
                         </div>
-                        <h4 className="text-sm font-bold text-primary mb-1">{value.title}</h4>
-                        <p className="text-xs text-charcoal/60">{value.desc}</p>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 {/* Action Buttons */}
@@ -198,7 +221,7 @@ const About = () => {
                   </a>
                   
                   <button
-                    onClick={() => setShowVideo(true)}
+                    onClick={handleVideoOpen}
                     className="flex items-center justify-center gap-2 bg-white/90 backdrop-blur-sm hover:bg-white text-primary border-2 border-primary/20 hover:border-yellow-400/50 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/20 hover:-translate-y-1 group relative overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/0 via-yellow-400/10 to-yellow-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
@@ -231,8 +254,10 @@ const About = () => {
                       />
                       
                       <button
-                        onClick={() => setShowVideo(true)}
+                        onClick={handleVideoOpen}
                         className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/10 transition-all duration-300 group-video"
+                        type="button"
+                        aria-label="Play video about CHRIST Consulting"
                       >
                         <div className="relative w-10 h-10 flex items-center justify-center bg-white/95 backdrop-blur-sm rounded-full shadow-xl transform group-video-hover:scale-110 transition-all duration-300 border-2 border-yellow-400/30 hover:border-yellow-400/60">
                           <Play className="w-4 h-4 text-primary ml-1" />
@@ -287,8 +312,10 @@ const About = () => {
           <div className="relative w-full max-w-4xl">
             {/* Close button */}
             <button
-              onClick={() => setShowVideo(false)}
+              onClick={handleVideoClose}
               className="absolute -top-12 right-0 w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white hover:text-accent transition-all duration-300 z-10 rounded-full backdrop-blur-sm border border-white/20"
+              type="button"
+              aria-label="Close video modal"
             >
               <X className="w-5 h-5" />
             </button>
@@ -304,7 +331,8 @@ const About = () => {
                     title="CHRIST Incubation and Consultancy Foundation - Our Story"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
-                  ></iframe>
+                    sandbox="allow-scripts allow-same-origin allow-presentation"
+                  />
                 </div>
               </div>
             </div>
