@@ -88,55 +88,40 @@ export default function Services(): JSX.Element {
           </h3>
 
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="service-card">
-              <div className="icon-circle"><BarChart3 size={28} /></div>
-              <h4 className="text-xl font-semibold text-[var(--primary)] mb-2">Business Strategy</h4>
-              <p className="text-[var(--charcoal-light)]">
-                Helping businesses define goals, streamline operations, and achieve growth with proven strategies.
-              </p>
-            </div>
+  <div className="service-card">
+    <div className="icon-circle"><BarChart3 size={28} /></div>
+    <h4 className="text-xl font-semibold text-[var(--primary)] mb-2">Core Consultancy Services</h4>
+    <p className="text-[var(--charcoal-light)]">
+      Creation of original frameworks and paradigms. Support assignments for Research, General Management Consultancy.
+    </p>
+  </div>
 
-            <div className="service-card">
-              <div className="icon-circle"><Monitor size={28} /></div>
-              <h4 className="text-xl font-semibold text-[var(--primary)] mb-2">Digital Transformation</h4>
-              <p className="text-[var(--charcoal-light)]">
-                Guiding companies through modern tech adoption, automation, and digital-first business models.
-              </p>
-            </div>
+  <div className="service-card">
+    <div className="icon-circle"><Monitor size={28} /></div>
+    <h4 className="text-xl font-semibold text-[var(--primary)] mb-2">Organisational Training and Development</h4>
+    <p className="text-[var(--charcoal-light)]">
+      Corporate Training, Training for Competetive Examinations, Inputs on Curriculum or pedagogy design.
+    </p>
+  </div>
 
-            <div className="service-card">
-              <div className="icon-circle"><BookOpen size={28} /></div>
-              <h4 className="text-xl font-semibold text-[var(--primary)] mb-2">Education & Training</h4>
-              <p className="text-[var(--charcoal-light)]">
-                Workshops, courses, and certifications designed to equip teams with future-ready skills.
-              </p>
-            </div>
+  <div className="service-card">
+    <div className="icon-circle"><BookOpen size={28} /></div>
+    <h4 className="text-xl font-semibold text-[var(--primary)] mb-2">Research Based Consultancy Services</h4>
+    <p className="text-[var(--charcoal-light)]">
+      Research studies on any specific or general areas of Sciences or Social Sciences.
+    </p>
+  </div>
 
-            <div className="service-card">
-              <div className="icon-circle"><FlaskConical size={28} /></div>
-              <h4 className="text-xl font-semibold text-[var(--primary)] mb-2">Research & Development</h4>
-              <p className="text-[var(--charcoal-light)]">
-                Innovative R&D solutions to turn groundbreaking ideas into market-ready products and services.
-              </p>
-            </div>
-
-            <div className="service-card">
-              <div className="icon-circle"><Leaf size={28} /></div>
-              <h4 className="text-xl font-semibold text-[var(--primary)] mb-2">Sustainability Consulting</h4>
-              <p className="text-[var(--charcoal-light)]">
-                Helping businesses adopt eco-friendly strategies and sustainable growth practices.
-              </p>
-            </div>
-
-            <div className="service-card">
-              <div className="icon-circle"><TrendingUp size={28} /></div>
-              <h4 className="text-xl font-semibold text-[var(--primary)] mb-2">Commercial Management</h4>
-              <p className="text-[var(--charcoal-light)]">
-                Optimizing financial and operational performance for sustainable profitability.
-              </p>
-            </div>
-          </div>
-        </div>
+  {/* ✅ Center the 4th card */}
+  <div className="service-card lg:col-span-3 lg:mx-auto lg:w-1/2">
+    <div className="icon-circle"><FlaskConical size={28} /></div>
+    <h4 className="text-xl font-semibold text-[var(--primary)] mb-2">Government Projects</h4>
+    <p className="text-[var(--charcoal-light)]">
+      RFPs for major Government projects and projects for public centre entreprises. Could be tender or proposal based.
+    </p>
+  </div>
+</div>
+</div>
       </section>
     </div>
   );
