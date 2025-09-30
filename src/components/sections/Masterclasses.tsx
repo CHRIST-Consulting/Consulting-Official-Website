@@ -1,146 +1,123 @@
-import { useState } from "react";
-import SectionTitle from "../ui/SectionTitle";
-import ScrollAnimation from "../ui/ScrollAnimation";
-import { CalendarDays, ChevronRight, CalendarX } from "lucide-react";
+import { CalendarDays, CalendarX, ChevronRight } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { upcomingEvents, pastEvents } from "../../data/EventsData";
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.2, duration: 0.6, ease: "easeOut" },
+  }),
+};
+
 const EventsSection = () => {
-  const [showUpcoming, setShowUpcoming] = useState(true);
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 0.2", "end 0.9"],
+  });
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   const hasUpcomingEvents = upcomingEvents.length > 0;
   const hasPastEvents = pastEvents.length > 0;
-  const eventsToShow = showUpcoming ? upcomingEvents : pastEvents;
-  const displayedEvents = eventsToShow.slice(0, 3);
+
+  const events = [
+    ...(hasUpcomingEvents ? upcomingEvents.slice(0, 3) : []),
+    ...(hasPastEvents ? pastEvents.slice(0, 3) : []),
+  ];
 
   return (
-    <section id="events" className="py-20">
-      <div className="section-container">
-        <ScrollAnimation>
-          <SectionTitle
-            title={showUpcoming ? "Upcoming Events" : "Past Events"}
-            subtitle={
-              showUpcoming
-                ? "Join our transformative learning experiences"
-                : "Relive our past successful events"
-            }
-            centered={true}
-          />
-        </ScrollAnimation>
+    <section
+      id="events"
+      className="py-24 bg-ice-blue relative overflow-hidden"
+      ref={containerRef}
+    >
+      <div className="section-container relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary font-heading mb-4">
+            Our Events
+          </h2>
+          <p className="text-charcoal-light text-lg">
+            Explore our upcoming and past milestones
+          </p>
+        </div>
 
-        {(hasUpcomingEvents || hasPastEvents) && (
-          <div className="flex justify-center mb-8">
-            <div className="inline-flex bg-secondary rounded-full p-1">
-              <button
-                onClick={() => setShowUpcoming(true)}
-                className={`px-6 py-2 rounded-full transition-all ${
-                  showUpcoming
-                    ? "bg-primary text-white"
-                    : "text-primary hover:bg-primary/10"
-                }`}
-              >
-                Upcoming
-              </button>
-              <button
-                onClick={() => setShowUpcoming(false)}
-                className={`px-6 py-2 rounded-full transition-all ${
-                  !showUpcoming
-                    ? "bg-primary text-white"
-                    : "text-primary hover:bg-primary/10"
-                }`}
-              >
-                Past Events
-              </button>
-            </div>
-          </div>
-        )}
+        {/* Timeline Container */}
+        <div className="relative">
+          {/* Vertical Line */}
+          <motion.div
+            style={{ height: lineHeight }}
+            className="absolute left-1/2 top-0 w-1 bg-royal-blue origin-top"
+          ></motion.div>
 
-        {displayedEvents.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
-            {displayedEvents.map((event, index) => (
-              <ScrollAnimation key={index} delay={index * 150}>
-                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col hover:shadow-xl transition-all duration-300 group">
-                  <div className="relative overflow-hidden">
+          <div className="space-y-20">
+            {events.length > 0 ? (
+              events.map((event, i) => (
+                <motion.div
+                  key={i}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeInUp}
+                  custom={i}
+                  className={`relative md:flex md:items-center md:gap-25 ${
+                    i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                  }`}
+                >
+                  {/* Date beside the line */}
+                  <div
+                    className={`hidden md:flex md:w-5/12 text-xl font-bold text-primary-dark ${
+                      i % 2 === 0
+                        ? "justify-end mr-6 text-right"
+                        : "justify-start ml-6 text-left"
+                    }`}
+                  >
+                    {event.date}
+                  </div>
+
+                  {/* Event Card */}
+                  <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={fadeInUp}
+                    className="bg-white shadow-md rounded-lg p-6 md:w-5/12 hover:shadow-xl transition"
+                  >
                     <img
                       src={event.images[0]}
                       alt={event.title}
-                      className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-40 object-cover rounded-md mb-4"
                     />
-                    <div className="absolute top-4 left-4 bg-accent text-primary text-xs font-bold py-1 px-2 rounded">
-                      {"category" in event ? event.category : "Event"}
-                    </div>
-                  </div>
-
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-xl font-bold text-primary mb-2 font-heading">
+                    <h4 className="text-lg font-bold text-primary mb-2">
                       {event.title}
-                    </h3>
-
-                    <div className="flex items-center text-gray-600 mb-4">
-                      <CalendarDays size={16} className="mr-2" />
-                      <span className="text-sm">{event.date}</span>
-                    </div>
-
-                    <p className="text-charcoal mb-4 flex-grow">
-                      {showUpcoming
-                        ? "Join us for this exciting event featuring industry experts and hands-on learning."
-                        : "A look back at our successful event with valuable insights and networking."}
-                    </p>
-
+                    </h4>
                     <a
-                      href={showUpcoming ? "/events" : `/events/${event.id}`}
-                      className="text-primary font-medium flex items-center hover:text-accent transition-colors duration-300 mt-auto"
+                      href={
+                        i < upcomingEvents.length ? "/events" : `/events/${event.id}`
+                      }
+                      className="text-royal-blue text-sm font-semibold hover:text-amber-500"
                     >
-                      {showUpcoming ? "Learn More" : "View Recap"}
-                      <ChevronRight
-                        size={16}
-                        className="ml-1 group-hover:translate-x-1 transition-transform duration-300"
-                      />
+                      {i < upcomingEvents.length ? "Learn More →" : "View Recap →"}
                     </a>
-                  </div>
-                </div>
-              </ScrollAnimation>
-            ))}
-          </div>
-        ) : (
-          <ScrollAnimation>
-            <div className="bg-white rounded-lg shadow-sm p-12 text-center max-w-2xl mx-auto">
-              <div className="flex justify-center mb-6">
-                <div className="bg-secondary/20 p-4 rounded-full">
-                  <CalendarX size={48} className="text-primary" />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-primary mb-2">
-                {showUpcoming
-                  ? "No Upcoming Events Scheduled"
-                  : "No Past Events Available"}
-              </h3>
-              <p className="text-charcoal mb-6">
-                {showUpcoming
-                  ? "We're currently planning our next events. Check back soon or subscribe to our newsletter for updates!"
-                  : "Our event history will be available here soon."}
-              </p>
-              <a
-                href="/contact"
-                className="inline-flex items-center text-primary font-medium hover:text-accent transition-colors duration-300"
-              >
-                {showUpcoming
-                  ? "Get Notified About Future Events"
-                  : "Contact Us For More Information"}
-                <ChevronRight size={16} className="ml-1" />
-              </a>
-            </div>
-          </ScrollAnimation>
-        )}
+                  </motion.div>
 
-        {hasPastEvents && (
-          <div className="mt-12 text-center">
-            <ScrollAnimation>
-              <a href="/events" className="btn-primary">
-                View All {showUpcoming ? "Events" : "Past Events"}
-              </a>
-            </ScrollAnimation>
+                  {/* Date for mobile */}
+                  <div className="md:hidden text-primary-dark text-base font-semibold mt-4 text-center">
+                    {event.date}
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <div className="text-center py-12">
+                <CalendarX size={40} className="mx-auto mb-4 text-primary" />
+                <p className="text-charcoal-light">No events available.</p>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
