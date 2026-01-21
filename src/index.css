@@ -264,6 +264,63 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Offset sections from fixed navbar */
+  .has-navbar-offset {
+    padding-top: 84px; /* default header height incl. padding */
+  }
+  @media (min-width: 640px) {
+    .has-navbar-offset {
+      padding-top: 90px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .has-navbar-offset {
+      padding-top: 96px;
+    }
+  }
+
+  /* Hero Card: Enhanced with modern styling */
+  .hero-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10; /* keep width, control height */
+    min-height: 220px;
+    max-height: 420px; /* cap to avoid overly tall look */
+    border-radius: 1.5rem; /* rounded-3xl for more modern look */
+    overflow: hidden;
+    background-color: rgb(229 231 235); /* bg-gray-200 */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+  }
+
+  .hero-card:hover {
+    box-shadow: 0 32px 64px -12px rgba(15, 42, 77, 0.3);
+    transform: translateY(-2px);
+  }
+
+  @media (min-width: 640px) {
+    .hero-card {
+      min-height: 260px;
+      max-height: 440px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-card {
+      min-height: 280px;
+      max-height: 460px;
+    }
+  }
+
+  /* Carousel track with fixed slide widths */
+  .hero-carousel-track {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
 }
 
 @layer base {
