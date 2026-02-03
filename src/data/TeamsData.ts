@@ -50,7 +50,7 @@ export const facultyConsultantsData: TeamMember[] = [
       "Ms Maria Divya is a postgraduate in Business Administration (Tourism) and has previously served as the sales & operations manager for Thomas Cook India Ltd and the Serai group.",
     linkedin: "https://www.linkedin.com/in/maria-divya-3503961bb/",
     email: "mariadivya.chethana@christuniversity.in",
-  */},
+  */}
   {
     name: "Mr Suman Thomas",
     role: "Lead Consultant",
