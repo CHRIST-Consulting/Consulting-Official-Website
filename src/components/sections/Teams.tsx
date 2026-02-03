@@ -162,7 +162,7 @@ const Teams = () => {
             />
           </ScrollAnimation>
 
-          {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 section-container">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 section-container">
             {studentLeaders.map((student, index) => (
               <ScrollAnimation key={index} delay={index * 150}>
                 <div className="bg-white rounded-xl shadow-md overflow-hidden group hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2">
@@ -187,7 +187,7 @@ const Teams = () => {
               </ScrollAnimation>
             ))}
           </div>
-        </div>*/}
+        </div>
 
         <ScrollAnimation>
           <div className="mt-20 bg-white rounded-2xl p-8 py-20 md:p-12">
