@@ -42,7 +42,7 @@ export const facultyConsultantsData: TeamMember[] = [
     linkedin: "https://www.linkedin.com/in/alexander-porinchu-a90a17120/",
     email: "alexander.thalakottour@christuniversity.in",
   },
-  {
+  {/*
     name: "Ms Maria Divya",
     role: "Lead Consultant",
     image: "/images/teams/consultants/Maria.png",
@@ -50,7 +50,7 @@ export const facultyConsultantsData: TeamMember[] = [
       "Ms Maria Divya is a postgraduate in Business Administration (Tourism) and has previously served as the sales & operations manager for Thomas Cook India Ltd and the Serai group.",
     linkedin: "https://www.linkedin.com/in/maria-divya-3503961bb/",
     email: "mariadivya.chethana@christuniversity.in",
-  },
+  */},
   {
     name: "Mr Suman Thomas",
     role: "Lead Consultant",
