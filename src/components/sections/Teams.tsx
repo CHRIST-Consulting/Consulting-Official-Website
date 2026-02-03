@@ -153,7 +153,7 @@ const Teams = () => {
           </div>
         </div>
 
-        <div className="mt-10">
+        {/*<div className="mt-10">
           <ScrollAnimation>
             <SectionTitle
               title="Student Leaders"
@@ -162,7 +162,7 @@ const Teams = () => {
             />
           </ScrollAnimation>
 
-          {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 section-container">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 section-container">
             {studentLeaders.map((student, index) => (
               <ScrollAnimation key={index} delay={index * 150}>
                 <div className="bg-white rounded-xl shadow-md overflow-hidden group hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2">
