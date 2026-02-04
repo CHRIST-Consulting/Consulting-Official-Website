@@ -230,8 +230,8 @@ const PrimeModel = () => {
                       </div>
                     </div>
 
-                    {/* Title and Toggle */}
-                   {/* <div className="flex-grow flex items-center justify-between">
+                    {/* Title and Toggle */
+                   /* <div className="flex-grow flex items-center justify-between">
                       <div>
                         <h3 className="text-lg font-bold text-primary font-heading mb-1">
                           {item.title}
@@ -241,8 +241,8 @@ const PrimeModel = () => {
                         </span>
                       </div>
 
-                      {/* Toggle Icon */}
-                      {/*<div className="ml-4">
+                      {/* Toggle Icon */
+                      /*<div className="ml-4">
                         {expandedMobile === item.id ? (
                           <ChevronUp size={20} className="text-accent" />
                         ) : (
@@ -253,8 +253,8 @@ const PrimeModel = () => {
                   </div>
                 </div>
 
-                {/* Expandable Description */}
-                {/*<div
+                {/* Expandable Description */
+                /*<div
                   className={`overflow-hidden transition-all duration-500 ease-out ${
                     expandedMobile === item.id
                       ? "max-h-96 opacity-100"
@@ -263,15 +263,15 @@ const PrimeModel = () => {
                 >
                   <div className="bg-white/95 backdrop-blur-sm rounded-b-2xl p-6 pt-0 border-l border-r border-b border-white/20 shadow-lg border-t-0">
                     <div className="relative">
-                      {/* Background gradient for description */}
-                      {/*<div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-white/50 rounded-xl -m-4 p-4"></div>
+                      {/* Background gradient for description */
+                      /*<div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-white/50 rounded-xl -m-4 p-4"></div>
 
                       <p className="relative text-charcoal text-sm leading-relaxed">
                         {item.description}
                       </p>
 
-                      {/* Bottom decoration */}
-                      {/*<div className="relative flex justify-center mt-4">
+                      {/* Bottom decoration */
+                      /*<div className="relative flex justify-center mt-4">
                         <div className="w-16 h-0.5 bg-gradient-to-r from-accent to-primary rounded-full"></div>
                       </div>
                     </div>
