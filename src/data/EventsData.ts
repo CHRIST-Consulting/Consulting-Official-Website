@@ -56,8 +56,8 @@ export interface PastEvent {
 
 export const categories: Category[] = [
   { id: "all", name: "All Events" },
-  { id: "workshops", name: "Workshops" },
-  { id: "talks", name: "Industry Talks" },
+  { id: "workshops", name: "Past Events" },
+  { id: "talks", name: "Industry Connects" },
 ];
 
 export const featuredEvent: FeaturedEvent = {
@@ -74,24 +74,48 @@ export const featuredEvent: FeaturedEvent = {
 
 export const upcomingEvents: UpcomingEvent[] = [
   {
-    id: "ai-business-workshop-2025",
-    title: "AI in Business Workshop",
-    date: "April 5, 2025",
-    time: "10:00 AM",
+    id: "ai-business-workshop-2025", /*Nasa Hackathon*/
+    title: "NASA Hackathon",
+    date: "August 22, 2025",
+    time: "9:00 AM",
     speaker: "Prof. Michael Chen",
-    venue: "Online",
+    venue: "CHRIST (Deemed to be University), Kengeri Campus",
     category: "workshops",
     images: [
       "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg",
     ],
   },
   {
-    id: "leadership-symposium-2025",
-    title: "Leadership Symposium",
+    id: "ai-business-workshop-2025", /*ConneXion*/
+    title: "ConneXion 2025",
+    date: "November 22, 2025",
+    time: "6:00 PM",
+    speaker: "Prof. Michael Chen",
+    venue: "CHRIST (Deemed to be University), Central Campus Auditorium",
+    category: "workshops",
+    images: [
+      "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg",
+    ],
+  },
+  {
+    id: "ai-business-workshop-2025", /*Prospero*/
+    title: "Prospero",
+    date: "December 15, 2025",
+    time: "6:00 PM",
+    speaker: "Prof. Michael Chen",
+    venue: "CHRIST (Deemed to be University), Central Campus Auditorium",
+    category: "workshops",
+    images: [
+      "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg",
+    ],
+  },
+  {
+    id: "leadership-symposium-2025", /*Toyota*/
+    title: "Toyota",
     date: "April 12, 2025",
-    time: "2:00 PM",
-    speaker: "Industry Panel",
-    venue: "Bannerghatta Campus",
+    time: "8:30 AM",
+    speaker: "Faculty from CHRIST (Deemed to be University)",
+    venue: "CHRIST (Deemed to be University), Kengeri Campus",
     category: "talks",
     images: [
       "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg",

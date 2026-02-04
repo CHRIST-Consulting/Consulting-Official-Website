@@ -129,7 +129,7 @@ const EventsPage = () => {
         <div className="section-container">
           <ScrollAnimation>
             <SectionTitle
-              title="Upcoming Events"
+              title="Our Events"
               subtitle="Join us for these transformative learning experiences"
               centered={true}
             />
@@ -200,7 +200,7 @@ const EventsPage = () => {
         </div>
       </section>
 
-      {/* Past Events */}
+      {/* Past Events 
       <section className="py-20 bg-secondary">
         <div className="section-container">
           <ScrollAnimation>
@@ -253,6 +253,7 @@ const EventsPage = () => {
           </div>
         </div>
       </section>
+      */}
 
       {/* Stats Section */}
       <section className="py-20">
@@ -275,7 +276,7 @@ const EventsPage = () => {
         </div>
       </section>
 
-      {/* Call for Collaborators */}
+      {/* Call for Collaborators 
       <section className="bg-secondary text-white py-20">
         <div className="section-container text-center">
           <ScrollAnimation>
@@ -288,7 +289,7 @@ const EventsPage = () => {
             </button>
           </ScrollAnimation>
         </div>
-      </section>
+      </section>*/}
     </main>
   );
 };
