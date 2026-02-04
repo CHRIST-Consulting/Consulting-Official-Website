@@ -17,7 +17,7 @@ const EventsSection = () => {
       <div className="section-container">
         <ScrollAnimation>
           <SectionTitle
-            title={showUpcoming ? "Upcoming Events" : "Past Events"}
+            title={showUpcoming ? "Our Events" : "Past Events"}
             subtitle={
               showUpcoming
                 ? "Join our transformative learning experiences"
@@ -38,8 +38,8 @@ const EventsSection = () => {
                     : "text-primary hover:bg-primary/10"
                 }`}
               >
-                Upcoming
-              </button>
+                Past Events
+              </button> {/*Comment here to disable button*/}
               <button
                 onClick={() => setShowUpcoming(false)}
                 className={`px-6 py-2 rounded-full transition-all ${
@@ -48,8 +48,8 @@ const EventsSection = () => {
                     : "text-primary hover:bg-primary/10"
                 }`}
               >
-                Past Events
-              </button>
+                Industry Connects
+              </button>{/*How do I add Toyota here and shift inaugration to past events?*/}
             </div>
           </div>
         )}
