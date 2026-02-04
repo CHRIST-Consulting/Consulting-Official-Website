@@ -88,12 +88,11 @@ const PrimeModel = () => {
   };
 
   return (
-    <section
+    {/*<section
       id="prime-model"
-      className="py-16 md:py-20 bg-secondary relative overflow-hidden"
-    >
+      className="py-16 md:py-20 bg-secondary relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
+      {/*<div className="absolute inset-0 opacity-[0.02]">
         <div
           className="absolute inset-0"
           style={{
@@ -103,7 +102,7 @@ const PrimeModel = () => {
       </div>
 
       {/* Floating Background Elements */}
-      <div className="absolute inset-0">
+      {/*<div className="absolute inset-0">
         <div
           className="absolute top-20 left-[15%] w-24 h-24 bg-gradient-to-br from-accent/10 to-primary/5 rounded-full blur-2xl animate-float"
           style={{ animationDelay: "0s", animationDuration: "8s" }}
@@ -124,7 +123,7 @@ const PrimeModel = () => {
         </ScrollAnimation>
 
         {/* Desktop and Large Tablet Layout */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 lg:gap-8 mt-12">
+        {/*<div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 lg:gap-8 mt-12">
           {primeItems.map((item, index) => (
             <ScrollAnimation key={item.id} delay={index * 100}>
               <div
@@ -137,10 +136,10 @@ const PrimeModel = () => {
                 onMouseLeave={() => setActiveItem(null)}
               >
                 {/* Background with glassmorphism effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-500"></div>
+                {/*<div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-500"></div>
 
                 {/* Border gradient effect */}
-                <div
+                {/*<div
                   className={`absolute inset-0 bg-gradient-to-br rounded-2xl p-[1px] transition-all duration-500 ${
                     activeItem === item.id
                       ? "from-accent/40 via-primary/30 to-accent/40"
@@ -152,11 +151,11 @@ const PrimeModel = () => {
 
                 <div className="relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 h-full border border-white/20 shadow-lg group-hover:shadow-2xl transition-all duration-500 text-center flex flex-col">
                   {/* Icon with enhanced styling */}
-                  <div className="flex justify-center mb-4">
+                 {/* <div className="flex justify-center mb-4">
                     <div className="relative">
                       {item.icon}
                       {/* Icon glow effect on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      {/*<div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                   </div>
 
@@ -165,7 +164,7 @@ const PrimeModel = () => {
                   </h3>
 
                   {/* Highlight badge */}
-                  <div className="mb-4">
+                 {/* <div className="mb-4">
                     <span className="inline-block px-3 py-1 text-xs font-medium bg-gradient-to-r from-accent/20 to-primary/20 text-primary rounded-full border border-accent/30">
                       {item.highlight}
                     </span>
@@ -182,7 +181,7 @@ const PrimeModel = () => {
                   </p>
 
                   {/* Bottom decoration */}
-                  <div className="mt-4 flex justify-center">
+                  {/*<div className="mt-4 flex justify-center">
                     <div
                       className={`w-12 h-0.5 bg-gradient-to-r from-accent to-primary rounded-full transition-all duration-500 ${
                         activeItem === item.id ? "w-16" : ""
@@ -196,22 +195,22 @@ const PrimeModel = () => {
         </div>
 
         {/* Mobile and Small Tablet Layout */}
-        <div className="md:hidden space-y-4 mt-12">
+        {/*<div className="md:hidden space-y-4 mt-12">
           {primeItems.map((item, index) => (
             <ScrollAnimation key={item.id} delay={index * 100}>
               <div className="group">
                 {/* Card Header - Always Visible */}
-                <div
+                {/*<div
                   className={`relative bg-white/95 backdrop-blur-sm rounded-t-2xl ${
                     expandedMobile === item.id ? "" : "rounded-b-2xl"
                   } p-6 border border-white/20 shadow-lg transition-all duration-500 cursor-pointer`}
                   onClick={() => handleMobileToggle(item.id)}
                 >
                   {/* Background gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm rounded-2xl"></div>
+                  {/*<div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm rounded-2xl"></div>
 
                   {/* Border gradient */}
-                  <div
+                  {/*<div
                     className={`absolute inset-0 bg-gradient-to-br rounded-2xl p-[1px] transition-all duration-500 ${
                       expandedMobile === item.id
                         ? "from-accent/40 via-primary/30 to-accent/40"
@@ -223,7 +222,7 @@ const PrimeModel = () => {
 
                   <div className="relative flex items-center space-x-4">
                     {/* Icon */}
-                    <div className="flex-shrink-0">
+                    {/*<div className="flex-shrink-0">
                       <div className="relative">
                         <div className="text-primary transition-colors duration-300 w-12 h-12 flex items-center justify-center">
                           {React.cloneElement(item.icon, { size: 32 })}
@@ -232,7 +231,7 @@ const PrimeModel = () => {
                     </div>
 
                     {/* Title and Toggle */}
-                    <div className="flex-grow flex items-center justify-between">
+                   {/* <div className="flex-grow flex items-center justify-between">
                       <div>
                         <h3 className="text-lg font-bold text-primary font-heading mb-1">
                           {item.title}
@@ -243,7 +242,7 @@ const PrimeModel = () => {
                       </div>
 
                       {/* Toggle Icon */}
-                      <div className="ml-4">
+                      {/*<div className="ml-4">
                         {expandedMobile === item.id ? (
                           <ChevronUp size={20} className="text-accent" />
                         ) : (
@@ -255,7 +254,7 @@ const PrimeModel = () => {
                 </div>
 
                 {/* Expandable Description */}
-                <div
+                {/*<div
                   className={`overflow-hidden transition-all duration-500 ease-out ${
                     expandedMobile === item.id
                       ? "max-h-96 opacity-100"
@@ -265,14 +264,14 @@ const PrimeModel = () => {
                   <div className="bg-white/95 backdrop-blur-sm rounded-b-2xl p-6 pt-0 border-l border-r border-b border-white/20 shadow-lg border-t-0">
                     <div className="relative">
                       {/* Background gradient for description */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-white/50 rounded-xl -m-4 p-4"></div>
+                      {/*<div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-white/50 rounded-xl -m-4 p-4"></div>
 
                       <p className="relative text-charcoal text-sm leading-relaxed">
                         {item.description}
                       </p>
 
                       {/* Bottom decoration */}
-                      <div className="relative flex justify-center mt-4">
+                      {/*<div className="relative flex justify-center mt-4">
                         <div className="w-16 h-0.5 bg-gradient-to-r from-accent to-primary rounded-full"></div>
                       </div>
                     </div>
@@ -283,7 +282,7 @@ const PrimeModel = () => {
           ))}
         </div>
       </div>
-    </section>
+    </section>*/}
   );
 };
 
