@@ -83,7 +83,7 @@ const Hero = () => {
   const [transitionEnabled, setTransitionEnabled] = useState(true);
 
   const stats = [
-    { number: "100+", label: "Student Interns", icon: GraduationCap },
+    { number: "6", label: "Campuses", icon: GraduationCap },
     { number: "1500+", label: "Teaching Faculties", icon: UserCheck },
     { number: "32+", label: "Specialisms", icon: BookOpen },
   ];
