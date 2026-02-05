@@ -114,7 +114,7 @@ const EventsPage = () => {
                     </div>
 
                     {featuredEvent.isUpcoming && (
-                      <button className="btn-primary">Register Now</button>
+                      <button className="btn-primary">Register Now</button> /*Add link to button here*/
                     )}
                   </div>
                 </div>
@@ -191,7 +191,7 @@ const EventsPage = () => {
                     <button className="w-full btn-primary flex items-center justify-center">
                       Register Now
                       <ChevronRight size={18} className="ml-1" />
-                    </button>
+                    </button> {/*Add link to button here*/}
                   </div>
                 </div>
               </ScrollAnimation>

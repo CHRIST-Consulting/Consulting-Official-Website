@@ -1,5 +1,5 @@
 // Type definitions
-export type CategoryId = "all" | "workshops" | "talks";
+export type CategoryId = "all" | "past events" | "industry connects";
 
 export interface Category {
   id: CategoryId;
@@ -56,8 +56,8 @@ export interface PastEvent {
 
 export const categories: Category[] = [
   { id: "all", name: "All Events" },
-  { id: "workshops", name: "Past Events" },
-  { id: "talks", name: "Industry Connects" },
+  { id: "past events", name: "Past Events" },
+  { id: "industry connects", name: "Industry Connects" },
 ];
 
 export const featuredEvent: FeaturedEvent = {
@@ -80,7 +80,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     time: "9:00 AM",
     speaker: "Prof. Michael Chen",
     venue: "CHRIST (Deemed to be University), Kengeri Campus",
-    category: "workshops",
+    category: "past events",
     images: [
       "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg",
     ],
@@ -92,7 +92,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     time: "6:00 PM",
     speaker: "Prof. Michael Chen",
     venue: "CHRIST (Deemed to be University), Central Campus Auditorium",
-    category: "workshops",
+    category: "past events",
     images: [
       "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg",
     ],
@@ -104,7 +104,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     time: "6:00 PM",
     speaker: "Prof. Michael Chen",
     venue: "CHRIST (Deemed to be University), Central Campus Auditorium",
-    category: "workshops",
+    category: "past events",
     images: [
       "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg",
     ],
@@ -116,7 +116,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     time: "8:30 AM",
     speaker: "Faculty from CHRIST (Deemed to be University)",
     venue: "CHRIST (Deemed to be University), Kengeri Campus",
-    category: "talks",
+    category: "industry connects",
     images: [
       "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg",
     ],

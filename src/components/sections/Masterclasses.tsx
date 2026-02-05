@@ -17,11 +17,11 @@ const EventsSection = () => {
       <div className="section-container">
         <ScrollAnimation>
           <SectionTitle
-            title={showUpcoming ? "Our Events" : "Past Events"}
+            title={showUpcoming ? "Past Events" : "Industry Connects"}
             subtitle={
               showUpcoming
                 ? "Join our transformative learning experiences"
-                : "Relive our past successful events"
+                : "Join the network that moves the world."
             }
             centered={true}
           />

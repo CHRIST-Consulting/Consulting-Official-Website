@@ -293,6 +293,7 @@
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     will-change: transform;
+    
     backface-visibility: hidden;
   }
 
@@ -429,4 +430,20 @@
   .golden-shimmer:hover::before {
     left: 100%;
   }
+}
+
+/* Add this to the bottom of your CSS file */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px); /* Starts slightly to the right */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0); /* Slides to the center */
+  }
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.5s ease-out forwards;
 }

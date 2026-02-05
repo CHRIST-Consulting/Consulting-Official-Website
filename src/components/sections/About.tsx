@@ -5,8 +5,7 @@ import { Users, Play, X, Award, Target, TrendingUp, Globe, BookOpen, Lightbulb }
 const STATS_DATA = [
   { id: 'years', value: 'years', suffix: '+', label: 'Years', icon: Award, gradient: 'from-yellow-400 to-amber-500' },
   { id: 'projects', value: 'projects', suffix: '+', label: 'Projects', icon: TrendingUp, gradient: 'from-primary to-royal-blue' },
-  { id: 'clients', value: 'clients', suffix: '+', label: 'Clients', icon: Globe, gradient: 'from-accent to-sky-blue' },
-  { id: 'impact', value: 'impact', suffix: '%', label: 'Success', icon: Target, gradient: 'from-amber-400 to-yellow-500' }
+  { id: 'clients', value: 'clients', suffix: '+', label: 'Clients', icon: Globe, gradient: 'from-accent to-sky-blue' }
 ];
 
 // Core values data with unique IDs
@@ -214,7 +213,7 @@ const About = () => {
   // Move animateCounters before useEffect to fix "variables before they are defined"
   const animateCounters = useCallback(() => {
     const duration = 2500;
-    const targets = { years: 5, projects: 150, clients: 50, impact: 95 };
+    const targets = { years: 5, projects: 250, clients: 260 };
     const startTime = Date.now();
 
     const animate = () => {
@@ -226,8 +225,7 @@ const About = () => {
       setCounters({
         years: Math.floor(targets.years * easeOutQuart),
         projects: Math.floor(targets.projects * easeOutQuart),
-        clients: Math.floor(targets.clients * easeOutQuart),
-        impact: Math.floor(targets.impact * easeOutQuart)
+        clients: Math.floor(targets.clients * easeOutQuart)
       });
 
       if (progress < 1) {

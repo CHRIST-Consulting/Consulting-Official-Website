@@ -205,7 +205,7 @@ const Contact = () => {
                       >
                         <Send size={20} />
                         Send Message
-                      </Button>
+                      </Button> {/*Mail inbox link here*/}
                     </div>
                   </form>
                 </>
