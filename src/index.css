@@ -432,18 +432,3 @@
   }
 }
 
-/* Add this to the bottom of your CSS file */
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px); /* Starts slightly to the right */
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0); /* Slides to the center */
-  }
-}
-
-.animate-slide-in {
-  animation: slideInRight 0.5s ease-out forwards;
-}
