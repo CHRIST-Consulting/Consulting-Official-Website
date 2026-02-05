@@ -94,7 +94,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     venue: "CHRIST (Deemed to be University), Central Campus Auditorium",
     category: "past events",
     images: [
-      "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg",
+      "/images/events/past/ConneXion/connexion.png",
     ],
   },
   {
@@ -106,7 +106,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     venue: "CHRIST (Deemed to be University), Central Campus Auditorium",
     category: "past events",
     images: [
-      "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg",
+      "/images/events/past/Prospero/prospero.png",
     ],
   },
   {
