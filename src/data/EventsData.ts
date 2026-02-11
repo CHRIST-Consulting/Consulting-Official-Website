@@ -82,7 +82,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     venue: "CHRIST (Deemed to be University), Kengeri Campus",
     category: "past events",
     images: [
-      "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg",
+      "/images/events/past/nasa/nasa.jpeg",
     ],
   },
   {
