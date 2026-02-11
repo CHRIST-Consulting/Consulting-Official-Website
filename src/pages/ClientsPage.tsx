@@ -6,7 +6,6 @@ import { clientClustersData } from "../data/ClientClustersData";
 import { testimonialsData } from "../data/TestimonialsData";
 
 const ClientsPage = () => {
-  const [activeCluster, setActiveCluster] = useState("core");
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isAutoplayPaused, setIsAutoplayPaused] = useState(false);
 
@@ -16,49 +15,18 @@ const ClientsPage = () => {
 
   const clusters = clientClustersData;
   const testimonials = testimonialsData;
+  const clientImages = clusters.map((cluster) => cluster.clients);
 
-  // Enhanced auto-advance testimonials with pause functionality
+  // Testimonial Autoplay Logic
   useEffect(() => {
     if (isAutoplayPaused) return;
-
-    // Main testimonial change timer
     const mainTimer = setTimeout(() => {
       setCurrentTestimonial((prev) =>
         prev === testimonials.length - 1 ? 0 : prev + 1
       );
     }, 3000);
-
-    return () => {
-      clearTimeout(mainTimer);
-    };
+    return () => clearTimeout(mainTimer);
   }, [testimonials.length, isAutoplayPaused, currentTestimonial]);
-
-  // Pause autoplay when user hovers over testimonial section
-  const handleMouseEnter = () => setIsAutoplayPaused(true);
-  const handleMouseLeave = () => setIsAutoplayPaused(false);
-
-  // Manual navigation functions
-  const goToPrevious = () => {
-    setCurrentTestimonial((prev) =>
-      prev === 0 ? testimonials.length - 1 : prev - 1
-    );
-    setIsAutoplayPaused(true);
-    setTimeout(() => setIsAutoplayPaused(false), 3000); // Resume after 3 seconds
-  };
-
-  const goToNext = () => {
-    setCurrentTestimonial((prev) =>
-      prev === testimonials.length - 1 ? 0 : prev + 1
-    );
-    setIsAutoplayPaused(true);
-    setTimeout(() => setIsAutoplayPaused(false), 3000); // Resume after 3 seconds
-  };
-
-  const goToTestimonial = (index: number) => {
-    setCurrentTestimonial(index);
-    setIsAutoplayPaused(true);
-    setTimeout(() => setIsAutoplayPaused(false), 3000); // Resume after 3 seconds
-  };
 
   const stats = [
     { value: "50+", label: "Active Clients" },
@@ -87,60 +55,66 @@ const ClientsPage = () => {
         </div>
       </section>
 
-      {/* Client Clusters */}
-      <section className="py-20">
-        <div className="section-container">
-          <ScrollAnimation>
-            <div className="flex flex-wrap gap-4 mb-12">
-              {clusters.map((cluster) => (
-                <button
-                  key={cluster.id}
-                  onClick={() => setActiveCluster(cluster.id)}
-                  className={`flex items-center px-6 py-3 rounded-lg transition-all duration-300 ${
-                    activeCluster === cluster.id
-                      ? "bg-[#0066cc] text-white"
-                      : "bg-[#f0f8ff] text-[#002d72] hover:bg-[#0066cc]/10"
-                  }`}
-                >
-                  <span className="mr-2">{cluster.icon}</span>
-                  {cluster.title}
-                </button>
-              ))}
-            </div>
-          </ScrollAnimation>
+      {/* FIXED: Scrolling Clients Section with CSS-Pause */}
+      <section id="our-clients" className="bg-[#051650] py-20 overflow-hidden">
+        <div className="container mx-auto">
+          <h2 className="text-white text-5xl md:text-7xl font-bold mb-16 text-center">
+            Our Clients
+          </h2>
 
-          {clusters.map((cluster) => (
-            <div
-              key={cluster.id}
-              className={`transition-all duration-500 ${
-                activeCluster === cluster.id ? "block" : "hidden"
-              }`}
-            >
-              <ScrollAnimation>
-                <p className="text-xl text-charcoal mb-8">
-                  {cluster.description}
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {cluster.clients.map((client, index) => (
-                    <div
-                      key={index}
-                      className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-500"
-                    >
-                      <div className="h-24 flex items-center justify-center mb-6">
-                        <img
-                          src={client}
-                          alt={`Client ${index + 1}`}
-                          className="max-h-16 max-w-full object-contain"
-                        />
+          <div className="space-y-10">
+            {clientImages.map((rowImages, rowIndex) => (
+              <div 
+                key={rowIndex} 
+                className="group relative flex overflow-hidden py-4"
+              >
+                {/* Gradient Overlays */}
+                <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-[#051650] to-transparent z-20 pointer-events-none" />
+                <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-[#051650] to-transparent z-20 pointer-events-none" />
+
+                {/* The Scrolling Container */}
+                <div
+                  className={`flex w-fit animate-scroll-${rowIndex % 2 === 0 ? 'left' : 'right'} group-hover:[animation-play-state:paused]`}
+                >
+                  {/* Duplicating logos multiple times for seamless scrolling */}
+                  {[...rowImages, ...rowImages, ...rowImages, ...rowImages].map((imagePath, index) => (
+                    <div key={index} className="mx-6 flex-shrink-0">
+                      <div className="w-[220px] h-[125px] bg-white rounded-[24px] p-2 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] cursor-pointer">
+                        <div className="w-full h-full rounded-[20px] border-[3px] border-[#051650] bg-white p-3 flex items-center justify-center">
+                          <img
+                            src={imagePath || "/placeholder.svg"}
+                            loading="lazy"
+                            alt={`Client Logo ${index + 1}`}
+                            className="max-w-[80%] max-h-[80%] object-contain"
+                          />
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
-              </ScrollAnimation>
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
+
+      {/* Custom CSS for Smooth Infinite Scroll and Pause */}
+      <style>{`
+        @keyframes scroll-left {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes scroll-right {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        .animate-scroll-left {
+          animation: scroll-left 40s linear infinite;
+        }
+        .animate-scroll-right {
+          animation: scroll-right 40s linear infinite;
+        }
+      `}</style>
 
       {/* Testimonials Section */}
       <section className="py-20 bg-gradient-to-br from-[#f0f8ff] to-white">
@@ -157,98 +131,54 @@ const ClientsPage = () => {
             <ScrollAnimation>
               <div
                 className="bg-white rounded-2xl shadow-xl p-8 md:p-12 relative overflow-hidden transition-all duration-300 hover:shadow-2xl"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
+                onMouseEnter={() => setIsAutoplayPaused(true)}
+                onMouseLeave={() => setIsAutoplayPaused(false)}
               >
-                {/* Background decoration */}
                 <div className="absolute top-6 left-6 text-[#0066cc]/10">
                   <Quote size={80} />
                 </div>
-
-                {/* Autoplay indicator */}
-                <div className="absolute top-6 right-6">
-                  <div
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      isAutoplayPaused ? "bg-orange-400" : "bg-green-400"
-                    }`}
-                    title={
-                      isAutoplayPaused ? "Autoplay Paused" : "Autoplay Active"
-                    }
-                  />
-                </div>
-
-                {/* Testimonial content with fade transition */}
                 <div className="relative z-10 transition-opacity duration-500">
                   <div className="flex items-center mb-4">
-                    {[
-                      ...Array(testimonials[currentTestimonial]?.rating || 5),
-                    ].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={20}
-                        className="text-yellow-400 fill-current"
-                      />
+                    {Array.from({ length: testimonials[currentTestimonial]?.rating || 5 }).map((_, i) => (
+                      <Star key={i} size={20} className="text-yellow-400 fill-current" />
                     ))}
                   </div>
-
-                  <blockquote className="text-lg md:text-xl text-[#4b5563] mb-8 leading-relaxed">
+                  <blockquote className="text-lg md:text-xl text-[#4b5563] mb-8 leading-relaxed italic">
                     "{testimonials[currentTestimonial]?.content}"
                   </blockquote>
-
                   <div className="flex items-center">
                     <div className="w-16 h-16 bg-gradient-to-br from-[#0066cc] to-[#002d72] rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
                       {testimonials[currentTestimonial]?.name.charAt(0)}
                     </div>
                     <div>
-                      <div className="font-semibold text-[#002d72] text-lg">
-                        {testimonials[currentTestimonial]?.name}
-                      </div>
-                      <div className="text-[#4b5563]">
-                        {testimonials[currentTestimonial]?.position}
-                      </div>
-                      <div className="text-[#0066cc] font-medium">
-                        {testimonials[currentTestimonial]?.company}
-                      </div>
+                      <div className="font-semibold text-[#002d72] text-lg">{testimonials[currentTestimonial]?.name}</div>
+                      <div className="text-[#4b5563]">{testimonials[currentTestimonial]?.position}</div>
+                      <div className="text-[#0066cc] font-medium">{testimonials[currentTestimonial]?.company}</div>
                     </div>
                   </div>
                 </div>
               </div>
             </ScrollAnimation>
 
-            {/* Enhanced Navigation */}
             <div className="flex justify-center items-center mt-8 space-x-4">
-              <button
-                onClick={goToPrevious}
-                className="p-3 rounded-full bg-white shadow-lg hover:bg-[#f0f8ff] hover:scale-105 transition-all duration-300 border border-[#e5e7eb]"
-                aria-label="Previous testimonial"
+              <button 
+                onClick={() => setCurrentTestimonial(prev => prev === 0 ? testimonials.length - 1 : prev - 1)} 
+                className="p-3 rounded-full bg-white shadow-lg border border-[#e5e7eb]"
               >
                 <ChevronLeft size={20} className="text-[#002d72]" />
               </button>
-
-              {/* Enhanced dots indicator with progress */}
               <div className="flex space-x-2">
                 {testimonials.map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => goToTestimonial(index)}
-                    className={`relative w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === currentTestimonial
-                        ? "bg-[#0066cc] scale-110"
-                        : "bg-[#d1d5db] hover:bg-[#9ca3af]"
-                    }`}
-                    aria-label={`Go to testimonial ${index + 1}`}
-                  >
-                    {index === currentTestimonial && !isAutoplayPaused && (
-                      <div className="absolute inset-0 rounded-full border-2 border-[#0066cc] animate-ping"></div>
-                    )}
-                  </button>
+                    onClick={() => setCurrentTestimonial(index)}
+                    className={`w-3 h-3 rounded-full transition-all ${index === currentTestimonial ? "bg-[#0066cc] scale-110" : "bg-[#d1d5db]"}`}
+                  />
                 ))}
               </div>
-
-              <button
-                onClick={goToNext}
-                className="p-3 rounded-full bg-white shadow-lg hover:bg-[#f0f8ff] hover:scale-105 transition-all duration-300 border border-[#e5e7eb]"
-                aria-label="Next testimonial"
+              <button 
+                onClick={() => setCurrentTestimonial(prev => prev === testimonials.length - 1 ? 0 : prev + 1)} 
+                className="p-3 rounded-full bg-white shadow-lg border border-[#e5e7eb]"
               >
                 <ChevronRight size={20} className="text-[#002d72]" />
               </button>
@@ -264,9 +194,7 @@ const ClientsPage = () => {
             {stats.map((stat, index) => (
               <ScrollAnimation key={index} delay={index * 100}>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-[#002d72] mb-2">
-                    {stat.value}
-                  </div>
+                  <div className="text-3xl font-bold text-[#002d72] mb-2">{stat.value}</div>
                   <div className="text-[#4b5563]">{stat.label}</div>
                 </div>
               </ScrollAnimation>
@@ -274,27 +202,6 @@ const ClientsPage = () => {
           </div>
         </div>
       </section>
-
-      {/* CTA Section 
-      <section className="py-20">
-        <div className="section-container text-center">
-          <ScrollAnimation>
-            <h2 className="text-3xl font-bold text-[#002d72] mb-6">
-              Become a CHRIST Consulting Partner
-            </h2>
-            <p className="text-xl text-[#4b5563] mb-8 max-w-2xl mx-auto">
-              Explore how we can collaborate to drive lasting impact.
-            </p>
-            <a
-              href="/#contact"
-              className="inline-flex items-center px-8 py-3 bg-[#0066cc] text-white rounded-lg hover:bg-[#002d72] transition-colors duration-300"
-            >
-              Partner With Us
-              <ChevronRight size={20} className="ml-2" />
-            </a>
-          </ScrollAnimation>
-        </div>
-      </section>*/}
     </main>
   );
 };
