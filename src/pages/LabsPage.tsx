@@ -131,7 +131,7 @@ const Lab = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section 
       <section className="py-20 bg-secondary text-primary">
         <div className="section-container text-center">
           <ScrollAnimation>
@@ -147,7 +147,7 @@ const Lab = () => {
             </Link>
           </ScrollAnimation>
         </div>
-      </section>
+      </section>*/}
     </div>
   );
 };

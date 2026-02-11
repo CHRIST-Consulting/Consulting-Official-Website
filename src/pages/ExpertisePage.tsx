@@ -73,7 +73,7 @@ const ExpertisePage = () => {
         </div>
       </section>
 
-      {/* Contact CTA */}
+      {/* Contact CTA 
       <section className="py-16 bg-secondary">
         <div className="section-container text-center">
           <ScrollAnimation>
@@ -92,7 +92,7 @@ const ExpertisePage = () => {
             </a>
           </ScrollAnimation>
         </div>
-      </section>
+      </section>*/}
     </main>
   );
 };

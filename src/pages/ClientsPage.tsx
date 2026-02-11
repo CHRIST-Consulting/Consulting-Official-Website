@@ -62,7 +62,7 @@ const ClientsPage = () => {
 
   const stats = [
     { value: "50+", label: "Active Clients" },
-    { value: "200+", label: "Projects Completed" },
+    { value: "250+", label: "Projects Completed" },
     { value: "15+", label: "Industry Sectors" },
     { value: "95%", label: "Client Retention" },
   ];
@@ -275,7 +275,7 @@ const ClientsPage = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section 
       <section className="py-20">
         <div className="section-container text-center">
           <ScrollAnimation>
@@ -294,7 +294,7 @@ const ClientsPage = () => {
             </a>
           </ScrollAnimation>
         </div>
-      </section>
+      </section>*/}
     </main>
   );
 };
