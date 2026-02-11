@@ -110,7 +110,7 @@ const ClientsPage = () => {
             />
           </ScrollAnimation>
 
-          <div className="mt-16 relative max-w-4xl mx-auto min-h-[450px] md:min-h-[400px]">
+          <div className="mt-16 relative max-w-4xl mx-auto min-h-[500px] sm:min-h-[450px] md:min-h-[400px]">
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
                 key={currentTestimonial}
@@ -119,7 +119,7 @@ const ClientsPage = () => {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="bg-[#f8fbff] rounded-2xl shadow-lg border border-[#0066cc]/5 p-8 md:p-12 absolute inset-0 transition-shadow duration-500 hover:shadow-2xl flex flex-col justify-center"
+                className="bg-[#f8fbff] rounded-2xl shadow-lg border border-[#0066cc]/5 p-6 md:p-12 absolute inset-0 transition-shadow duration-500 hover:shadow-2xl flex flex-col justify-center"
                 onMouseEnter={() => setIsAutoplayPaused(true)}
                 onMouseLeave={() => setIsAutoplayPaused(false)}
               >
@@ -132,55 +132,55 @@ const ClientsPage = () => {
                       <Star key={i} size={20} className="text-yellow-400 fill-current" />
                     ))}
                   </div>
-                  <blockquote className="text-lg md:text-2xl text-[#4b5563] mb-8 leading-relaxed italic font-medium">
+                  <blockquote className="text-base sm:text-lg md:text-2xl text-[#4b5563] mb-8 leading-relaxed italic font-medium">
                     "{testimonials[currentTestimonial]?.content}"
                   </blockquote>
                   <div className="flex items-center">
-                    <div className="w-16 h-16 bg-gradient-to-br from-[#0066cc] to-[#002d72] rounded-full flex items-center justify-center text-white font-bold text-xl mr-4 shadow-md">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-[#0066cc] to-[#002d72] rounded-full flex items-center justify-center text-white font-bold text-lg sm:text-xl mr-4 shadow-md">
                       {testimonials[currentTestimonial]?.name.charAt(0)}
                     </div>
                     <div>
-                      <div className="font-bold text-[#002d72] text-xl">{testimonials[currentTestimonial]?.name}</div>
-                      <div className="text-[#4b5563] text-sm tracking-wide">{testimonials[currentTestimonial]?.position}</div>
-                      <div className="text-[#0066cc] font-semibold">{testimonials[currentTestimonial]?.company}</div>
+                      <div className="font-bold text-[#002d72] text-lg sm:text-xl">{testimonials[currentTestimonial]?.name}</div>
+                      <div className="text-[#4b5563] text-xs sm:text-sm tracking-wide">{testimonials[currentTestimonial]?.position}</div>
+                      <div className="text-[#0066cc] font-semibold text-sm sm:text-base">{testimonials[currentTestimonial]?.company}</div>
                     </div>
                   </div>
                 </div>
               </motion.div>
             </AnimatePresence>
 
-            <div className="absolute -bottom-24 left-0 right-0 flex justify-center items-center space-x-8">
-              <button onClick={() => paginate(-1)} className="p-4 rounded-full bg-white shadow-md border border-[#0066cc]/10 text-[#002d72] hover:bg-[#0066cc] hover:text-white transition-all duration-300">
-                <ChevronLeft size={28} />
+            <div className="absolute -bottom-24 left-0 right-0 flex justify-center items-center space-x-4 sm:space-x-8">
+              <button onClick={() => paginate(-1)} className="p-3 sm:p-4 rounded-full bg-white shadow-md border border-[#0066cc]/10 text-[#002d72] hover:bg-[#0066cc] hover:text-white transition-all duration-300">
+                <ChevronLeft size={24} />
               </button>
-              <div className="flex space-x-3">
+              <div className="flex space-x-2 sm:space-x-3">
                 {testimonials.map((_, index) => (
-                  <button key={index} onClick={() => { setDirection(index > currentTestimonial ? 1 : -1); setCurrentTestimonial(index); }} className={`h-2 rounded-full transition-all duration-500 ${index === currentTestimonial ? "bg-[#0066cc] w-10" : "bg-gray-200 w-3 hover:bg-gray-300"}`} />
+                  <button key={index} onClick={() => { setDirection(index > currentTestimonial ? 1 : -1); setCurrentTestimonial(index); }} className={`h-2 rounded-full transition-all duration-500 ${index === currentTestimonial ? "bg-[#0066cc] w-6 sm:w-10" : "bg-gray-200 w-2 sm:w-3 hover:bg-gray-300"}`} />
                 ))}
               </div>
-              <button onClick={() => paginate(1)} className="p-4 rounded-full bg-white shadow-md border border-[#0066cc]/10 text-[#002d72] hover:bg-[#0066cc] hover:text-white transition-all duration-300">
-                <ChevronRight size={28} />
+              <button onClick={() => paginate(1)} className="p-3 sm:p-4 rounded-full bg-white shadow-md border border-[#0066cc]/10 text-[#002d72] hover:bg-[#0066cc] hover:text-white transition-all duration-300">
+                <ChevronRight size={24} />
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Scrolling Clients Section */}
-      <section id="our-clients" className="relative py-28 bg-gradient-to-r from-[#002d72] to-[#0066cc] overflow-hidden mt-12">
+      {/* 2. Scrolling Clients Section (RESPONSIVE) */}
+      <section id="our-clients" className="relative py-20 sm:py-28 bg-gradient-to-r from-[#002d72] to-[#0066cc] overflow-hidden mt-20">
         <div className="absolute inset-0 bg-pattern opacity-10 pointer-events-none"></div>
         <div className="container mx-auto relative z-10">
-          <h2 className="text-white text-5xl md:text-7xl font-bold mb-20 text-center">Our Clients</h2>
-          <div className="space-y-12">
+          <h2 className="text-white text-4xl sm:text-5xl md:text-7xl font-bold mb-12 sm:mb-20 text-center">Our Clients</h2>
+          <div className="space-y-6 sm:space-y-12">
             {clientImages.map((rowImages, rowIndex) => (
-              <div key={rowIndex} className="group relative flex overflow-hidden py-4">
-                <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-[#002d72] to-transparent z-20 pointer-events-none" />
-                <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-[#0066cc] to-transparent z-20 pointer-events-none" />
+              <div key={rowIndex} className="group relative flex overflow-hidden py-2 sm:py-4">
+                <div className="absolute left-0 top-0 w-20 sm:w-32 h-full bg-gradient-to-r from-[#002d72] to-transparent z-20 pointer-events-none" />
+                <div className="absolute right-0 top-0 w-20 sm:w-32 h-full bg-gradient-to-l from-[#0066cc] to-transparent z-20 pointer-events-none" />
                 <div className={`flex w-fit animate-scroll-${rowIndex % 2 === 0 ? 'left' : 'right'} group-hover:[animation-play-state:paused]`}>
                   {[...rowImages, ...rowImages, ...rowImages, ...rowImages].map((imagePath, index) => (
-                    <div key={index} className="mx-8 flex-shrink-0 flex items-center">
-                      <div className="bg-white rounded-[24px] p-4 transition-all duration-500 hover:scale-110 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] cursor-pointer flex items-center justify-center w-[240px] h-[140px]">
-                        {/* Blended Image Container */}
+                    <div key={index} className="mx-4 sm:mx-8 flex-shrink-0 flex items-center">
+                      {/* Tile size adjusts: smaller on mobile (w-40/h-24), standard on desktop (w-60/h-36) */}
+                      <div className="bg-white rounded-[16px] sm:rounded-[24px] p-3 sm:p-4 transition-all duration-500 hover:scale-110 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] cursor-pointer flex items-center justify-center w-40 h-24 sm:w-[240px] sm:h-[140px]">
                         <img
                           src={imagePath || "/placeholder.svg"}
                           loading="lazy"
@@ -200,12 +200,12 @@ const ClientsPage = () => {
       {/* Stats Section */}
       <section className="py-20 bg-[#f0f8ff]">
         <div className="section-container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
             {stats.map((stat, index) => (
               <ScrollAnimation key={index} delay={index * 100}>
                 <div className="text-center group">
-                  <div className="text-4xl font-bold text-[#002d72] mb-3 group-hover:scale-110 transition-transform duration-300">{stat.value}</div>
-                  <div className="text-[#4b5563] font-medium tracking-wide uppercase text-sm">{stat.label}</div>
+                  <div className="text-3xl sm:text-4xl font-bold text-[#002d72] mb-3 group-hover:scale-110 transition-transform duration-300">{stat.value}</div>
+                  <div className="text-[#4b5563] font-medium tracking-wide uppercase text-xs sm:text-sm">{stat.label}</div>
                 </div>
               </ScrollAnimation>
             ))}
@@ -216,8 +216,15 @@ const ClientsPage = () => {
       <style>{`
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         @keyframes scroll-right { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+        
+        /* Speed: 45s on Desktop, 30s on Mobile for a better feel */
         .animate-scroll-left { animation: scroll-left 45s linear infinite; }
         .animate-scroll-right { animation: scroll-right 45s linear infinite; }
+
+        @media (max-width: 640px) {
+          .animate-scroll-left { animation: scroll-left 30s linear infinite; }
+          .animate-scroll-right { animation: scroll-right 30s linear infinite; }
+        }
       `}</style>
     </main>
   );
