@@ -7,10 +7,15 @@ import { upcomingEvents, pastEvents } from "../../data/EventsData";
 const EventsSection = () => {
   const [showUpcoming, setShowUpcoming] = useState(true);
 
-  const hasUpcomingEvents = upcomingEvents.length > 0;
-  const hasPastEvents = pastEvents.length > 0;
-  const eventsToShow = showUpcoming ? upcomingEvents : pastEvents;
-  const displayedEvents = eventsToShow.slice(0, 3);
+  // LOGIC: 
+  // If showUpcoming is true -> Show NASA, ConneXion, Prospero + Inauguration
+  // If showUpcoming is false -> Show Toyota
+  const eventsToShow = showUpcoming 
+    ? [...upcomingEvents.filter(e => e.category === "past events"), ...pastEvents]
+    : upcomingEvents.filter(e => e.category === "industry connects");
+
+  const displayedEvents = eventsToShow.slice(0, 4); // Increased to 4 to show all past events
+  const hasEvents = eventsToShow.length > 0;
 
   return (
     <section id="events" className="py-20">
@@ -27,37 +32,35 @@ const EventsSection = () => {
           />
         </ScrollAnimation>
 
-        {(hasUpcomingEvents || hasPastEvents) && (
-          <div className="flex justify-center mb-8">
-            <div className="inline-flex bg-secondary rounded-full p-1">
-              <button
-                onClick={() => setShowUpcoming(true)}
-                className={`px-6 py-2 rounded-full transition-all ${
-                  showUpcoming
-                    ? "bg-primary text-white"
-                    : "text-primary hover:bg-primary/10"
-                }`}
-              >
-                Past Events
-              </button> {/*Comment here to disable button*/}
-              <button
-                onClick={() => setShowUpcoming(false)}
-                className={`px-6 py-2 rounded-full transition-all ${
-                  !showUpcoming
-                    ? "bg-primary text-white"
-                    : "text-primary hover:bg-primary/10"
-                }`}
-              >
-                Industry Connects
-              </button>{/*How do I add Toyota here and shift inaugration to past events?*/}
-            </div>
+        <div className="flex justify-center mb-8">
+          <div className="inline-flex bg-secondary rounded-full p-1">
+            <button
+              onClick={() => setShowUpcoming(true)}
+              className={`px-6 py-2 rounded-full transition-all ${
+                showUpcoming
+                  ? "bg-primary text-white"
+                  : "text-primary hover:bg-primary/10"
+              }`}
+            >
+              Past Events
+            </button>
+            <button
+              onClick={() => setShowUpcoming(false)}
+              className={`px-6 py-2 rounded-full transition-all ${
+                !showUpcoming
+                  ? "bg-primary text-white"
+                  : "text-primary hover:bg-primary/10"
+              }`}
+            >
+              Industry Connects
+            </button>
           </div>
-        )}
+        </div>
 
-        {displayedEvents.length > 0 ? (
+        {hasEvents ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
-            {displayedEvents.map((event, index) => (
-              <ScrollAnimation key={index} delay={index * 150}>
+            {eventsToShow.map((event, index) => (
+              <ScrollAnimation key={event.id} delay={index * 150}>
                 <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col hover:shadow-xl transition-all duration-300 group">
                   <div className="relative overflow-hidden">
                     <img
@@ -66,7 +69,7 @@ const EventsSection = () => {
                       className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute top-4 left-4 bg-accent text-primary text-xs font-bold py-1 px-2 rounded">
-                      {"category" in event ? event.category : "Event"}
+                      {"category" in event ? event.category : "past events"}
                     </div>
                   </div>
 
@@ -80,17 +83,17 @@ const EventsSection = () => {
                       <span className="text-sm">{event.date}</span>
                     </div>
 
-                    <p className="text-charcoal mb-4 flex-grow">
+                    <p className="text-charcoal mb-4 flex-grow text-sm">
                       {showUpcoming
-                        ? "Join us for this exciting event featuring industry experts and hands-on learning."
-                        : "A look back at our successful event with valuable insights and networking."}
+                        ? "A look back at our successful event with valuable insights and networking."
+                        : "Join us for this exciting industry collaboration featuring experts and hands-on learning."}
                     </p>
 
                     <a
-                      href={showUpcoming ? "/events" : `/events/${event.id}`}
+                      href={`/events/${event.id}`}
                       className="text-primary font-medium flex items-center hover:text-accent transition-colors duration-300 mt-auto"
                     >
-                      {showUpcoming ? "Learn More" : "View Recap"}
+                      View Recap
                       <ChevronRight
                         size={16}
                         className="ml-1 group-hover:translate-x-1 transition-transform duration-300"
@@ -110,37 +113,22 @@ const EventsSection = () => {
                 </div>
               </div>
               <h3 className="text-xl font-bold text-primary mb-2">
-                {showUpcoming
-                  ? "No Upcoming Events Scheduled"
-                  : "No Past Events Available"}
+                No Events Available
               </h3>
               <p className="text-charcoal mb-6">
-                {showUpcoming
-                  ? "We're currently planning our next events. Check back soon or subscribe to our newsletter for updates!"
-                  : "Our event history will be available here soon."}
+                Check back soon for updates in this category.
               </p>
-              <a
-                href="/contact"
-                className="inline-flex items-center text-primary font-medium hover:text-accent transition-colors duration-300"
-              >
-                {showUpcoming
-                  ? "Get Notified About Future Events"
-                  : "Contact Us For More Information"}
-                <ChevronRight size={16} className="ml-1" />
-              </a>
             </div>
           </ScrollAnimation>
         )}
 
-        {hasPastEvents && (
-          <div className="mt-12 text-center">
-            <ScrollAnimation>
-              <a href="/events" className="btn-primary">
-                View All {showUpcoming ? "Events" : "Past Events"}
-              </a>
-            </ScrollAnimation>
-          </div>
-        )}
+        <div className="mt-12 text-center">
+          <ScrollAnimation>
+            <a href="/events" className="btn-primary">
+              View All {showUpcoming ? "Past Events" : "Industry Connects"}
+            </a>
+          </ScrollAnimation>
+        </div>
       </div>
     </section>
   );
