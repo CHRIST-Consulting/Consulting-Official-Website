@@ -280,10 +280,10 @@ const EventRecapPage = () => {
         <div className="section-container text-center">
           <ScrollAnimation>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 font-heading">
-              Don't Miss Our Next Event
+              Don't Miss Our Events
             </h2>
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-              Stay updated with our upcoming events and be part of the CHRIST
+              Stay updated with all our events and be part of the CHRIST
               Consulting community.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -291,7 +291,7 @@ const EventRecapPage = () => {
                 to="/events"
                 className="btn-secondary bg-white text-primary hover:bg-secondary"
               >
-                View Upcoming Events
+                View All Events
               </Link>
               <Link
                 to="/contact"
