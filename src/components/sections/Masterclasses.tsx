@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import SectionTitle from "../ui/SectionTitle";
 import ScrollAnimation from "../ui/ScrollAnimation";
 import { CalendarDays, ChevronRight, CalendarX } from "lucide-react";
@@ -8,13 +9,15 @@ const EventsSection = () => {
   const [showUpcoming, setShowUpcoming] = useState(true);
 
   // LOGIC: 
-  // If showUpcoming is true -> Show NASA, ConneXion, Prospero + Inauguration
-  // If showUpcoming is false -> Show Toyota
+  // If showUpcoming is true (Past Events tab) -> Show items from 'upcomingEvents' marked as "past events" + items in 'pastEvents' array.
+  // If showUpcoming is false (Industry Connects tab) -> Show ONLY items from 'upcomingEvents' marked as "industry connects".
+  
+  // NOTE: Toyota is in 'upcomingEvents' with category "industry connects", so it will ONLY show when showUpcoming is false.
   const eventsToShow = showUpcoming 
     ? [...upcomingEvents.filter(e => e.category === "past events"), ...pastEvents]
     : upcomingEvents.filter(e => e.category === "industry connects");
 
-  const displayedEvents = eventsToShow.slice(0, 4); // Increased to 4 to show all past events
+  const displayedEvents = eventsToShow.slice(0, 4); 
   const hasEvents = eventsToShow.length > 0;
 
   return (
@@ -89,8 +92,8 @@ const EventsSection = () => {
                         : "Join us for this exciting industry collaboration featuring experts and hands-on learning."}
                     </p>
 
-                    <a
-                      href={`/events/${event.id}`}
+                    <Link
+                      to={`/events/${event.id}`}
                       className="text-primary font-medium flex items-center hover:text-accent transition-colors duration-300 mt-auto"
                     >
                       View Recap
@@ -98,7 +101,7 @@ const EventsSection = () => {
                         size={16}
                         className="ml-1 group-hover:translate-x-1 transition-transform duration-300"
                       />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </ScrollAnimation>

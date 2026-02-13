@@ -33,10 +33,14 @@ const EventsPage = () => {
     { icon: Award, value: "25", label: "Guest Speakers" },
   ];
 
+  // Combine both arrays to ensure "All" includes Investiture (from pastEvents) 
+  // and Toyota (from upcomingEvents)
+  const allEvents = [...upcomingEvents, ...pastEvents];
+
   const filteredEvents =
     activeFilter === "all"
-      ? upcomingEvents
-      : upcomingEvents.filter((event) => event.category === activeFilter);
+      ? allEvents
+      : allEvents.filter((event) => event.category === activeFilter);
 
   return (
     <main className="pt-16">
@@ -60,17 +64,6 @@ const EventsPage = () => {
                 View All Events
               </a>
             </ScrollAnimation>
-
-            {/* <ScrollAnimation delay={200}>
-              <div className="relative hidden lg:flex rounded-lg overflow-hidden shadow-2xl">
-                <img
-                  src="/images/events/past/investiture-2025/4.jpg"
-                  alt="Event Networking"
-                  className="w-full h-[400px] object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent"></div>
-              </div>
-            </ScrollAnimation> */}
           </div>
         </div>
       </section>
@@ -114,7 +107,7 @@ const EventsPage = () => {
                     </div>
 
                     {featuredEvent.isUpcoming && (
-                      <button className="btn-primary">Register Now</button> /*Add link to button here*/
+                      <button className="btn-primary">Register Now</button>
                     )}
                   </div>
                 </div>
@@ -154,7 +147,7 @@ const EventsPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredEvents.map((event, index) => (
               <ScrollAnimation key={index} delay={index * 100}>
-                <div className="bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition-all duration-500">
+                <div className="bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition-all duration-500 h-full flex flex-col">
                   <div className="relative h-48 overflow-hidden">
                     <img
                       src={event.images[0]}
@@ -162,89 +155,40 @@ const EventsPage = () => {
                       className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-primary">
-                      {event.category.charAt(0).toUpperCase() +
-                        event.category.slice(1)}
+                      {event.category ? (event.category.charAt(0).toUpperCase() + event.category.slice(1)) : "Event"}
                     </div>
                   </div>
 
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col flex-grow">
                     <h3 className="text-xl font-bold text-primary mb-2 font-heading">
                       {event.title}
                     </h3>
-                    <p className="text-charcoal mb-4">{event.speaker}</p>
+                    <p className="text-charcoal mb-4">{event.speaker || "Guest Speakers"}</p>
 
-                    <div className="space-y-2 mb-6">
+                    <div className="space-y-2 mb-6 flex-grow">
                       <div className="flex items-center text-gray-600">
                         <Calendar size={18} className="mr-2" />
                         <span>{event.date}</span>
                       </div>
-                      <div className="flex items-center text-gray-600">
-                        <Clock size={18} className="mr-2" />
-                        <span>{event.time}</span>
-                      </div>
+                      {event.time && (
+                        <div className="flex items-center text-gray-600">
+                          <Clock size={18} className="mr-2" />
+                          <span>{event.time}</span>
+                        </div>
+                      )}
                       <div className="flex items-center text-gray-600">
                         <MapPin size={18} className="mr-2" />
-                        <span>{event.venue}</span>
+                        <span className="line-clamp-1">{event.venue}</span>
                       </div>
                     </div>
 
-                    <button className="w-full btn-primary flex items-center justify-center">
-                      Register Now
-                      <ChevronRight size={18} className="ml-1" />
-                    </button> {/*Add link to button here*/}
-                  </div>
-                </div>
-              </ScrollAnimation>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Past Events 
-      <section className="py-20 bg-secondary">
-        <div className="section-container">
-          <ScrollAnimation>
-            <SectionTitle
-              title="Past Events"
-              subtitle="Highlights from our previous events"
-              centered={true}
-            />
-          </ScrollAnimation>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-            {pastEvents.map((event, index) => (
-              <ScrollAnimation key={index} delay={index * 100}>
-                <div className="bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition-all duration-500">
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={event.images[0]}
-                      alt={event.title}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  </div>
-
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-primary mb-2 font-heading">
-                      {event.title}
-                    </h3>
-                    <div className="flex items-center text-gray-600 mb-2">
-                      <CalendarDays size={16} className="mr-2" />
-                      <span className="text-sm">{event.date}</span>
-                    </div>
-                    <p className="text-accent mb-4">{event.impact}</p>
-                    <p className="text-charcoal text-sm mb-4 line-clamp-3">
-                      {event.description}
-                    </p>
-                    <Link
-                      to={`/events/${event.id}`}
-                      className="text-primary font-medium group-hover:text-accent transition-colors duration-300 flex items-center"
+                    {/* UPDATED LINK LOGIC HERE */}
+                    <Link 
+                      to={`/events/${event.id}`} 
+                      className="w-full btn-primary flex items-center justify-center mt-auto"
                     >
                       View Recap
-                      <ChevronRight
-                        size={18}
-                        className="ml-1 group-hover:translate-x-1 transition-transform duration-300"
-                      />
+                      <ChevronRight size={18} className="ml-1" />
                     </Link>
                   </div>
                 </div>
@@ -253,7 +197,6 @@ const EventsPage = () => {
           </div>
         </div>
       </section>
-      */}
 
       {/* Stats Section */}
       <section className="py-20">
@@ -275,21 +218,6 @@ const EventsPage = () => {
           </div>
         </div>
       </section>
-
-      {/* Call for Collaborators 
-      <section className="bg-secondary text-white py-20">
-        <div className="section-container text-center">
-          <ScrollAnimation>
-            <h2 className="text-3xl md:text-4xl text-primary font-bold mb-6 font-heading">
-              Are you an expert or organization looking to host with CHRIST
-              Consulting?
-            </h2>
-            <button className="btn-primary bg-white text-primary hover:bg-white/90">
-              Contact Us
-            </button>
-          </ScrollAnimation>
-        </div>
-      </section>*/}
     </main>
   );
 };
