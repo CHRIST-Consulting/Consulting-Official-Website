@@ -75,7 +75,7 @@ export const upcomingEvents: PastEvent[] = [
     time: "8:30 AM",
     venue: "CHRIST (Deemed to be University), Kengeri Campus",
     category: "industry connects", // This ensures it goes to the correct tab
-    images: ["https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg"],
+    images: ["/images/events/industry/toyota.png"],
     description: "An exclusive industrial visit and workshop with Toyota Kirloskar Motor. Students gained firsthand insight into Lean Manufacturing, the Toyota Production System (TPS), and supply chain logistics.",
     attendees: 60,
     statsAvailable: true,

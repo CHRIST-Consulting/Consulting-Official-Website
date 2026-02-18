@@ -1,166 +1,161 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { clientLogosData, testimonialsData } from "../../data/ClientsData";
 
-// Helpers for infinite marquee
-const getSeamlessLogos = (arr) => [...arr, ...arr, ...arr, ...arr];
-const LOGO_SIZE = 160; // Increased from 128 to accommodate larger tiles
-const GAP = 48;
-const logosRow = getSeamlessLogos(clientLogosData);
-const slideDistance = (LOGO_SIZE + GAP) * clientLogosData.length;
+/** * Corrected Imports pointing to the assets folder 
+ * Ensure your images are in src/assets/testimonial_logos/
+ */
+import ClientLogo1 from "../../assets/testimonial_logos/client1.jpg";
+import ClientLogo2 from "../../assets/testimonial_logos/client2.jpg";
+import ClientLogo4 from "../../assets/testimonial_logos/client4.jpg";
 
-const getAvatar = (author) =>
-  `https://ui-avatars.com/api/?name=${encodeURIComponent(
-    author
-  )}&background=f9fafb&color=283c54&rounded=true&format=svg`;
+const localLogos = [ClientLogo1, ClientLogo2, ClientLogo4];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.18 } },
+// TypeScript Interfaces
+interface Testimonial {
+  author: string;
+  position: string;
+  quote: string;
+}
+
+interface TestimonialCardProps {
+  testimonial: Testimonial;
+  logo: string;
+  index: number;
+}
+
+const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, logo, index }) => {
+  return (
+    <motion.div
+      // Fade-in-up animation on scroll
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, delay: index * 0.2, ease: "easeOut" }}
+      className="relative group w-full md:w-[420px] min-h-[520px] p-10 mt-20 flex flex-col items-center flex-shrink-0 transition-all duration-500"
+    >
+      {/* SOLID NAVY BLUE DESIGN */}
+      <div className="absolute inset-0 bg-[#162944] rounded-[40px] shadow-2xl border-2 border-[#162944] transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-blue-900/40"></div>
+
+      {/* LARGER LOGO CIRCLE */}
+      <div className="absolute -top-20 left-1/2 -translate-x-1/2 z-20">
+        <div className="w-40 h-40 rounded-full border-4 border-white shadow-xl bg-white flex items-center justify-center p-6 transition-transform duration-500 group-hover:scale-105">
+          <img
+            src={logo}
+            alt="Client Logo"
+            className="w-full h-full object-contain"
+          />
+        </div>
+      </div>
+
+      {/* Quote Section */}
+      <div className="relative z-10 mt-20 text-center flex-grow flex items-center justify-center">
+        <p className="text-white text-base md:text-lg leading-relaxed font-semibold italic line-clamp-[10] px-4">
+          "{testimonial.quote}"
+        </p>
+      </div>
+
+      {/* Author Details */}
+      <div className="relative z-10 text-center mt-8 w-full">
+        <h4 className="font-bold text-[#FFB400] text-xl tracking-wide uppercase drop-shadow-md">
+          {testimonial.author}
+        </h4>
+        <p className="text-white/70 text-xs uppercase tracking-widest font-bold mt-2 line-clamp-2">
+          {testimonial.position}
+        </p>
+        <div className="flex justify-center gap-1.5 mt-5">
+          {[...Array(5)].map((_, i) => (
+            <span key={i} className="text-[#FFB400] text-lg">★</span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0 },
-};
+const Clients: React.FC = () => {
+  const marqueeControls = useAnimation();
+  
+  useEffect(() => {
+    marqueeControls.start({
+      x: [0, -2500],
+      transition: {
+        duration: 35,
+        ease: "linear",
+        repeat: Infinity,
+      },
+    });
+  }, [marqueeControls]);
 
-const TestimonialCard = ({ testimonial }) => (
-  <motion.div
-    variants={cardVariants}
-    initial="hidden"
-    animate="visible"
-    className="relative bg-white border border-gray-200 rounded-2xl flex flex-col items-center w-full md:w-[320px] max-w-[360px] min-h-[440px] pt-8 px-8 pb-2 transition-all duration-300 hover:border-yellow-400 shadow-lg"
-  >
-    <div className="flex flex-col items-center">
-      <div className="bg-blue-100 w-20 h-20 flex items-center justify-center rounded-full border-2 border-blue-200 shadow-md -mt-12 mb-4">
-        <img
-          src={getAvatar(testimonial.author)}
-          alt={testimonial.author}
-          className="w-14 h-14 rounded-full object-cover"
-        />
-      </div>
-      <div className="font-bold text-lg text-[#162944] text-center mb-1 border-b-2 border-blue-100 pb-1 w-full">
-        {testimonial.author}
-      </div>
-      <div className="text-blue-700 text-xs text-center mb-4">
-        {testimonial.position}
-      </div>
-    </div>
-    <div className="flex-1 flex items-center justify-center">
-      <blockquote className="italic text-blue-900 text-[1rem] leading-snug text-center px-1">
-        {testimonial.quote}
-      </blockquote>
-    </div>
-  </motion.div>
-);
-
-const Clients = () => (
-  <div className="relative bg-gradient-to-br from-[#EEF6FA] via-[#DBEAF3] to-[#B7D6E7] w-full min-h-screen flex flex-col items-center pb-24 overflow-x-hidden">
-    {/* Decorative shapes */}
-    <div className="absolute top-28 left-10 w-36 h-36 rounded-full bg-blue-200 opacity-20 blur-3xl pointer-events-none"></div>
-    <div className="absolute top-[60%] right-20 w-24 h-24 rounded-full bg-yellow-100 blur-2xl opacity-30 pointer-events-none"></div>
-    <div className="absolute top-0 left-1/2 w-24 h-24 rounded-full bg-yellow-300 opacity-20 blur-xl pointer-events-none"></div>
-
-    {/* Logos Marquee Section */}
-    <section className="w-full flex flex-col items-center py-10 z-20">
-      <div className="max-w-7xl w-[90vw] mx-auto">
-        <motion.h2
-          initial={{ opacity: 0, y: -32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, type: "spring" }}
-          className="text-2xl md:text-4xl font-black text-center mb-3"
-          style={{ color: "#162944" }}
-        >
-          Hall of Excellence
-        </motion.h2>
-        <div className="w-20 h-1 bg-[#FFB400] mx-auto mb-2 rounded-full"></div>
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.15 }}
-          className="text-base md:text-lg text-center mb-3 text-blue-900 font-medium"
-        >
-          Celebrating our Remarkable Partners and their trust in our Journey of Impact
-        </motion.p>
-        <div className="relative mt-2 rounded-3xl shadow-xl bg-white">
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/60 to-[#EEF6FA]/80 pointer-events-none"></div>
-          <div className="overflow-hidden relative w-full py-10"> {/* Increased padding for larger tiles */}
-            <motion.div
-              className="flex gap-12 whitespace-nowrap"
-              animate={{ x: [0, -slideDistance] }}
-              transition={{
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 25, // Slightly slowed down to make larger logos easier to read while moving
-                ease: "linear",
-              }}
-              style={{ minWidth: "fit-content" }}
-            >
-              {logosRow.map((client, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-center w-36 h-36 md:w-40 md:h-40 bg-white rounded-2xl shadow-md border border-gray-100 hover:ring-2 hover:ring-yellow-400 transition-all duration-300 p-4"
-                >
-                  <img
-                    src={client.logo}
-                    alt={client.name}
-                    className="w-full h-full max-w-[90%] max-h-[90%] object-contain"
-                  />
-                </div>
-              ))}
-            </motion.div>
+  return (
+    <div className="relative bg-gradient-to-br from-[#EEF6FA] via-[#DBEAF3] to-[#B7D6E7] w-full min-h-screen flex flex-col items-center pb-32 overflow-x-hidden">
+      
+      {/* Section 1: Hall of Excellence */}
+      <section className="w-full flex flex-col items-center py-10 z-20">
+        <div className="max-w-7xl w-[90vw] mx-auto">
+          <h2 className="text-2xl md:text-4xl font-black text-center mb-3 text-[#162944]">
+            Hall of Excellence
+          </h2>
+          <div className="w-20 h-1 bg-[#FFB400] mx-auto mb-2 rounded-full"></div>
+          
+          <div className="relative mt-8 rounded-[40px] shadow-xl bg-white overflow-hidden">
+            <div className="relative w-full py-16 px-4 overflow-hidden">
+              <motion.div
+                className="flex gap-12 whitespace-nowrap"
+                animate={marqueeControls}
+                onHoverStart={() => marqueeControls.stop()}
+                onHoverEnd={() => {
+                  marqueeControls.start({
+                    x: [null, -2500],
+                    transition: { duration: 35, ease: "linear", repeat: Infinity }
+                  });
+                }}
+                style={{ width: "max-content" }}
+              >
+                {[...clientLogosData, ...clientLogosData].map((client, index) => (
+                  <div key={index} className="relative flex items-center justify-center w-36 h-36 md:w-40 md:h-40 bg-white rounded-2xl shadow-md border border-gray-100 p-4">
+                    <img src={client.logo} alt={client.name} className="w-full h-full object-contain" />
+                  </div>
+                ))}
+              </motion.div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    {/* Testimonials Section */}
-    <section className="w-full flex flex-col items-center py-10 z-20">
-      <div className="max-w-7xl w-[90vw] mx-auto">
-        <div className="flex justify-center mt-4 mb-2">
-          <span className="text-5xl text-yellow-400 opacity-60">“</span>
-        </div>
-        <motion.h2
-          initial={{ opacity: 0, y: -32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, type: "spring" }}
-          className="text-2xl md:text-4xl font-black text-center mb-2"
-          style={{ color: "#162944" }}
-        >
-          Stories of Partnership & Results
-        </motion.h2>
-        <div className="w-20 h-1 bg-[#FFB400] mx-auto mb-2 rounded-full"></div>
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.15 }}
-          className="text-base md:text-lg text-center mb-3 text-blue-900 font-medium"
-        >
-          Real Voices from Our Trusted Collaborators Sharing Their Impactful Journey with us
-        </motion.p>
-        
-        <motion.div
-          className="relative mt-12 rounded-3xl shadow-xl bg-white/80 flex justify-center py-8 px-6"
-          style={{ background: "linear-gradient(90deg, #f6fbff 0%, #f9fbfc 100%)" }}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/90 to-[#EEF6FA]/90 pointer-events-none"></div>
+      {/* Section 2: Testimonials - FORCED TO ONE LINE */}
+      <section className="w-full flex flex-col items-center py-10 z-20 overflow-hidden">
+        <div className="max-w-full w-screen mx-auto">
+          <h2 className="text-2xl md:text-4xl font-black text-center mb-2 text-[#162944]">
+            Stories of Partnership & Results
+          </h2>
+          <div className="w-20 h-1 bg-[#FFB400] mx-auto mb-16 rounded-full"></div>
           
-          <div className="relative z-10 flex flex-col md:flex-row justify-center items-center md:items-end gap-y-16 md:gap-8 w-full">
-            {testimonialsData.slice(0, 3).map((testimonial, i) => (
-              <TestimonialCard testimonial={testimonial} key={i} />
+          {/* Container for Horizontal Layout */}
+          <div className="flex overflow-x-auto md:overflow-visible pb-12 px-8 gap-8 justify-start md:justify-center no-scrollbar">
+            {testimonialsData.slice(0, 3).map((testimonial: Testimonial, i: number) => (
+              <TestimonialCard 
+                testimonial={testimonial} 
+                key={i} 
+                index={i}
+                logo={localLogos[i] || localLogos[0]} 
+              />
             ))}
           </div>
-        </motion.div>
 
-        <div className="flex justify-center mt-6 mb-8">
-          <span className="text-5xl text-yellow-400 opacity-60">”</span>
+          <div className="flex justify-center gap-8 mt-10">
+            <button className="w-14 h-14 rounded-full border-2 border-[#162944] flex items-center justify-center text-[#162944] hover:bg-[#162944] hover:text-white transition-all duration-300 shadow-md">
+              <ChevronLeft size={24} />
+            </button>
+            <button className="w-14 h-14 rounded-full border-2 border-[#162944] flex items-center justify-center text-[#162944] hover:bg-[#162944] hover:text-white transition-all duration-300 shadow-md">
+              <ChevronRight size={24} />
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
-  </div>
-);
+      </section>
+    </div>
+  );
+};
 
 export default Clients;
