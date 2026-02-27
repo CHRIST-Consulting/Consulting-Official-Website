@@ -75,7 +75,7 @@ export const upcomingEvents: PastEvent[] = [
     time: "8:30 AM",
     venue: "CHRIST (Deemed to be University), Kengeri Campus",
     category: "industry connects", // This ensures it goes to the correct tab
-    images: ["/images/events/industry/toyota.png"],
+    images: ["/images/events/industry/toyota.png","/images/events/industry/9.png","/images/events/industry/7.png","/images/events/industry/22.png","/images/events/industry/24.png","/images/events/industry/25.png","/images/events/industry/26.png"],
     description: "An exclusive industrial visit and workshop with Toyota Kirloskar Motor. Students gained firsthand insight into Lean Manufacturing, the Toyota Production System (TPS), and supply chain logistics.",
     attendees: 60,
     statsAvailable: true,
@@ -88,14 +88,6 @@ export const upcomingEvents: PastEvent[] = [
       "Q&A with Plant Head",
       "Kaizen implementation workshop",
       "Supply chain simulation game"
-    ],
-    testimonials: [
-      {
-         name: "Rohan M.", 
-         role: "Student Coordinator", 
-         quote: "Seeing TPS in action was a game-changer for understanding operations management.", 
-         image: "https://ui-avatars.com/api/?name=Rohan+M" 
-      }
     ]
   },
   {
@@ -105,7 +97,7 @@ export const upcomingEvents: PastEvent[] = [
     time: "9:00 AM",
     venue: "CHRIST (Deemed to be University), Kengeri Campus",
     category: "past events",
-    images: ["/images/events/past/nasa/nasa.jpeg"],
+    images: ["/images/events/past/nasa/nasa.png","/images/events/past/nasa/6.png","/images/events/past/nasa/10.png","/images/events/past/nasa/11.png"],
     description: "A 48-hour global hackathon where students collaborated to solve real-world space challenges using NASA's open data.",
     attendees: 150,
     statsAvailable: true,
@@ -122,7 +114,7 @@ export const upcomingEvents: PastEvent[] = [
     time: "6:00 PM",
     venue: "CHRIST (Deemed to be University), Central Campus Auditorium",
     category: "past events",
-    images: ["/images/events/past/ConneXion/connexion.png"],
+    images: ["/images/events/past/ConneXion/connexion.png","/images/events/past/ConneXion/12.png","/images/events/past/ConneXion/13.png","/images/events/past/ConneXion/14.png","/images/events/past/ConneXion/15.png","/images/events/past/ConneXion/17.png"],
     description: ["The event, Connexion 2025, Bridging Minds, Building Bonds, served as a crucial platform for incorporating institutional dialogue with academic reflection. It also combined a knowledge exchange between both industries and academia to ensure an era of fruitful collaboration and meaningful contribution to society through this partnership. The event featured formal addresses by the leadership of Christ (Deemed to be University), followed by a panel discussion in the latter half of the evening, in which senior corporate representatives examined the evolving workforce demands, the relevance of internships, and the need for universities to create learning ecosystems which drive innovation. The session brought to light the need for expansion in incubation and research infrastructure, strengthening of industry partnerships, and redesigning of university curricula to align with the emerging technological shifts, particularly that of Artificial Intelligence. Fostering interdisciplinary collaboration across academic programmes was also a crucial highlight of the discussion.\n\nThe open forum enabled the faculty and administrative leaders to engage directly with industry experts and generate curated insights on experimental learning models, implementation of policy and building capable students who would be prepared to tackle transitional changes of the future.\n\n The event reinforced the university’s commitment to becoming an academic institution which is equipped for the future. It emphasised the priorities of employability, entrepreneurial capability, and sustained industry engagement, which the institution works on producing in its students. It symbolised the university’s mission of establishing pathways for future collaborations, Memorandums of Understanding, and joint developmental initiatives to provide the foremost for its pupils."],
     attendees: 90,
     statsAvailable: true,
@@ -139,7 +131,7 @@ export const upcomingEvents: PastEvent[] = [
     time: "6:00 PM",
     venue: "CHRIST (Deemed to be University), Central Campus Auditorium",
     category: "past events",
-    images: ["/images/events/past/Prospero/prospero.png"],
+    images: ["/images/events/past/Prospero/prospero.png","/images/events/past/Prospero/18.png","/images/events/past/Prospero/19.png","/images/events/past/Prospero/20.png","/images/events/past/Prospero/21.png"],
     description: "Prospero’25 was the annual Christmas Gratitude Dinner organised by the CHRIST Incubation and Consultancy Foundation. The event brought together the distinguished clients, consultants, faculty members, and interns from all campuses for an evening of formal celebration, institutional fellowship, and professional networking. It served as a platform to acknowledge partnerships, strengthen engagement, and celebrate the festive season through culture and collaboration.\n\n The programme included formal leadership addresses, curated cultural performances by interns across campuses, a collective musical segment, and a delightful fellowship dinner. The evening reflected the foundation’s continued emphasis on community building, creativity, and professional relationship development in a dignified festive setting.",
     attendees: 50,
     statsAvailable: true,
