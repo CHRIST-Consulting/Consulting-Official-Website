@@ -12,7 +12,7 @@ export interface FeaturedEvent {
   date: string;
   time: string;
   venue: string;
-  description: string;
+  description: string[];
   image: string;
   isUpcoming: boolean;
 }
@@ -25,7 +25,7 @@ export interface PastEvent {
   date: string;
   time?: string; // Added to support upcoming events
   speaker?: string; // Added to support upcoming events
-  description: string;
+  description: string[];
   venue: string;
   category?: string;
   attendees?: number;
@@ -123,14 +123,14 @@ export const upcomingEvents: PastEvent[] = [
     venue: "CHRIST (Deemed to be University), Central Campus Auditorium",
     category: "past events",
     images: ["/images/events/past/ConneXion/connexion.png"],
-    description: "ConneXion 2025 was our flagship networking gala, bringing together students and top-tier consulting professionals.",
-    attendees: 300,
+    description: ["The event, Connexion 2025, Bridging Minds, Building Bonds, served as a crucial platform for incorporating institutional dialogue with academic reflection. It also combined a knowledge exchange between both industries and academia to ensure an era of fruitful collaboration and meaningful contribution to society through this partnership. The event featured formal addresses by the leadership of Christ (Deemed to be University), followed by a panel discussion in the latter half of the evening, in which senior corporate representatives examined the evolving workforce demands, the relevance of internships, and the need for universities to create learning ecosystems which drive innovation. The session brought to light the need for expansion in incubation and research infrastructure, strengthening of industry partnerships, and redesigning of university curricula to align with the emerging technological shifts, particularly that of Artificial Intelligence. Fostering interdisciplinary collaboration across academic programmes was also a crucial highlight of the discussion.\n\nThe open forum enabled the faculty and administrative leaders to engage directly with industry experts and generate curated insights on experimental learning models, implementation of policy and building capable students who would be prepared to tackle transitional changes of the future.\n\n The event reinforced the university’s commitment to becoming an academic institution which is equipped for the future. It emphasised the priorities of employability, entrepreneurial capability, and sustained industry engagement, which the institution works on producing in its students. It symbolised the university’s mission of establishing pathways for future collaborations, Memorandums of Understanding, and joint developmental initiatives to provide the foremost for its pupils."],
+    attendees: 90,
     statsAvailable: true,
     stats: [
       { label: "Companies", value: "15+" },
-      { label: "Leaders", value: "40+" }
+      { label: "Leaders", value: "90+" }
     ],
-    highlights: ["Panel discussion", "Speed networking", "Resume review booths"]
+    highlights: ["Strategic Industry Engagement", "Leadership Keynote", "Navigating the Future of Work","Focus on Experiential Learning","Actionable Open Forum","Networking and Ecosystem Building"]
   },
   {
     id: "prospero-2025",
@@ -140,14 +140,14 @@ export const upcomingEvents: PastEvent[] = [
     venue: "CHRIST (Deemed to be University), Central Campus Auditorium",
     category: "past events",
     images: ["/images/events/past/Prospero/prospero.png"],
-    description: "Prospero was a high-stakes strategy simulation competition. Teams were tasked with solving complex business cases.",
-    attendees: 200,
+    description: "Prospero’25 was the annual Christmas Gratitude Dinner organised by the CHRIST Incubation and Consultancy Foundation. The event brought together the distinguished clients, consultants, faculty members, and interns from all campuses for an evening of formal celebration, institutional fellowship, and professional networking. It served as a platform to acknowledge partnerships, strengthen engagement, and celebrate the festive season through culture and collaboration.\n\n The programme included formal leadership addresses, curated cultural performances by interns across campuses, a collective musical segment, and a delightful fellowship dinner. The evening reflected the foundation’s continued emphasis on community building, creativity, and professional relationship development in a dignified festive setting.",
+    attendees: 50,
     statsAvailable: true,
     stats: [
-      { label: "Case Studies", value: "4" },
-      { label: "Prize Pool", value: "₹50k" }
+      { label: "Attendees", value: "50" },
+      { label: "Campuses", value: "4" }
     ],
-    highlights: ["Live crisis management", "Data analytics workshop", "Final presentations"]
+    highlights: ["Christmas Gratitude Dinner", "Formal Welcome and Keynote Addresses", "Multi-Campus Cultural Showcase","Interactive Sing-Along Segment","Event Aftermovie Screening","Vote of Thanks","Christmas Fellowship Dinner","Cross-Campus and Client Networking"]
   }
 ];
 

@@ -112,7 +112,7 @@ const EventRecapPage = () => {
                 <h2 className="text-3xl font-bold text-primary mb-6 font-heading">
                   Event Overview
                 </h2>
-                <p className="text-lg text-charcoal mb-8">
+                <p className="text-lg text-charcoal mb-8" style={{ whiteSpace: "pre-line" }}>
                   {event.description}
                 </p>
 
