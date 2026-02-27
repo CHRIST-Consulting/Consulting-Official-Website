@@ -1,5 +1,5 @@
 // Type definitions
-export type CategoryId = "all" | "workshops" | "talks";
+export type CategoryId = "all" | "past events" | "industry connects";
 
 export interface Category {
   id: CategoryId;
@@ -12,31 +12,23 @@ export interface FeaturedEvent {
   date: string;
   time: string;
   venue: string;
-  description: string;
+  description: string[];
   image: string;
   isUpcoming: boolean;
 }
 
-export interface UpcomingEvent {
-  id: string;
-  title: string;
-  date: string;
-  time: string;
-  speaker: string;
-  venue: string;
-  category: Exclude<CategoryId, "all">; // Exclude "all" since it's not a real category for events
-  images: string[];
-}
-
+// Unified interface to allow rich data for both past and upcoming events
 export interface PastEvent {
   id: string;
   title: string;
   impact?: string;
   date: string;
-  description: string;
+  time?: string; // Added to support upcoming events
+  speaker?: string; // Added to support upcoming events
+  description: string[];
   venue: string;
+  category?: string;
   attendees?: number;
-  speakers?: string[];
   highlights?: string[];
   images: string[];
   videos?: string[];
@@ -54,60 +46,111 @@ export interface PastEvent {
   }[];
 }
 
+// Re-export PastEvent as UpcomingEvent for compatibility if needed, 
+// or just use PastEvent for everything.
+export type UpcomingEvent = PastEvent;
+
 export const categories: Category[] = [
   { id: "all", name: "All Events" },
-  { id: "workshops", name: "Workshops" },
-  { id: "talks", name: "Industry Talks" },
+  { id: "past events", name: "Past Events" },
+  { id: "industry connects", name: "Industry Connects" },
 ];
 
 export const featuredEvent: FeaturedEvent = {
   title: "CICF INAUGURATION AND STUDENT ORIENTATION 2025",
   date: "5th July, 2025",
   time: "2:00 PM - 3:45 PM",
-  venue:
-    "Campus View, Central Block, CHRIST (Deemed to be University), Central Campus",
-  description:
-    "The CICF Inauguration and Student Orientation 2025 was a vibrant and meticulously organized event that marked the official launch of the new session and welcomed a diverse group of interns into the fold. The proceedings commenced with an energetic welcome by the Emcee, setting a positive tone for the afternoon. This was followed by the traditional Lighting of the Lamp and a heartfelt Welcome Prayer, creating a solemn yet inspiring atmosphere. Father Jossy delivered an engaging welcome address, unveiling the new logo to enthusiastic applause, symbolising a fresh chapter for the organisation. The Guest of Honour, Rishav, delivered a thought-provoking speech, offering valuable insights into leadership and personal growth that resonated deeply with the audience. <br/>The event featured impactful contributions from consultants, with Kiran Ma’am sharing her expertise on consulting methodologies and Shruiti Ma’am providing an inspiring overview of incubation opportunities. A special video message from Dr. Saji Varghese (DAISE) added a unique element, highlighting the importance of interdisciplinary collaboration. The highlight of the afternoon was the Badge Giving Ceremony, a significant moment in which the incoming leadership was formally recognised and welcomed with badges, accompanied by cheers and applause from their peers. The ceremony underscored the importance of leadership development and set a collaborative tone for the year ahead. The event concluded with a Vote of Thanks delivered by the Student Head, expressing gratitude to all participants, followed by a delightful High Tea featuring a single sandwich, one juice, and banana cake, which provided a relaxed opportunity for networking and reflection among attendees.",
+  venue: "Campus View, Central Block, CHRIST (Deemed to be University), Central Campus",
+  description: "The CICF Inauguration and Student Orientation 2025 was a vibrant and meticulously organized event...",
   image: "/images/events/past/investiture-2025/1.png",
   isUpcoming: false,
 };
 
-export const upcomingEvents: UpcomingEvent[] = [
+// Events here will appear in the "Industry Connects" tab OR "Past Events" tab depending on category
+export const upcomingEvents: PastEvent[] = [
   {
-    id: "ai-business-workshop-2025",
-    title: "AI in Business Workshop",
-    date: "April 5, 2025",
-    time: "10:00 AM",
-    speaker: "Prof. Michael Chen",
-    venue: "Online",
-    category: "workshops",
-    images: [
-      "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg",
-    ],
-  },
-  {
-    id: "leadership-symposium-2025",
-    title: "Leadership Symposium",
+    id: "toyota-connect-2025",
+    title: "Toyota Industry Connect",
     date: "April 12, 2025",
-    time: "2:00 PM",
-    speaker: "Industry Panel",
-    venue: "Bannerghatta Campus",
-    category: "talks",
-    images: [
-      "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg",
+    time: "8:30 AM",
+    venue: "CHRIST (Deemed to be University), Kengeri Campus",
+    category: "industry connects", // This ensures it goes to the correct tab
+    images: ["/images/events/industry/toyota.png","/images/events/industry/9.png","/images/events/industry/7.png","/images/events/industry/22.png","/images/events/industry/24.png","/images/events/industry/25.png","/images/events/industry/26.png"],
+    description: "An exclusive industrial visit and workshop with Toyota Kirloskar Motor. Students gained firsthand insight into Lean Manufacturing, the Toyota Production System (TPS), and supply chain logistics.",
+    attendees: 60,
+    statsAvailable: true,
+    stats: [
+      { label: "Industry Experts", value: "5" },
+      { label: "Hours of Training", value: "6" }
     ],
+    highlights: [
+      "Shop floor walk-through",
+      "Q&A with Plant Head",
+      "Kaizen implementation workshop",
+      "Supply chain simulation game"
+    ]
   },
+  {
+    id: "nasa-hackathon-2025",
+    title: "NASA Hackathon",
+    date: "August 22, 2025",
+    time: "9:00 AM",
+    venue: "CHRIST (Deemed to be University), Kengeri Campus",
+    category: "past events",
+    images: ["/images/events/past/nasa/nasa.png","/images/events/past/nasa/6.png","/images/events/past/nasa/10.png","/images/events/past/nasa/11.png"],
+    description: "A 48-hour global hackathon where students collaborated to solve real-world space challenges using NASA's open data.",
+    attendees: 150,
+    statsAvailable: true,
+    stats: [
+      { label: "Teams", value: "25" },
+      { label: "Projects", value: "18" }
+    ],
+    highlights: ["Keynote by ISRO Scientists", "24-hour nonstop coding", "Mentorship from experts"]
+  },
+  {
+    id: "connexion-2025",
+    title: "ConneXion 2025",
+    date: "November 22, 2025",
+    time: "6:00 PM",
+    venue: "CHRIST (Deemed to be University), Central Campus Auditorium",
+    category: "past events",
+    images: ["/images/events/past/ConneXion/connexion.png","/images/events/past/ConneXion/12.png","/images/events/past/ConneXion/13.png","/images/events/past/ConneXion/14.png","/images/events/past/ConneXion/15.png","/images/events/past/ConneXion/17.png"],
+    description: ["The event, Connexion 2025, Bridging Minds, Building Bonds, served as a crucial platform for incorporating institutional dialogue with academic reflection. It also combined a knowledge exchange between both industries and academia to ensure an era of fruitful collaboration and meaningful contribution to society through this partnership. The event featured formal addresses by the leadership of Christ (Deemed to be University), followed by a panel discussion in the latter half of the evening, in which senior corporate representatives examined the evolving workforce demands, the relevance of internships, and the need for universities to create learning ecosystems which drive innovation. The session brought to light the need for expansion in incubation and research infrastructure, strengthening of industry partnerships, and redesigning of university curricula to align with the emerging technological shifts, particularly that of Artificial Intelligence. Fostering interdisciplinary collaboration across academic programmes was also a crucial highlight of the discussion.\n\nThe open forum enabled the faculty and administrative leaders to engage directly with industry experts and generate curated insights on experimental learning models, implementation of policy and building capable students who would be prepared to tackle transitional changes of the future.\n\n The event reinforced the university’s commitment to becoming an academic institution which is equipped for the future. It emphasised the priorities of employability, entrepreneurial capability, and sustained industry engagement, which the institution works on producing in its students. It symbolised the university’s mission of establishing pathways for future collaborations, Memorandums of Understanding, and joint developmental initiatives to provide the foremost for its pupils."],
+    attendees: 90,
+    statsAvailable: true,
+    stats: [
+      { label: "Companies", value: "15+" },
+      { label: "Leaders", value: "90+" }
+    ],
+    highlights: ["Strategic Industry Engagement", "Leadership Keynote", "Navigating the Future of Work","Focus on Experiential Learning","Actionable Open Forum","Networking and Ecosystem Building"]
+  },
+  {
+    id: "prospero-2025",
+    title: "Prospero",
+    date: "December 15, 2025",
+    time: "6:00 PM",
+    venue: "CHRIST (Deemed to be University), Central Campus Auditorium",
+    category: "past events",
+    images: ["/images/events/past/Prospero/prospero.png","/images/events/past/Prospero/18.png","/images/events/past/Prospero/19.png","/images/events/past/Prospero/20.png","/images/events/past/Prospero/21.png"],
+    description: "Prospero’25 was the annual Christmas Gratitude Dinner organised by the CHRIST Incubation and Consultancy Foundation. The event brought together the distinguished clients, consultants, faculty members, and interns from all campuses for an evening of formal celebration, institutional fellowship, and professional networking. It served as a platform to acknowledge partnerships, strengthen engagement, and celebrate the festive season through culture and collaboration.\n\n The programme included formal leadership addresses, curated cultural performances by interns across campuses, a collective musical segment, and a delightful fellowship dinner. The evening reflected the foundation’s continued emphasis on community building, creativity, and professional relationship development in a dignified festive setting.",
+    attendees: 50,
+    statsAvailable: true,
+    stats: [
+      { label: "Attendees", value: "50" },
+      { label: "Campuses", value: "4" }
+    ],
+    highlights: ["Christmas Gratitude Dinner", "Formal Welcome and Keynote Addresses", "Multi-Campus Cultural Showcase","Interactive Sing-Along Segment","Event Aftermovie Screening","Vote of Thanks","Christmas Fellowship Dinner","Cross-Campus and Client Networking"]
+  }
 ];
 
+// Events that are strictly historical and not in the "Upcoming" list logic (like Investiture)
 export const pastEvents: PastEvent[] = [
   {
     id: "investiture-2025",
     title: "CICF INAUGURATION AND STUDENT ORIENTATION 2025",
     date: "5th June, 2025",
-    description:
-      "The CICF Inauguration and Student Orientation 2025 was a vibrant and meticulously organized event that marked the official launch of the new session and welcomed a diverse group of interns into the fold. The proceedings commenced with an energetic welcome by the Emcee, setting a positive tone for the afternoon. This was followed by the traditional Lighting of the Lamp and a heartfelt Welcome Prayer, creating a solemn yet inspiring atmosphere. Father Jossy delivered an engaging welcome address, unveiling the new logo to enthusiastic applause, symbolising a fresh chapter for the organisation. The Guest of Honour, Rishav, delivered a thought-provoking speech, offering valuable insights into leadership and personal growth that resonated deeply with the audience. <br/>The event featured impactful contributions from consultants, with Kiran Ma’am sharing her expertise on consulting methodologies and Shruiti Ma’am providing an inspiring overview of incubation opportunities. A special video message from Dr. Saji Varghese (DAISE) added a unique element, highlighting the importance of interdisciplinary collaboration. The highlight of the afternoon was the Badge Giving Ceremony, a significant moment in which the incoming leadership was formally recognised and welcomed with badges, accompanied by cheers and applause from their peers. The ceremony underscored the importance of leadership development and set a collaborative tone for the year ahead. The event concluded with a Vote of Thanks delivered by the Student Head, expressing gratitude to all participants, followed by a delightful High Tea featuring a single sandwich, one juice, and banana cake, which provided a relaxed opportunity for networking and reflection among attendees.",
-    venue:
-      "Campus View, Central Block, CHRIST (Deemed to be University), Central Campus",
+    description: "The CICF Inauguration and Student Orientation 2025 was a vibrant and meticulously organized event that marked the official launch of the new session.",
+    venue: "Campus View, Central Block, CHRIST (Deemed to be University), Central Campus",
     images: [
       "/images/events/past/investiture-2025/1.png",
       "/images/events/past/investiture-2025/2.png",
@@ -116,26 +159,20 @@ export const pastEvents: PastEvent[] = [
       "/images/events/past/investiture-2025/5.jpg",
     ],
     statsAvailable: false,
-  },
+    category: "past events"
+  }
 ];
 
 // Utility functions
-export const getEventById = (id: string): PastEvent | UpcomingEvent | null => {
-  const pastEvent = pastEvents.find((event) => event.id === id);
-  const upcomingEvent = upcomingEvents.find((event) => event.id === id);
-  return pastEvent || upcomingEvent || null;
+export const getEventById = (id: string): PastEvent | null => {
+  const all = [...upcomingEvents, ...pastEvents];
+  return all.find((event) => event.id === id) || null;
 };
 
 export const getPastEventById = (id: string): PastEvent | null => {
-  return pastEvents.find((event) => event.id === id) || null;
+  return getEventById(id);
 };
 
-export const getEventsByCategory = (
-  categoryId: Exclude<CategoryId, "all">
-): UpcomingEvent[] => {
-  return upcomingEvents.filter((event) => event.category === categoryId);
-};
-
-export const getAllEvents = (): (UpcomingEvent | PastEvent)[] => {
+export const getAllEvents = (): PastEvent[] => {
   return [...upcomingEvents, ...pastEvents];
 };

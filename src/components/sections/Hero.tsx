@@ -9,21 +9,23 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 
-// Stable typing words array (module scope to avoid changing refs per render)
 const TYPING_WORDS = ["Smarter", "Faster", "Better", "Stronger"];
 
+// Smooth spring configuration for entrance animations
+const smoothSpring = {
+  type: "spring",
+  stiffness: 70,
+  damping: 15,
+  mass: 1
+};
+
 const Hero = () => {
-  //this part is for typing effect
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(150);
 
-  // Typing effect logic
-  const currentWord = useMemo(
-    () => TYPING_WORDS[currentWordIndex],
-    [currentWordIndex]
-  );
+  const currentWord = useMemo(() => TYPING_WORDS[currentWordIndex], [currentWordIndex]);
 
   const handleTyping = useCallback(() => {
     if (!isDeleting) {
@@ -31,12 +33,10 @@ const Hero = () => {
         setCurrentText(currentWord.slice(0, currentText.length + 1));
         setTypingSpeed(150);
       } else {
-        // starts deleting
         setTypingSpeed(2000);
         setIsDeleting(true);
       }
     } else {
-      // deleting
       if (currentText.length > 0) {
         setCurrentText(currentWord.slice(0, currentText.length - 1));
         setTypingSpeed(100);
@@ -54,23 +54,11 @@ const Hero = () => {
     }, typingSpeed);
     return () => clearTimeout(timeout);
   }, [handleTyping, typingSpeed]);
-  //sliding carousel
+
   const heroImages = [
-    {
-      src: "/images/home/hero.png",
-      title: "Excellence in Action",
-      subtitle: "Where expertise meets innovation",
-    },
-    {
-      src: "/images/home/hero1.png",
-      title: "Leading Consultancy",
-      subtitle: "Transforming businesses worldwide",
-    },
-    {
-      src: "/images/services/hero-consulting-team.jpg",
-      title: "Expert Team",
-      subtitle: "Professional consulting at its finest",
-    },
+    { src: "/images/home/hero.JPG", title: "Excellence in Action", subtitle: "Where expertise meets innovation" },
+    { src: "/images/services/hero-consulting-team.jpg", title: "Leading Consultancy", subtitle: "Transforming businesses worldwide" },
+    { src: "/images/home/hero.png", title: "Expert Team", subtitle: "Professional consulting at its finest" },
   ];
 
   const extendedImages = [
@@ -83,7 +71,7 @@ const Hero = () => {
   const [transitionEnabled, setTransitionEnabled] = useState(true);
 
   const stats = [
-    { number: "100+", label: "Student Interns", icon: GraduationCap },
+    { number: "6", label: "Campuses", icon: GraduationCap },
     { number: "1500+", label: "Teaching Faculties", icon: UserCheck },
     { number: "32+", label: "Specialisms", icon: BookOpen },
   ];
@@ -97,20 +85,26 @@ const Hero = () => {
 
   useEffect(() => {
     if (index === extendedImages.length - 1) {
-      setTransitionEnabled(false);
-      setIndex(1);
+      // Delay disabling transition to allow the animation to finish
+      const timer = setTimeout(() => {
+        setTransitionEnabled(false);
+        setIndex(1);
+      }, 700); 
+      return () => clearTimeout(timer);
     } else if (index === 0) {
-      setTransitionEnabled(false);
-      setIndex(extendedImages.length - 2);
+      const timer = setTimeout(() => {
+        setTransitionEnabled(false);
+        setIndex(extendedImages.length - 2);
+      }, 700);
+      return () => clearTimeout(timer);
     }
   }, [index, extendedImages.length]);
 
   useEffect(() => {
     if (!transitionEnabled) {
-      const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
         requestAnimationFrame(() => setTransitionEnabled(true));
       });
-      return () => cancelAnimationFrame(id);
     }
   }, [transitionEnabled]);
 
@@ -120,13 +114,10 @@ const Hero = () => {
       className="relative flex w-full min-h-[90vh] items-center has-navbar-offset overflow-hidden bg-gradient-to-br from-secondary via-white to-ice-blue"
     >
       <div aria-hidden className="absolute inset-0 z-0">
-        {/* Subtle background image with light masks */}
         <div className="absolute inset-0 bg-[url('/images/home/bg-1.jpg')] bg-cover bg-center select-none pointer-events-none" />
-        {/* Section gradient veil */}
         <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/70 to-white/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-white/20 via-transparent to-transparent" />
 
-        {/* Floating orbs per design system */}
         <motion.div
           animate={{ x: [0, 100, 0], y: [0, -50, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -136,7 +127,6 @@ const Hero = () => {
           animate={{ x: [0, -80, 0], y: [0, 100, 0] }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
           className="absolute bottom-20 -right-10 w-40 h-40 bg-gradient-to-br from-primary/15 via-royal-blue/10 to-transparent rounded-full blur-2xl"
-          style={{ animationDelay: "2s" }}
         />
       </div>
 
@@ -147,305 +137,114 @@ const Hero = () => {
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.8, ...smoothSpring }}
                 className="w-full lg:w-1/2 flex flex-col gap-6"
               >
                 {/* Featured Image Card */}
-                <div className="hero-card group">
+                <div className="hero-card group overflow-hidden rounded-2xl">
                   <div
-                    className={`hero-carousel-track ${
+                    className={`hero-carousel-track flex h-full ${
                       transitionEnabled
-                        ? "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                        ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
                         : "transition-none"
                     }`}
-                    style={{ transform: `translateX(-${index * 100}%)` }}
+                    style={{ 
+                        transform: `translateX(-${index * 100}%)`,
+                        willChange: "transform" // Force GPU use for smoothness
+                    }}
                   >
                     {extendedImages.map((image, i) => (
                       <div key={i} className="relative w-full h-full shrink-0">
                         <img
                           src={image.src}
                           alt={image.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                           loading={i === 1 ? "eager" : "lazy"}
                           decoding="async"
                         />
-
                         <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent" />
-
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.6, delay: 0.3 }}
-                          className="absolute bottom-6 left-6 right-6"
-                        >
-                          <h3 className="text-white text-xl sm:text-2xl font-bold drop-shadow-lg">
-                            {image.title}
-                          </h3>
-                          <p className="text-white/90 text-sm sm:text-base drop-shadow-md mt-1">
-                            {image.subtitle}
-                          </p>
-                        </motion.div>
+                        <div className="absolute bottom-6 left-6 right-6">
+                          <h3 className="text-white text-xl sm:text-2xl font-bold drop-shadow-lg">{image.title}</h3>
+                          <p className="text-white/90 text-sm sm:text-base drop-shadow-md mt-1">{image.subtitle}</p>
+                        </div>
                       </div>
                     ))}
                   </div>
 
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3">
+                  {/* Dot Indicators */}
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 z-20">
                     {heroImages.map((_, dotIndex) => {
-                      const active =
-                        (index - 1 + heroImages.length) % heroImages.length ===
-                        dotIndex;
+                      const active = (index - 1 + heroImages.length) % heroImages.length === dotIndex;
                       return (
-                        <motion.button
+                        <button
                           key={dotIndex}
                           onClick={() => setIndex(dotIndex + 1)}
-                          aria-label={`Go to slide ${dotIndex + 1}`}
-                          whileHover={{ scale: 1.2 }}
-                          whileTap={{ scale: 0.9 }}
                           className={`h-3 w-3 rounded-full border-2 transition-all duration-300 ${
-                            active
-                              ? "bg-white border-white shadow-lg shadow-white/50"
-                              : "bg-white/40 border-white/60 hover:bg-white/70 hover:border-white/90"
+                            active ? "bg-white border-white scale-110" : "bg-white/40 border-white/60"
                           }`}
                         />
                       );
                     })}
                   </div>
-
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                 </div>
 
-                {/* Impact Stats Cards - Compact Row Layout */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 1.0 }}
-                  className="flex flex-col gap-3"
-                >
-                  {/* Section Title - Compact */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.2 }}
-                    className="flex items-center gap-2"
-                  >
-                    <div className="h-px bg-gradient-to-r from-transparent via-primary/30 to-primary/30 flex-1" />
-                    <p className="text-primary/80 text-xs sm:text-sm font-semibold tracking-wide flex items-center gap-1.5">
-                      <Target className="w-3 h-3 sm:w-4 sm:h-4 text-accent" />
-                      <span className="hidden sm:inline">
-                        Our Impact at a Glance
-                      </span>
-                      <span className="sm:hidden">Impact</span>
-                    </p>
-                    <div className="h-px bg-gradient-to-l from-transparent via-primary/30 to-primary/30 flex-1" />
-                  </motion.div>
-
-                  {/* Stats Cards - Single Row Layout */}
-                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                    {stats.map((stat, idx) => {
-                      const Icon = stat.icon;
-                      return (
-                        <motion.div
-                          key={idx}
-                          initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          transition={{ duration: 0.6, delay: 1.4 + idx * 0.1 }}
-                          whileHover={{ y: -2, scale: 1.02 }}
-                          className="group cursor-pointer w-full"
-                        >
-                          <div className="w-full h-[80px] sm:h-[90px] rounded-lg sm:rounded-xl bg-white/95 backdrop-blur-sm border border-primary/10 shadow-sm hover:shadow-lg hover:shadow-primary/15 p-2 sm:p-3 transition-all duration-300 relative overflow-hidden flex flex-col items-center justify-center">
-                            {/* Background gradient on hover */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                            <div className="relative z-10 flex flex-col items-center text-center gap-1 sm:gap-1.5 w-full">
-                              <motion.div
-                                whileHover={{ rotate: 360 }}
-                                transition={{ duration: 0.6 }}
-                                className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md bg-gradient-to-br from-primary/10 to-accent/10 group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-300 flex-shrink-0"
-                              >
-                                <Icon
-                                  size={12}
-                                  className="sm:w-3.5 sm:h-3.5 text-primary group-hover:text-primary-light transition-colors"
-                                />
-                              </motion.div>
-                              <div className="w-full flex flex-col items-center min-h-0">
-                                <motion.div
-                                  className="text-base sm:text-lg font-black text-primary leading-none whitespace-nowrap"
-                                  whileHover={{ scale: 1.05 }}
-                                  transition={{
-                                    type: "spring",
-                                    stiffness: 300,
-                                  }}
-                                >
-                                  {stat.number}
-                                </motion.div>
-                                <div className="text-[10px] sm:text-xs text-primary/70 font-medium mt-0.5 group-hover:text-primary transition-colors leading-tight text-center px-1 overflow-hidden">
-                                  <div className="truncate w-full">
-                                    {stat.label}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Animated border */}
-                            <motion.div
-                              className="absolute inset-0 rounded-lg sm:rounded-xl border-2 border-transparent"
-                              whileHover={{
-                                borderColor: "rgba(15, 42, 77, 0.2)",
-                              }}
-                              transition={{ duration: 0.3 }}
-                            />
-                          </div>
-                        </motion.div>
-                      );
-                    })}
-                  </div>
-                </motion.div>
+                {/* Stats Row */}
+                <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                  {stats.map((stat, idx) => {
+                    const Icon = stat.icon;
+                    return (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.8 + idx * 0.1, ...smoothSpring }}
+                        className="group cursor-pointer w-full h-[80px] sm:h-[90px] rounded-lg bg-white/95 border border-primary/10 shadow-sm flex flex-col items-center justify-center relative overflow-hidden"
+                      >
+                        <Icon size={14} className="text-primary mb-1" />
+                        <div className="text-base sm:text-lg font-black text-primary leading-none">{stat.number}</div>
+                        <div className="text-[10px] sm:text-xs text-primary/70 font-medium">{stat.label}</div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
               </motion.div>
 
+              {/* Right Side Content */}
               <div className="w-full lg:w-1/2 flex flex-col justify-center gap-6 sm:gap-8">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="text-left space-y-4"
+                  transition={{ duration: 0.8, delay: 0.2, ...smoothSpring }}
+                  className="space-y-4"
                 >
-                  {/* Overline with icon */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                    className="flex items-center gap-2 text-primary font-semibold text-sm sm:text-base tracking-wide uppercase"
-                  >
-                    <Sparkles className="w-4 h-4 text-accent" />
-                    Leading Business Transformation
-                  </motion.div>
+                  <div className="flex items-center gap-2 text-primary font-semibold text-sm uppercase">
+                    <Sparkles className="w-4 h-4 text-accent" /> Leading Business Transformation
+                  </div>
 
-                  {/* Main headline with gradient and emphasis */}
-                  <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.6 }}
-                    className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-none"
-                  >
+                  <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-none">
                     <span className="text-charcoal">Empowering</span>{" "}
-                    <span className="bg-gradient-to-r from-primary via-royal-blue to-primary bg-clip-text text-transparent">
-                      Businesses
-                    </span>{" "}
+                    <span className="bg-gradient-to-r from-primary via-royal-blue to-primary bg-clip-text text-transparent">Businesses</span>{" "}
                     <span className="text-charcoal">to Scale</span>{" "}
-                    <span className="relative inline-block min-w-[200px] sm:min-w-[240px] lg:min-w-[280px]">
-                      <span className="bg-gradient-to-r from-accent to-royal-blue bg-clip-text text-transparent">
-                        {currentText}
-                        <motion.span
-                          animate={{ opacity: [1, 0] }}
-                          transition={{
-                            duration: 0.8,
-                            repeat: Infinity,
-                            repeatType: "reverse",
-                          }}
-                          className="text-accent"
-                        >
-                          |
-                        </motion.span>
-                      </span>
-                      <motion.div
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                        }}
-                        className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full"
-                      />
+                    <span className="relative inline-block min-w-[200px]">
+                      <span className="bg-gradient-to-r from-accent to-royal-blue bg-clip-text text-transparent">{currentText}</span>
+                      <motion.span animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }} className="text-accent">|</motion.span>
                     </span>
-                  </motion.h1>
+                  </h1>
 
-                  {/* Enhanced subtitle with better typography */}
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.8 }}
-                    className="text-lg sm:text-xl lg:text-2xl text-charcoal/80 font-medium leading-relaxed max-w-2xl"
-                  >
-                    We help{" "}
-                    <span className="font-bold text-primary">
-                      startups and enterprises
-                    </span>{" "}
-                    unlock exponential growth with{" "}
-                    <span className="font-bold text-accent-dark">
-                      tailored strategies
-                    </span>
-                    , data-driven decisions, and{" "}
-                    <span className="font-bold text-royal-blue">
-                      innovative solutions
-                    </span>
-                    .
-                  </motion.p>
-
-                  {/* Key benefits with icons */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.0 }}
-                    className="flex flex-wrap gap-4 pt-2"
-                  >
-                    {[
-                      { icon: Target, text: "Strategic Excellence" },
-                      { icon: Sparkles, text: "Innovation-Driven" },
-                      { icon: GraduationCap, text: "Expert Team" },
-                    ].map((benefit, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center gap-2 text-primary font-semibold"
-                      >
-                        <benefit.icon className="w-4 h-4 text-accent" />
-                        <span className="text-sm sm:text-base">
-                          {benefit.text}
-                        </span>
-                      </div>
-                    ))}
-                  </motion.div>
+                  <p className="text-lg sm:text-xl text-charcoal/80 font-medium leading-relaxed max-w-2xl">
+                    We help <span className="text-primary font-bold">startups and enterprises</span> unlock growth.
+                  </p>
                 </motion.div>
 
-                {/* Enhanced CTAs with animations */}
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 1.2 }}
+                  transition={{ duration: 0.8, delay: 0.5, ...smoothSpring }}
                   className="flex flex-col sm:flex-row gap-4"
                 >
-                  <motion.a
-                    href="#contact"
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="group inline-flex items-center justify-center h-14 px-12 rounded-xl text-white font-bold text-lg tracking-wide transition-all duration-300 relative overflow-hidden btn-primary shadow-[0_4px_15px_rgba(15,42,77,0.3)] bg-gradient-to-r from-primary to-royal-blue hover:from-royal-blue hover:to-primary whitespace-nowrap"
-                  >
-                    <span className="relative z-10 flex items-center gap-2 whitespace-nowrap">
-                      Contact Us
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
-                    </span>
-                    <motion.div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                      whileHover={{ scale: 1.05 }}
-                    />
-                  </motion.a>
-
-                  <motion.a
-                    href="#clients"
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="group inline-flex items-center justify-center h-14 px-12 rounded-xl bg-white/90 backdrop-blur-sm text-primary font-bold text-lg tracking-wide border-2 border-white/40 hover:border-yellow-400/50 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-yellow-400/20 whitespace-nowrap"
-                  >
-                    <span className="flex items-center gap-2 whitespace-nowrap">
-                      See Our Success Stories
-                      <motion.div
-                        animate={{ x: [0, 4, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                        className="flex-shrink-0"
-                      >
-                        <ArrowRight className="w-5 h-5" />
-                      </motion.div>
-                    </span>
-                  </motion.a>
+                  <a href="#contact" className="inline-flex items-center justify-center h-14 px-12 rounded-xl text-white font-bold bg-primary hover:bg-royal-blue transition-colors shadow-lg">
+                    Contact Us <ArrowRight className="ml-2 w-5 h-5" />
+                  </a>
                 </motion.div>
               </div>
             </div>

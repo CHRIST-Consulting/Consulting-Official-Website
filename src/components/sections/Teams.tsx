@@ -153,7 +153,7 @@ const Teams = () => {
           </div>
         </div>
 
-        <div className="mt-10">
+        {/*<div className="mt-10">
           <ScrollAnimation>
             <SectionTitle
               title="Student Leaders"
@@ -187,13 +187,13 @@ const Teams = () => {
               </ScrollAnimation>
             ))}
           </div>
-        </div>
+        </div>*/}
 
         <ScrollAnimation>
           <div className="mt-20 bg-white rounded-2xl p-8 py-20 md:p-12">
             <div className="max-w-4xl mx-auto">
               <blockquote className="text-2xl md:text-3xl text-primary font-heading text-center italic">
-                "CHRIST Consulting empowers students and mentors to collaborate,
+                "CHRIST Consulting empowers faculty expertise and mentors to collaborate,
                 innovate, and lead real-world projects together."
               </blockquote>
             </div>
