@@ -66,6 +66,7 @@ export const facultyConsultantsData: TeamMember[] = [
     image: "/images/teams/consultants/Sharanya.png",
     expertise:
       "Ms Sai Sharanya is consultant with a postgraduate degree in Ancient History and Archaeology, she combines analytical depth with creative strategy. Formerly a social media strategist at Pathika Technologies and an ex-Christite.",
+    linkedin: "https://www.linkedin.com/in/sai-sharanya-3084a7296/",
     email: "saisharanya.n@christuniversity.in",
   },
 ];
