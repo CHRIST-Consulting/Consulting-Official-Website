@@ -93,7 +93,11 @@ const Services = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mt-12 items-stretch">
           {services.map((service, index) => (
             <ScrollAnimation key={index} delay={index * 100}>
-              <div className="group relative h-full flex flex-col">
+              {/* Changed div to a tag with href="/expertise" and cursor-pointer */}
+              <a 
+                href="/expertise" 
+                className="group relative h-full flex flex-col cursor-pointer outline-none block"
+              >
                 {/* Card background with glassmorphism effect */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-500 transform group-hover:-translate-y-2"></div>
 
@@ -168,7 +172,7 @@ const Services = () => {
                   {/* Bottom border accent */}
                   <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                 </div>
-              </div>
+              </a>
             </ScrollAnimation>
           ))}
         </div>

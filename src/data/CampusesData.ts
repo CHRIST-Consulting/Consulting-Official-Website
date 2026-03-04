@@ -32,6 +32,133 @@ export const campusesData: Campus[] = [
     name: "Central Campus",
     location: "Bangalore",
     image: "/images/campuses/central-campus.jpg",
+    description: "COMING SOON",
+    link: "https://www.christuniversity.in/#",
+    stats: {
+      totalProjects: 3,
+      activeProjects: 2,
+      studentsInvolved: 320,
+      completionRate: "33%",
+    },
+    projects: [],
+  },
+  {
+    name: "Bannerghatta Road Campus",
+    location: "Bangalore",
+    image: "/images/campuses/bannerghatta-campus.jpg",
+    description: "COMING SOOn",
+    link: "https://christuniversity.in/campus/Bangalore%20Bannerghatta%20Road%20Campus",
+    stats: {
+      totalProjects: 2,
+      activeProjects: 1,
+      studentsInvolved: 280,
+      completionRate: "50%",
+    },
+    projects: [
+      
+    ],
+  },
+  {
+    name: "Kengeri Campus",
+    location: "Bangalore",
+    image: "/images/campuses/kengeri-campus.jpg",
+    description: "COMING SOON",
+    link: "https://christuniversity.in/campus/Bangalore%20Kengeri%20Campus",
+    stats: {
+      totalProjects: 3,
+      activeProjects: 3,
+      studentsInvolved: 450,
+      completionRate: "0%",
+    },
+    projects: [
+      
+    ],
+  },
+  {
+    name: "Yeshwanthpur Campus",
+    location: "Bangalore",
+    image: "/images/campuses/yeshwanthpur-campus.jpg",
+    description: "COMING SOON",
+    link: "https://christuniversity.in/campus/Yeshwanthpur%20Campus",
+    stats: {
+      totalProjects: 2,
+      activeProjects: 1,
+      studentsInvolved: 380,
+      completionRate: "50%",
+    },
+    projects: [
+      
+    ],
+  },
+  {
+    name: "Pune Lavasa Campus",
+    location: "Off Campus",
+    image: "/images/campuses/pune-lavasa-campus.jpg",
+    description: "COMING SOON",
+    link: "https://lavasa.christuniversity.in/",
+    stats: {
+      totalProjects: 2,
+      activeProjects: 1,
+      studentsInvolved: 200,
+      completionRate: "50%",
+    },
+    projects: [
+      
+    ],
+  },
+  {
+    name: "Delhi NCR Campus",
+    location: "Off Campus",
+    image: "/images/campuses/delhi-ncr-campus.jpg",
+    description: "COMING SOON",
+    link: "https://ncr.christuniversity.in/",
+    stats: {
+      totalProjects: 2,
+      activeProjects: 2,
+      studentsInvolved: 250,
+      completionRate: "0%",
+    },
+    projects: [
+      
+    ],
+  },
+];
+
+{/*
+  export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  status: "Active" | "Planning" | "Completed";
+  startDate: string;
+  endDate?: string;
+  teamSize: number;
+  category: string;
+  image: string;
+  tags: string[];
+  priority: "High" | "Medium" | "Low";
+}
+
+export interface Campus {
+  name: string;
+  location: string;
+  image: string;
+  description: string;
+  link: string;
+  projects: Project[];
+  stats: {
+    totalProjects: number;
+    activeProjects: number;
+    studentsInvolved: number;
+    completionRate: string;
+  };
+}
+
+export const campusesData: Campus[] = [
+  {
+    name: "Central Campus",
+    location: "Bangalore",
+    image: "/images/campuses/central-campus.jpg",
     description: "Our flagship campus in the heart of Bangalore",
     link: "https://www.christuniversity.in/#",
     stats: {
@@ -393,3 +520,5 @@ export const campusesData: Campus[] = [
     ],
   },
 ];
+
+  */}
