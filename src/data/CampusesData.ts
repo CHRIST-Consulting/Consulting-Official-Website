@@ -46,7 +46,7 @@ export const campusesData: Campus[] = [
     name: "Bannerghatta Road Campus",
     location: "Bangalore",
     image: "/images/campuses/bannerghatta-campus.jpg",
-    description: "COMING SOOn",
+    description: "COMING SOON",
     link: "https://christuniversity.in/campus/Bangalore%20Bannerghatta%20Road%20Campus",
     stats: {
       totalProjects: 2,

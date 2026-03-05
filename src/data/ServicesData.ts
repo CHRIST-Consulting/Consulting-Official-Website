@@ -47,7 +47,7 @@ export const getServicesData = (): Service[] => [
       "Primary & secondary data studies",
       "Field research execution",
     ],
-    image: "/images/services/digital-transformation.jpg",
+    image: "/images/services/digital-transformation.png",
   },
   {
     icon: React.createElement(Globe, { size: 40, className: "text-primary" }),

@@ -56,9 +56,9 @@ const Hero = () => {
   }, [handleTyping, typingSpeed]);
 
   const heroImages = [
-    { src: "/images/home/hero.JPG", title: "Excellence in Action", subtitle: "Where expertise meets innovation" },
     { src: "/images/services/hero-consulting-team.jpg", title: "Leading Consultancy", subtitle: "Transforming businesses worldwide" },
-    { src: "/images/home/hero.png", title: "Expert Team", subtitle: "Professional consulting at its finest" },
+    { src: "/images/home/hero.png", title: "Excellence in Action", subtitle: "Where expertise meets innovation" },
+    { src: "/images/home/hero.JPG", title: "Expert Team", subtitle: "Professional consulting at its finest" },
   ];
 
   const extendedImages = [
