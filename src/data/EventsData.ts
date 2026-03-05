@@ -172,9 +172,6 @@ export const pastEvents: PastEvent[] = [
     images: [
       "/images/events/past/investiture-2025/1.JPG",
       "/images/events/past/investiture-2025/2.JPG",
-      "/images/events/past/investiture-2025/3.JPG",
-      "/images/events/past/investiture-2025/4.JPG",
-      "/images/events/past/investiture-2025/5.JPG",
       "/images/events/past/investiture-2025/6.JPG",
       "/images/events/past/investiture-2025/7.JPG",
       "/images/events/past/investiture-2025/8.JPG",
