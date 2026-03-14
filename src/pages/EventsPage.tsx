@@ -45,21 +45,23 @@ const EventsPage = () => {
   return (
     <main className="pt-16">
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center bg-gradient-to-r from-[#4682b4] to-[#78bdf2] overflow-hidden">
-        <div className="absolute inset-0 bg-white"></div>
-        <div className="section-container relative z-10 py-20">
+      <section className="relative min-h-[60vh] flex items-center bg-gradient-to-r from-[#0d3463] to-[#154b8d] overflow-hidden">
+        {/* Subtle overlay to add depth like the original image */}
+        <div className="absolute inset-0 bg-black/5"></div>
+  
+        <div className="section-container relative z-10 py-20 px-6 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <ScrollAnimation>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-primary mb-6 font-heading">
-                <span className="text-sky-blue">Experience</span> the Momentum
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-heading text-white">
+                <span className="text-[#6bb5ff]">Experience</span> the Momentum
               </h1>
-              <p className="text-xl text-charcoal mb-8">
+              <p className="text-xl text-blue-50/90 mb-8 max-w-lg">
                 Stay updated with academic events, corporate interactions, and
                 exclusive expert sessions curated by CHRIST Consulting.
               </p>
               <a
                 href="#upcoming"
-                className="btn-primary bg-primary text-white hover:bg-white/90"
+                className="inline-block px-8 py-3 rounded-md font-semibold transition-all bg-[#0d1b31] text-white border border-white/10 hover:bg-white hover:text-[#0d3463]"
               >
                 View All Events
               </a>
@@ -68,6 +70,7 @@ const EventsPage = () => {
         </div>
       </section>
 
+      
       {/* Featured Event */}
       {featuredEvent && (
         <section className="py-20 bg-secondary">
