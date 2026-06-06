@@ -14,6 +14,7 @@ const Team = lazy(() => import("./pages/TeamsPage"));
 const Expertise = lazy(() => import("./pages/ExpertisePage"));
 const Lab = lazy(() => import("./pages/LabsPage"));
 const EventRecapPage = lazy(() => import("./pages/EventsRecapPage"));
+const InternshipRegistration = lazy(() => import("./pages/InternshipRegistrationPage"));
 
 function App() {
   const location = useLocation();
@@ -39,6 +40,7 @@ function App() {
                 <Route path="/teams" element={<Team />} />
                 <Route path="/expertise" element={<Expertise />} />
                 <Route path="/labs" element={<Lab />} />
+                <Route path="/internship-registration" element={<InternshipRegistration />} />
               </Routes>
             </Suspense>
           </ChristLoadingScreen>
