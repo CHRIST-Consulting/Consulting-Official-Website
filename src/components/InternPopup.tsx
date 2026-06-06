@@ -14,20 +14,15 @@ const InternPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Check if the user has already seen the popup in this session
-    const hasSeen = sessionStorage.getItem("hasSeenInternPopup");
-    if (!hasSeen) {
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 1500); // 1.5-second delay for a smooth entry
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+    }, 1500); // 1.5-second delay for a smooth entry
 
-      return () => clearTimeout(timer);
-    }
+    return () => clearTimeout(timer);
   }, []);
 
   const handleClose = () => {
     setIsOpen(false);
-    sessionStorage.setItem("hasSeenInternPopup", "true");
   };
 
   const handleOpenChange = (open: boolean) => {
