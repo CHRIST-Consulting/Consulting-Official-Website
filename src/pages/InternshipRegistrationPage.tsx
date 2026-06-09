@@ -61,7 +61,7 @@ const InternshipRegistrationPage = () => {
                 Program Overview
               </h2>
               <p className="text-charcoal leading-relaxed text-sm sm:text-base">
-                The CHRIST Consulting Internship Program is a selective 6-month initiative designed to give students practical exposure to management consulting, research, and client relationship management. Under the mentorship of experienced faculty and industry veterans, interns play a crucial role in gathering intelligence, conducting analysis, and designing solutions for active clients.
+                The CHRIST Incubation and Consultancy Foundation Internship Program is a selective 6-month initiative designed to give students practical exposure to management consulting, research, and client relationship management. Under the mentorship of experienced faculty and industry veterans, interns play a crucial role in gathering intelligence, conducting analysis, and designing solutions for active clients.
               </p>
             </div>
 
