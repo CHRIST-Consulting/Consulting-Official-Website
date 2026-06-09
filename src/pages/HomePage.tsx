@@ -8,6 +8,7 @@ import Labs from '../components/sections/Labs';
 import Clients from '../components/sections/Clients';
 import Masterclasses from '../components/sections/Masterclasses';
 import Contact from '../components/sections/Contact';
+import InternPopup from '../components/InternPopup';
 
 function HomePage() {
   useEffect(() => {
@@ -43,6 +44,7 @@ function HomePage() {
       <Clients />
       <Masterclasses />
       <Contact />
+      <InternPopup />
     </main>
   );
 }
