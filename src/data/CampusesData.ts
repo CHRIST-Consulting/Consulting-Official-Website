@@ -16,6 +16,12 @@ export interface DepartmentExpertise {
   name: string;
   expertise: string[];
   iconName: string;
+  description?: string;
+  customIntro?: string;
+  customOutro?: string;
+  labs?: string[];
+  labsIntro?: string;
+  logos?: { name: string; path: string }[];
 }
 
 export interface CampusSPOC {
@@ -53,7 +59,7 @@ export const campusesData: Campus[] = [
     id: "central-campus",
     name: "Central Campus",
     location: "Bangalore",
-    image: "/images/campuses/central-campus.jpg",
+    image: "/images/campuses/Central/central-campus.jpg",
     description: "The Central Campus is the hub for innovation, research and consultancy excellence, driving impactful solutions across diverse domains.",
     link: "https://www.christuniversity.in/#",
     stats: {
@@ -184,7 +190,7 @@ export const campusesData: Campus[] = [
     id: "kengeri-campus",
     name: "Bangalore Kengeri Campus",
     location: "Bangalore",
-    image: "/images/campuses/kengeri-campus.jpg",
+    image: "/images/campuses/Kengeri/kengeri-campus.jpg",
     description: "A green sanctuary of technological innovation, housing engineering, architecture, and advanced science research facilities.",
     link: "https://christuniversity.in/campus/Bangalore%20Kengeri%20Campus",
     stats: {
@@ -289,7 +295,7 @@ export const campusesData: Campus[] = [
     id: "bannerghatta-campus",
     name: "Bangalore Bannerghatta Campus",
     location: "Bangalore",
-    image: "/images/campuses/bannerghatta-campus.jpg",
+    image: "/images/campuses/Bannerghatta/bannerghatta-campus.jpg",
     description: "Dedicated to business, humanities, and social sciences, fostering creative thinking and corporate consultancy partnerships.",
     link: "https://christuniversity.in/campus/Bangalore%20Bannerghatta%20Road%20Campus",
     stats: {
@@ -382,7 +388,7 @@ export const campusesData: Campus[] = [
     id: "yeshwanthpur-campus",
     name: "Yeshwanthpur Campus",
     location: "Bangalore",
-    image: "/images/campuses/yeshwanthpur-campus.jpg",
+    image: "/images/campuses/Yashwanthpur/yeshwanthpur-campus.jpg",
     description: "A state-of-the-art urban facility catering to computer applications, commerce, management, and mathematical sciences.",
     link: "https://christuniversity.in/campus/Yeshwanthpur%20Campus",
     stats: {
@@ -404,33 +410,127 @@ export const campusesData: Campus[] = [
     departments: [
       {
         name: "Dept. of Computer Science",
-        expertise: ["Software Development", "Cloud Computing", "AI/ML Solutions", "Network Security", "Data Engineering"],
+        expertise: [
+          "Data Analytics and Data Visualisation",
+          "Artificial Intelligence & Machine Learning",
+          "Web and Mobile Application Development",
+          "Software Development and Testing",
+          "Internet of Things (IoT) Solutions",
+          "Cloud Computing & Cyber Security",
+          "Academic Consultancy (OBE Framework, Curriculum Design)",
+          "Faculty Development Programs (FDPs)",
+          "Industry-Oriented Skill Development Programs"
+        ],
         iconName: "Laptop",
+        customIntro: "The Department of Computer Science, CHRIST University, BYC offers consultancy services in diverse and emerging areas of technology:",
+        labsIntro: "The department is equipped with modern infrastructure to support consultancy and training activities:",
+        labs: [
+          "Programming Lab (Visual Studio, Java, Python, C++)",
+          "Data Science & Intel - AI METIS Lab (Modern-driven Explorative Technologies & Intelligent Solutions )",
+          "Networking & Cyber Security Lab",
+          "IoT & Automation Lab"
+        ],
+        logos: [
+          { name: "NIE First Grade College, Mysore", path: "/images/campuses/Yashwanthpur/Department/computer science/NIE First Grade College, Mysore.png" },
+          { name: "Seshadripuram Institute of Commerce & Management", path: "/images/campuses/Yashwanthpur/Department/computer science/Seshadripuram Institute of Commerce & Management logo.jpg" },
+          { name: "St. Aloysius (Deemed to be University)", path: "/images/campuses/Yashwanthpur/Department/computer science/St. Aloysius (Deemed to be University).jpg" },
+          { name: "Toyota Tsusho Steel", path: "/images/campuses/Yashwanthpur/Department/computer science/Toyota Tsusho Steel (or download vectors via LogoKit).png" },
+          { name: "Jayraj Annapackiam College, Periyakulam", path: "/images/campuses/Yashwanthpur/Department/computer science/Jayraj Annapackiam College, Periyakulam.jpg" },
+          { name: "Maris Stella College, Vijayawada", path: "/images/campuses/Yashwanthpur/Department/computer science/Maris Stella College, Vijayawada.jpg" },
+          { name: "UPEDUCATORS (Tech for Educators)", path: "/images/campuses/Yashwanthpur/Department/computer science/UPEDUCATORS (Tech for Educators).png" },
+          { name: "Garden City University, Bengaluru", path: "/images/campuses/Yashwanthpur/Department/computer science/Garden City University, Bengaluru.png" },
+          { name: "Thiagarajar College, Madurai", path: "/images/campuses/Yashwanthpur/Department/computer science/Thiagarajar College, Madurai.jpg" },
+          { name: "Gokul Jain College for Women, Chennai", path: "/images/campuses/Yashwanthpur/Department/computer science/Gokul Jain College for Women, Chennai (Guru Shree Shantivijai Jain College).jpg" },
+          { name: "St. Anthony's College, Shillong", path: "/images/campuses/Yashwanthpur/Department/computer science/St. Anthony's College, Shillong.jpg" },
+          { name: "Blossom Arts & Science College", path: "/images/campuses/Yashwanthpur/Department/computer science/Blossom Arts & Science College.jpg" },
+          { name: "3S Communication", path: "/images/campuses/Yashwanthpur/Department/computer science/3S Communication.jpg" },
+          { name: "Nandha Arts & Science College", path: "/images/campuses/Yashwanthpur/Department/computer science/Nandha Arts & Science College.jpg" }
+        ]
       },
       {
         name: "Dept. of Commerce",
-        expertise: ["Taxation Advisory", "Financial Auditing", "Corporate Finance", "Portfolio Management", "GST Compliance"],
+        expertise: [
+          "Financial aspects of business; Budgeting, Pricing, Taxation etc.",
+          "Strategize resource management complexities",
+          "ESG, Social Impact, and Sustainability",
+          "Human Resource Development & Holistic Wellness"
+        ],
         iconName: "TrendingUp",
+        description: "The Department of Commerce at Christ University, Yeshwanthpur Campus, dwells at the intersection of tradition and transition. While we are immensely proud of our pedagogical innovations, ranging from case-based teaching to service learning, our commitment to excellence extends far beyond the classroom.\n\nWe are pleased to present our Consultancy Services; designed to channel our faculty members’ multi-dimensional expertise and our state-of-the-art infrastructure into actionable solutions for the corporate, public, and social sectors.",
+        customIntro: "We would be happy to provide services in the following key areas of Business:",
+        customOutro: "While the areas outlined above represent our expertise, but by no means are they exhaustive. In a rapidly evolving business environment we recognize that organizational challenges often require contemporary solutions.\n\nThe Department of Commerce is committed to versatility and adaptive problem-solving. Our consultancy division would be a dynamic partner, capable of developing tailored solutions to your specific institutional requirements. If you are facing a unique hurdle that falls outside our listed services, we welcome the opportunity to co-create a specialized framework to address it in collaboration with the expertise across the University, which would provide interdisciplinary approach.\n\nOur vide repository of academic resources, combined with the real-time analytical power of our Bloomberg Lab, allows us to pivot and scale our expertise to meet the emerging needs of any sector. Whether your requirement is a niche technical audit, a multi-disciplinary research project, or a unique capacity-building exercise, our doors are open for need-based expansion of our service portfolio.",
+        labs: ["Bloomberg Lab with 2 terminal and Trainer support"],
+        logos: [
+          { name: "KCG College of Technology", path: "/images/campuses/Yashwanthpur/Department/Commerce/KCG College of Technology.png" },
+          { name: "Mount Carmel College", path: "/images/campuses/Yashwanthpur/Department/Commerce/Mount carmel College.png" },
+          { name: "Nirmala College", path: "/images/campuses/Yashwanthpur/Department/Commerce/Nirmala College.png" },
+          { name: "Primax Foundation", path: "/images/campuses/Yashwanthpur/Department/Commerce/Primax Foundation.png" },
+          { name: "St. Francis De Sales College", path: "/images/campuses/Yashwanthpur/Department/Commerce/St. Francis De Sales College.png" }
+        ]
       },
       {
         name: "Economics dept",
-        expertise: ["Macroeconomic Analysis", "Market Research", "Policy Evaluation", "Econometric Modeling", "Cost-Benefit Analysis"],
+        expertise: [
+          "Behavioural Economics & Public Policy",
+          "Labour Economics, Migration & Informal Labour Markets",
+          "Development Economics, Agricultural Systems & Livelihood Studies",
+          "Environmental, Energy & Circular Economics",
+          "Applied Econometrics, Impact Evaluation & Efficiency Analysis",
+          "Macroeconomics, Monetary Policy & Financial Sector Analysis",
+          "Economic Sociology, Political Economy & Financial Inclusion",
+          "Tourism Economics, Social Enterprise & MSME Development"
+        ],
         iconName: "LineChart",
+        description: "The Department of Economics at Christ University, Yeshwanthpur Campus, integrates quantitative scientific research with qualitative policy analysis. We are committed to translating research insights into actionable consulting strategies for governments, non-profits, and corporate institutions.",
+        customIntro: "The Department offers consulting and capacity-building services across diverse and specialized domains of economics:",
+        labsIntro: "The department features advanced research infrastructure dedicated to computational analysis and experimental research:",
+        labs: [
+          "Data Analysis Facility (80 licensed systems for STATA)",
+          "Behavioural Economics Research Lab (for conducting experiments with integrated systems)"
+        ]
       },
       {
         name: "English dept",
-        expertise: ["Technical Writing", "Corporate Communication", "Content Strategy", "Professional Editing", "Public Relations"],
+        expertise: [
+          "Teaching, Learning and Assessment Practices: Designing learner-centred pedagogies, innovative teaching strategies, and effective assessment frameworks for school and higher education contexts.",
+          "TESOL and English Language Pedagogy: Providing expert training in English language teaching, TESOL methodologies, and communication-focused classroom practices across K–12 and higher education through Trinity CertTESOL-certified teachers.",
+          "Communication, Workplace and Soft Skills Development: Enhancing verbal, non-verbal, interpersonal, and professional communication skills for academic, workplace, and leadership contexts.",
+          "ICT, Digital Pedagogy and AI in Education: Supporting the integration of digital tools, ICT-enabled teaching, and ethical AI practices to enrich learning experiences.",
+          "Critical, Creative and Experiential Classroom Practices: Developing classroom strategies that foster critical thinking, creativity, simulations, role play, and experiential learning.",
+          "Student Mental Health and Holistic Development: Promoting student well-being, emotional resilience, and holistic development within and beyond the classroom.",
+          "Gender and Cultural Sensitisation: Facilitating inclusive and equitable learning environments through awareness of gender, diversity, and cultural contexts.",
+          "SDG-aligned Education and Institutional Outreach: Supporting the integration of Sustainable Development Goals into curriculum design, classroom practice, and school–university engagement initiatives.",
+          "Foreign Language Training (German and French): Offering language training in German and French for academic, professional, and everyday communication, tailored to learners across school, university, and corporate contexts."
+        ],
         iconName: "BookOpen",
+        description: "The Department of English at Christ University, Yeshwanthpur Campus, offers high-quality training and advisory services in teaching methodology, curriculum design, TESOL frameworks, professional communication, and language learning. We are dedicated to creating inclusive, creative, and future-ready educational spaces.",
+        customIntro: "The Department offers training, advisory, and consultation services in the following areas:"
       },
       {
         name: "Psychology dept",
-        expertise: ["Organizational Behavior", "Clinical Assessment", "Employee Counseling", "Mental Health Workshops", "Human Factors"],
+        expertise: [
+          "Healthcare, Well-being & Public Health: Quality of Life & Well-being Assessment Frameworks for patients with chronic illness, geriatric populations, and caregivers.",
+          "Neuropsychological Assessment: Cognitive screening tools, training programs for clinical teams, and standardized reporting protocols.",
+          "Community Mental Health: Programme design featuring awareness modules, community resource mapping, and gatekeeper training for labourers, elders, and adolescents.",
+          "Psychosocial Disaster Response: Formulation of rapid triage tools, field team training modules, and psychological first-aid systems."
+        ],
         iconName: "Brain",
+        description: "The Department of Psychology at Christ University, Yeshwanthpur Campus, integrates clinical insights with public health applications. We offer consultation, program design, and standardized assessments to support mental health, clinical practices, and community resilience.",
+        customIntro: "The Department offers research, diagnostic, and outreach consultancy across key domains:"
       },
       {
         name: "School of Business management",
-        expertise: ["Strategic Consulting", "Operations & Supply Chain", "HR Analytics", "Digital Marketing", "Change Management"],
+        expertise: [
+          "General: Leadership Development, Management Development, Outbound Experiential Learning, Personal Effectiveness Programmes, Soft/Life Skills, and Faculty Development Programmes.",
+          "Marketing: Digital Marketing, Marketing Analytics, Marketing Research, Marketing Plans & Strategies, Branding, Sales Promotion, Consumer Behaviour, and Sales Training.",
+          "Finance: Fintech, Financial Modeling, Statement Preparation & Analysis, Costing, Budgeting, Investment Optimization, Behavioural Finance, and Tax Planning.",
+          "Human Resources: Recruitment & Orientation, Training Need Analysis, Competency Mapping, HR Metrics, Appraisal Systems, Organisational Behaviour, HR Policy, Compliance, and Compensation Planning.",
+          "Analytics: Data Gathering & Preparation, Data Cleaning, Data Analytics, Custom Dashboard Creation, Text Analytics, and Data Visualization.",
+          "Entrepreneurship: Creativity & Innovation, Idea Generation, Business Plan Preparation, Startup Establishment, and Scale-up Management."
+        ],
         iconName: "Briefcase",
+        description: "The School of Business and Management at Christ University, Yeshwanthpur Campus, bridges academic intelligence with strategic corporate leadership. We offer dynamic executive training, business diagnostics, financial consulting, HR auditing, and analytics solutions to elevate organizational capacity.",
+        customIntro: "The School of Business and Management offers comprehensive consulting, diagnostics, and capacity-building across key business verticals:"
       },
     ],
     projects: [
@@ -480,7 +580,7 @@ export const campusesData: Campus[] = [
     id: "pune-lavasa-campus",
     name: "Pune Lavasa Campus",
     location: "Pune",
-    image: "/images/campuses/pune-lavasa-campus.jpg",
+    image: "/images/campuses/Pune Lavasa/pune-lavasa-campus.jpg",
     description: "Nestled in the scenic hills, this campus is a hub for analytical sciences, data science, law, and business leadership.",
     link: "https://lavasa.christuniversity.in/",
     stats: {
@@ -568,7 +668,7 @@ export const campusesData: Campus[] = [
     id: "delhi-ncr-campus",
     name: "Delhi NCR Campus",
     location: "Delhi NCR",
-    image: "/images/campuses/delhi-ncr-campus.jpg",
+    image: "/images/campuses/Delhi NCR/delhi-ncr-campus.jpg",
     description: "Serving as a vital link in the national capital region, focusing on professional education, law, and corporate connections.",
     link: "https://ncr.christuniversity.in/",
     stats: {
@@ -667,11 +767,11 @@ export const getDeptSlug = (name: string): string => {
 export const getDepartmentBySlug = (campusId: string, deptSlug: string): { campus: Campus; department: DepartmentExpertise } | undefined => {
   const campus = getCampusById(campusId);
   if (!campus) return undefined;
-  
+
   const department = campus.departments.find(
     (d) => getDeptSlug(d.name) === deptSlug
   );
-  
+
   if (!department) return undefined;
   return { campus, department };
 };

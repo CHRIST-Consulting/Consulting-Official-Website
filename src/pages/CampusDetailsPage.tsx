@@ -247,8 +247,13 @@ const CampusDetailsPage = () => {
                           {dept.name}
                         </h4>
                       </div>
-                      <p className="text-xs md:text-sm text-slate-550 dark:text-slate-400 leading-relaxed pl-1">
-                        {dept.expertise.join(", ")}
+                      <p className="text-sm text-slate-650 dark:text-slate-350 leading-relaxed pl-1 line-clamp-2 mt-1">
+                        {dept.expertise
+                          .map((exp) => {
+                            const colonIndex = exp.indexOf(":");
+                            return colonIndex !== -1 ? exp.slice(0, colonIndex).trim() : exp;
+                          })
+                          .join(", ")}
                       </p>
                     </Link>
                   ))}

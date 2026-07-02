@@ -212,39 +212,39 @@ const DepartmentDetailsPage = () => {
                     {renderIcon(department.iconName, "h-6 w-6")}
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-slate-850 dark:text-white">
+                    <h2 className="text-2xl font-bold text-slate-855 dark:text-white">
                       Academic & Consulting Profile
                     </h2>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
                       Driving innovation and research-led corporate solutions
                     </p>
                   </div>
                 </div>
 
-                <p className="text-slate-600 dark:text-slate-300 text-base md:text-lg leading-relaxed">
-                  {getDeptDescription(department.name, campus.name)}
+                <p className="text-slate-600 dark:text-slate-300 text-base md:text-lg leading-relaxed whitespace-pre-line">
+                  {department.description || getDeptDescription(department.name, campus.name)}
                 </p>
 
                 <div className="bg-slate-50 dark:bg-slate-800/40 p-5 rounded-xl border border-slate-200/50 dark:border-slate-800/60 mt-4">
-                  <h4 className="text-xs font-bold text-primary dark:text-sky-300 mb-3 uppercase tracking-wider">
+                  <h4 className="text-sm font-bold text-primary dark:text-sky-300 mb-3 uppercase tracking-wider">
                     Key Performance Indicators (KPIs)
                   </h4>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center sm:text-left">
                     <div className="p-3 bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800">
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase block font-semibold">Faculty Consultants</span>
-                      <p className="text-xl font-extrabold text-slate-800 dark:text-white mt-1">14</p>
+                      <span className="text-xs text-slate-400 dark:text-slate-500 uppercase block font-bold tracking-wider">Faculty Consultants</span>
+                      <p className="text-2xl font-extrabold text-slate-800 dark:text-white mt-1">14</p>
                     </div>
                     <div className="p-3 bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800">
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase block font-semibold">Active Projects</span>
-                      <p className="text-xl font-extrabold text-slate-800 dark:text-white mt-1">3</p>
+                      <span className="text-xs text-slate-400 dark:text-slate-500 uppercase block font-bold tracking-wider">Active Projects</span>
+                      <p className="text-2xl font-extrabold text-slate-800 dark:text-white mt-1">3</p>
                     </div>
                     <div className="p-3 bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800">
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase block font-semibold">Scholarly Papers</span>
-                      <p className="text-xl font-extrabold text-slate-800 dark:text-white mt-1">68+</p>
+                      <span className="text-xs text-slate-400 dark:text-slate-500 uppercase block font-bold tracking-wider">Scholarly Papers</span>
+                      <p className="text-2xl font-extrabold text-slate-800 dark:text-white mt-1">68+</p>
                     </div>
                     <div className="p-3 bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800">
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase block font-semibold">Corporate Partners</span>
-                      <p className="text-xl font-extrabold text-slate-800 dark:text-white mt-1">8+</p>
+                      <span className="text-xs text-slate-400 dark:text-slate-500 uppercase block font-bold tracking-wider">Corporate Partners</span>
+                      <p className="text-2xl font-extrabold text-slate-800 dark:text-white mt-1">8+</p>
                     </div>
                   </div>
                 </div>
@@ -253,126 +253,172 @@ const DepartmentDetailsPage = () => {
 
             {/* Consulting & Expertise Areas */}
             <ScrollAnimation>
-              <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-sm">
-                <div className="mb-6">
+              <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-6">
+                <div>
                   <h3 className="text-xl font-bold text-slate-850 dark:text-white mb-1.5">
                     Areas of Expertise
                   </h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
-                    Specific domains where we offer consultancy, troubleshooting, and developmental programs.
+                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    {department.customIntro || "Specific domains where we offer consultancy, troubleshooting, and developmental programs."}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {department.expertise.map((exp, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-3 p-4 bg-slate-50/50 dark:bg-slate-800/20 hover:bg-slate-50 dark:hover:bg-slate-800/40 rounded-xl border border-slate-200/40 dark:border-slate-800/80 transition-all group"
-                    >
-                      <div className="mt-0.5 w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-955/40 text-emerald-600 dark:text-emerald-300 flex items-center justify-center flex-shrink-0">
-                        <CheckCircle2 size={13} />
+                  {department.expertise.map((exp, idx) => {
+                    let title = exp;
+                    let desc = "Expert solutions, academic research backup, and customizable execution modules.";
+                    
+                    const colonIndex = exp.indexOf(":");
+                    if (colonIndex !== -1) {
+                      title = exp.slice(0, colonIndex).trim();
+                      desc = exp.slice(colonIndex + 1).trim();
+                    }
+                    
+                    return (
+                      <div
+                        key={idx}
+                        className="flex items-start gap-3 p-4 bg-slate-50/50 dark:bg-slate-800/20 hover:bg-slate-50 dark:hover:bg-slate-800/40 rounded-xl border border-slate-200/40 dark:border-slate-800/80 transition-all group"
+                      >
+                        <div className="mt-0.5 w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-955/40 text-emerald-600 dark:text-emerald-300 flex items-center justify-center flex-shrink-0">
+                          <CheckCircle2 size={13} />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-slate-800 dark:text-slate-200 text-base mb-1 group-hover:text-primary dark:group-hover:text-sky-300 transition-colors">
+                            {title}
+                          </h4>
+                          <p className="text-sm text-slate-550 dark:text-slate-400 leading-relaxed mt-1">
+                            {desc}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-bold text-slate-800 dark:text-slate-200 text-sm mb-1 group-hover:text-primary dark:group-hover:text-sky-300 transition-colors">
-                          {exp}
-                        </h4>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                          Expert solutions, academic research backup, and customizable execution modules.
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
+
+                {department.customOutro && (
+                  <div className="pt-5 border-t border-slate-100 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-base leading-relaxed whitespace-pre-line bg-slate-50/40 dark:bg-slate-900/10 p-5 rounded-xl border border-dashed border-slate-200 dark:border-slate-800/60 mt-4">
+                    {department.customOutro}
+                  </div>
+                )}
               </div>
             </ScrollAnimation>
 
-            {/* Projects Registry (Stock Data) */}
-            <ScrollAnimation>
-              <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-6">
-                <div>
-                  <h3 className="text-xl font-bold text-slate-850 dark:text-white mb-1.5">
-                    Consultancy & Projects Registry
-                  </h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
-                    A list of current and past collaborative engagements undertaken by this department.
-                  </p>
-                </div>
-
-                <div className="space-y-4">
-                  {/* Stock Project 1 */}
-                  <div className="p-5 bg-white dark:bg-slate-900 rounded-xl border border-slate-150 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div className="space-y-2 flex-grow">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <Badge className="bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-300 dark:border-emerald-900/30 text-[10px]">
-                          Ongoing
-                        </Badge>
-                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wide flex items-center">
-                          <Calendar size={11} className="mr-1" /> Est: Jan 2026 - Present
-                        </span>
-                      </div>
-                      <h4 className="font-bold text-slate-800 dark:text-slate-100 text-base">
-                        Smart Solutions Development Program
-                      </h4>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 leading-normal max-w-xl">
-                        Applying theoretical departmental research to build customized automation frameworks and process integration algorithms for external industrial partners.
-                      </p>
-                    </div>
-                    <div className="flex-shrink-0">
-                      <span className="text-xs font-semibold text-slate-450 dark:text-slate-500 block">Consultancy Value</span>
-                      <span className="text-sm font-extrabold text-slate-700 dark:text-slate-350">INR 4.5 Lakhs</span>
-                    </div>
+            {/* Offered Lab Facilities */}
+            {department.labs && department.labs.length > 0 && (
+              <ScrollAnimation>
+                <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-6">
+                  <div>
+                    <h3 className="text-xl font-bold text-slate-850 dark:text-white mb-1.5 flex items-center gap-2">
+                      <Icons.FlaskConical className="h-5 w-5 text-primary dark:text-sky-300" />
+                      Offered Lab Facilities
+                    </h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                      {department.labsIntro || "The department is equipped with modern infrastructure to support consultancy and training activities:"}
+                    </p>
                   </div>
 
-                  {/* Stock Project 2 */}
-                  <div className="p-5 bg-white dark:bg-slate-900 rounded-xl border border-slate-150 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div className="space-y-2 flex-grow">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <Badge className="bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-950/30 dark:text-amber-300 dark:border-amber-900/30 text-[10px]">
-                          Planning
-                        </Badge>
-                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wide flex items-center">
-                          <Calendar size={11} className="mr-1" /> Est: Sep 2026 Launch
-                        </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {department.labs.map((lab, idx) => (
+                      <div
+                        key={idx}
+                        className="p-4 bg-slate-50/50 dark:bg-slate-800/20 hover:bg-slate-50 dark:hover:bg-slate-800/40 rounded-xl border border-slate-200/40 dark:border-slate-800/80 transition-all group flex items-start gap-3.5"
+                      >
+                        <div className="w-10 h-10 bg-primary/5 dark:bg-primary/20 text-primary dark:text-sky-300 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                          {lab.toLowerCase().includes("bloomberg") ? (
+                            <Icons.LineChart className="h-5 w-5" />
+                          ) : lab.toLowerCase().includes("iot") || lab.toLowerCase().includes("automation") ? (
+                            <Icons.Cpu className="h-5 w-5" />
+                          ) : lab.toLowerCase().includes("data science") || lab.toLowerCase().includes("ai") ? (
+                            <Icons.Database className="h-5 w-5" />
+                          ) : lab.toLowerCase().includes("network") || lab.toLowerCase().includes("cyber") ? (
+                            <Icons.ShieldAlert className="h-5 w-5" />
+                          ) : (
+                            <Icons.Settings className="h-5 w-5" />
+                          )}
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-slate-855 dark:text-slate-100 text-base md:text-lg mb-1 group-hover:text-primary dark:group-hover:text-sky-300 transition-colors">
+                            {lab}
+                          </h4>
+                          <p className="text-sm text-slate-550 dark:text-slate-400 leading-relaxed mt-1">
+                            {lab.toLowerCase().includes("bloomberg")
+                              ? "Leveraging live global financial data feed terminals to drive market analyses and research consultancies."
+                              : "Equipped with high-performance computing platforms, specialized modules, and coordinator trainer support."}
+                          </p>
+                        </div>
                       </div>
-                      <h4 className="font-bold text-slate-800 dark:text-slate-100 text-base">
-                        Industry Compliance Audit & Capacity Building
-                      </h4>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 leading-normal max-w-xl">
-                        Comprehensive assessment of standard operation manuals and training workshops designed for local commercial clusters and corporate organizations.
-                      </p>
-                    </div>
-                    <div className="flex-shrink-0">
-                      <span className="text-xs font-semibold text-slate-450 dark:text-slate-500 block">Consultancy Value</span>
-                      <span className="text-sm font-extrabold text-slate-700 dark:text-slate-350">INR 2.8 Lakhs</span>
-                    </div>
-                  </div>
-
-                  {/* Stock Project 3 */}
-                  <div className="p-5 bg-white dark:bg-slate-900 rounded-xl border border-slate-150 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 opacity-85 hover:opacity-100">
-                    <div className="space-y-2 flex-grow">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <Badge className="bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 text-[10px]">
-                          Completed
-                        </Badge>
-                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wide flex items-center">
-                          <Calendar size={11} className="mr-1" /> Jul 2025 - Dec 2025
-                        </span>
-                      </div>
-                      <h4 className="font-bold text-slate-800 dark:text-slate-100 text-base">
-                        Strategic Restructuring Study
-                      </h4>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 leading-normal max-w-xl">
-                        Socio-economic dynamic testing and operational structural designs delivered successfully to retail developers, enabling a 12% rise in structural operational outputs.
-                      </p>
-                    </div>
-                    <div className="flex-shrink-0">
-                      <span className="text-xs font-semibold text-slate-455 dark:text-slate-500 block">Consultancy Value</span>
-                      <span className="text-sm font-extrabold text-slate-700 dark:text-slate-350">INR 3.2 Lakhs</span>
-                    </div>
+                    ))}
                   </div>
                 </div>
-              </div>
-            </ScrollAnimation>
+              </ScrollAnimation>
+            )}
+            {/* Collaborations Grid Section */}
+            {department.logos && department.logos.length > 0 && (
+              <ScrollAnimation>
+                <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-6 overflow-hidden relative">
+                  <style>{`
+                    @keyframes marquee-infinite {
+                      0% { transform: translate3d(0, 0, 0); }
+                      100% { transform: translate3d(-50%, 0, 0); }
+                    }
+                    .animate-marquee-infinite {
+                      animation: marquee-infinite 35s linear infinite;
+                      will-change: transform;
+                      backface-visibility: hidden;
+                    }
+                    .animate-marquee-infinite:hover {
+                      animation-play-state: paused;
+                    }
+                  `}</style>
+                  <div>
+                    <h3 className="text-xl font-bold text-slate-855 dark:text-white mb-1.5 flex items-center gap-2">
+                      <Icons.Handshake className="h-5 w-5 text-primary dark:text-sky-300" />
+                      Academic & Industry Collaborations
+                    </h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                      Leading institutions and corporate organizations that have partnered with the department for research, consultancy briefs, and technical collaborations.
+                    </p>
+                  </div>
+
+                  {/* Infinite Marquee Container */}
+                  <div className="relative w-full overflow-hidden py-4 rounded-xl bg-slate-50/50 dark:bg-slate-950/20 border border-slate-100 dark:border-slate-800/60">
+                    {/* Fade gradients at edges for premium look */}
+                    <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white dark:from-slate-900 to-transparent z-10 pointer-events-none" />
+                    <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white dark:from-slate-900 to-transparent z-10 pointer-events-none" />
+
+                    <div className="flex w-max animate-marquee-infinite gap-6 px-6">
+                      {[...department.logos, ...department.logos].map((logo, idx) => (
+                        <div
+                          key={idx}
+                          className="flex-shrink-0 w-64 h-44 bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200/50 dark:border-slate-700 hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-out group flex flex-col items-center justify-between text-center relative overflow-hidden"
+                          title={logo.name}
+                        >
+                          {/* TECH GRADIENT GLOW BORDER */}
+                          <div className="absolute inset-0 border border-transparent group-hover:border-sky-500 dark:group-hover:border-emerald-400 rounded-xl transition-colors duration-300 pointer-events-none z-10" />
+                          <div className="absolute -inset-[2px] bg-gradient-to-r from-sky-400 to-emerald-400 rounded-xl opacity-0 group-hover:opacity-10 blur-sm transition-opacity duration-300 pointer-events-none" />
+
+                          <div className="w-full h-24 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform duration-300">
+                            <img
+                              src={logo.path}
+                              alt={logo.name}
+                              className="w-full h-full object-contain filter dark:brightness-95 bg-white dark:bg-white/95 rounded-lg p-2 shadow-sm border border-slate-100 dark:border-slate-800 transition-all duration-300"
+                              loading="lazy"
+                            />
+                          </div>
+                          
+                          <div className="w-full flex-grow flex items-center justify-center mt-3">
+                            <span className="text-sm font-bold text-slate-700 dark:text-slate-200 line-clamp-2 leading-snug w-full px-1 group-hover:text-primary dark:group-hover:text-sky-300 transition-colors">
+                              {logo.name}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </ScrollAnimation>
+            )}
+
           </div>
 
           {/* Sidebar Column */}
@@ -395,13 +441,13 @@ const DepartmentDetailsPage = () => {
                 </div>
 
                 <div className="text-center space-y-1.5 mb-6">
-                  <h5 className="text-lg font-bold text-slate-850 dark:text-slate-100 leading-snug">
+                  <h5 className="text-xl font-bold text-slate-855 dark:text-slate-100 leading-snug">
                     {coordinator.name}
                   </h5>
-                  <p className="text-xs font-semibold text-primary dark:text-sky-300 uppercase tracking-wider">
+                  <p className="text-sm font-semibold text-primary dark:text-sky-300 uppercase tracking-wider">
                     {coordinator.role}
                   </p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
                     {campus.name}
                   </p>
                 </div>
@@ -409,14 +455,14 @@ const DepartmentDetailsPage = () => {
                 <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
                   <a
                     href={`mailto:${coordinator.email}`}
-                    className="flex items-center text-xs text-slate-650 dark:text-slate-350 hover:text-primary dark:hover:text-sky-300 transition-colors group break-all bg-slate-50 dark:bg-slate-800/40 p-2.5 rounded-xl border border-slate-200/40 dark:border-slate-800"
+                    className="flex items-center text-sm text-slate-650 dark:text-slate-350 hover:text-primary dark:hover:text-sky-300 transition-colors group break-all bg-slate-50 dark:bg-slate-800/40 p-2.5 rounded-xl border border-slate-200/40 dark:border-slate-800"
                   >
                     <Mail className="h-4 w-4 text-slate-400 mr-2 flex-shrink-0 group-hover:text-primary" />
                     <span className="font-semibold">{coordinator.email}</span>
                   </a>
                   <a
                     href={`tel:${coordinator.phone}`}
-                    className="flex items-center text-xs text-slate-650 dark:text-slate-350 hover:text-primary dark:hover:text-sky-300 transition-colors group break-all bg-slate-50 dark:bg-slate-800/40 p-2.5 rounded-xl border border-slate-200/40 dark:border-slate-800"
+                    className="flex items-center text-sm text-slate-650 dark:text-slate-350 hover:text-primary dark:hover:text-sky-300 transition-colors group break-all bg-slate-50 dark:bg-slate-800/40 p-2.5 rounded-xl border border-slate-200/40 dark:border-slate-800"
                   >
                     <Phone className="h-4 w-4 text-slate-400 mr-2 flex-shrink-0 group-hover:text-primary" />
                     <span className="font-semibold">{coordinator.phone}</span>
@@ -432,13 +478,13 @@ const DepartmentDetailsPage = () => {
                   Quick Navigation
                 </h4>
                 <div className="space-y-2">
-                  <Button asChild variant="outline" className="w-full justify-start text-xs border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800">
+                  <Button asChild variant="outline" className="w-full justify-start text-sm border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800">
                     <Link to={`/campus/${campus.id}`}>
                       <Building2 size={14} className="mr-2 text-primary" />
                       Explore {campus.name}
                     </Link>
                   </Button>
-                  <Button asChild variant="outline" className="w-full justify-start text-xs border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800">
+                  <Button asChild variant="outline" className="w-full justify-start text-sm border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800">
                     <a href={campus.link} target="_blank" rel="noopener noreferrer">
                       <Compass size={14} className="mr-2 text-primary" />
                       Official University Webpage
