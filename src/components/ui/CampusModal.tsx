@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import * as Icons from "lucide-react";
 import {
   X,
@@ -24,7 +25,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./car
 import { Badge } from "./badge";
 import { Button } from "./Button";
 import { ScrollArea } from "./scroll-area";
-import { campusesData, Campus } from "../../data/CampusesData";
+import { campusesData, Campus, getDeptSlug } from "../../data/CampusesData";
 
 interface CampusModalProps {
   campus: Campus | null;
@@ -353,22 +354,24 @@ const CampusModal: React.FC<CampusModalProps> = ({
                     ? selectedCampus.departments
                     : selectedCampus.departments.slice(0, 6)
                   ).map((dept, index) => (
-                    <div
+                    <Link
                       key={index}
-                      className="bg-slate-50/50 dark:bg-slate-900/10 p-4 rounded-xl border border-slate-100/50 dark:border-white/5 flex flex-col justify-start hover:bg-slate-50 dark:hover:bg-slate-900/20 transition-colors"
+                      to={`/campus/${selectedCampus.id}/department/${getDeptSlug(dept.name)}`}
+                      onClick={() => onClose()}
+                      className="bg-slate-50/50 dark:bg-slate-900/10 p-4 rounded-xl border border-slate-100/50 dark:border-white/5 flex flex-col justify-start hover:bg-slate-100 dark:hover:bg-slate-900/25 hover:border-primary/30 dark:hover:border-primary-light/30 transition-all duration-300 group hover:-translate-y-1 hover:shadow-md cursor-pointer text-left"
                     >
                       <div className="flex items-center gap-3 mb-2.5">
                         <div className="w-9 h-9 bg-primary/10 dark:bg-primary/20 text-primary dark:text-sky-blue rounded-full flex items-center justify-center flex-shrink-0">
                           {renderIcon(dept.iconName, "h-4.5 w-4.5")}
                         </div>
-                        <h5 className="font-bold text-slate-800 dark:text-slate-200 text-sm md:text-base">
+                        <h5 className="font-bold text-slate-800 dark:text-slate-200 text-sm md:text-base group-hover:text-primary dark:group-hover:text-sky-blue transition-colors">
                           {dept.name}
                         </h5>
                       </div>
-                      <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 leading-relaxed pl-1">
+                      <p className="text-xs md:text-sm text-slate-550 dark:text-slate-400 leading-relaxed pl-1">
                         {dept.expertise.join(", ")}
                       </p>
-                    </div>
+                    </Link>
                   ))}
                 </div>
 
@@ -564,15 +567,14 @@ const CampusModal: React.FC<CampusModalProps> = ({
               {/* Action/Close buttons in footer */}
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-6 border-t border-slate-250/50 dark:border-white/5">
                 <Button variant="outline" asChild>
-                  <a
-                    href={selectedCampus.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to={`/campus/${selectedCampus.id}`}
+                    onClick={() => onClose()}
                     className="flex items-center gap-2"
                   >
                     <ExternalLink className="w-4 h-4" />
                     Visit Campus Page
-                  </a>
+                  </Link>
                 </Button>
                 <Button
                   onClick={(e) => {

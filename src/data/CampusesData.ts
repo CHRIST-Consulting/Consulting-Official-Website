@@ -26,6 +26,7 @@ export interface CampusSPOC {
 }
 
 export interface Campus {
+  id: string;
   name: string;
   location: string;
   image: string;
@@ -49,6 +50,7 @@ export interface Campus {
 
 export const campusesData: Campus[] = [
   {
+    id: "central-campus",
     name: "Central Campus",
     location: "Bangalore",
     image: "/images/campuses/central-campus.jpg",
@@ -179,6 +181,7 @@ export const campusesData: Campus[] = [
     ],
   },
   {
+    id: "kengeri-campus",
     name: "Bangalore Kengeri Campus",
     location: "Bangalore",
     image: "/images/campuses/kengeri-campus.jpg",
@@ -283,6 +286,7 @@ export const campusesData: Campus[] = [
     ],
   },
   {
+    id: "bannerghatta-campus",
     name: "Bangalore Bannerghatta Campus",
     location: "Bangalore",
     image: "/images/campuses/bannerghatta-campus.jpg",
@@ -375,6 +379,7 @@ export const campusesData: Campus[] = [
     ],
   },
   {
+    id: "yeshwanthpur-campus",
     name: "Yeshwanthpur Campus",
     location: "Bangalore",
     image: "/images/campuses/yeshwanthpur-campus.jpg",
@@ -398,23 +403,33 @@ export const campusesData: Campus[] = [
     },
     departments: [
       {
-        name: "Computer Applications",
-        expertise: ["Database Systems", "Web Tech", "Mobile Solutions", "UI/UX Design"],
+        name: "Dept. of Computer Science",
+        expertise: ["Software Development", "Cloud Computing", "AI/ML Solutions", "Network Security", "Data Engineering"],
         iconName: "Laptop",
       },
       {
-        name: "Commerce",
-        expertise: ["Taxation Consulting", "Corporate Finance", "Auditing", "GST Compliance"],
+        name: "Dept. of Commerce",
+        expertise: ["Taxation Advisory", "Financial Auditing", "Corporate Finance", "Portfolio Management", "GST Compliance"],
         iconName: "TrendingUp",
       },
       {
-        name: "Mathematics",
-        expertise: ["Quantitative Modeling", "Statistical Analysis", "Actuarial Valuation"],
-        iconName: "PieChart",
+        name: "Economics dept",
+        expertise: ["Macroeconomic Analysis", "Market Research", "Policy Evaluation", "Econometric Modeling", "Cost-Benefit Analysis"],
+        iconName: "LineChart",
       },
       {
-        name: "Management",
-        expertise: ["Small Business Strategy", "Franchise Management", "E-commerce Logistics"],
+        name: "English dept",
+        expertise: ["Technical Writing", "Corporate Communication", "Content Strategy", "Professional Editing", "Public Relations"],
+        iconName: "BookOpen",
+      },
+      {
+        name: "Psychology dept",
+        expertise: ["Organizational Behavior", "Clinical Assessment", "Employee Counseling", "Mental Health Workshops", "Human Factors"],
+        iconName: "Brain",
+      },
+      {
+        name: "School of Business management",
+        expertise: ["Strategic Consulting", "Operations & Supply Chain", "HR Analytics", "Digital Marketing", "Change Management"],
         iconName: "Briefcase",
       },
     ],
@@ -462,6 +477,7 @@ export const campusesData: Campus[] = [
     ],
   },
   {
+    id: "pune-lavasa-campus",
     name: "Pune Lavasa Campus",
     location: "Pune",
     image: "/images/campuses/pune-lavasa-campus.jpg",
@@ -549,6 +565,7 @@ export const campusesData: Campus[] = [
     ],
   },
   {
+    id: "delhi-ncr-campus",
     name: "Delhi NCR Campus",
     location: "Delhi NCR",
     image: "/images/campuses/delhi-ncr-campus.jpg",
@@ -635,3 +652,26 @@ export const campusesData: Campus[] = [
     ],
   },
 ];
+
+export const getCampusById = (id: string): Campus | undefined => {
+  return campusesData.find((c) => c.id === id);
+};
+
+export const getDeptSlug = (name: string): string => {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+};
+
+export const getDepartmentBySlug = (campusId: string, deptSlug: string): { campus: Campus; department: DepartmentExpertise } | undefined => {
+  const campus = getCampusById(campusId);
+  if (!campus) return undefined;
+  
+  const department = campus.departments.find(
+    (d) => getDeptSlug(d.name) === deptSlug
+  );
+  
+  if (!department) return undefined;
+  return { campus, department };
+};
