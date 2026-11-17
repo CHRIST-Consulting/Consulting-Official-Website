@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { AnimatePresence } from "framer-motion";
 import ChristLoadingScreen from "./components/ChristLoadingScreen";
@@ -18,8 +18,31 @@ const InternshipRegistration = lazy(() => import("./pages/InternshipRegistration
 const CampusDetails = lazy(() => import("./pages/CampusDetailsPage"));
 const DepartmentDetails = lazy(() => import("./pages/DepartmentDetailsPage"));
 
+// Admin pages (not linked from the public site)
+const AdminLogin = lazy(() => import("./pages/AdminLoginPage"));
+const AdminMessages = lazy(() => import("./pages/AdminMessagesPage"));
+
+const PageSpinner = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+  </div>
+);
+
 function App() {
   const location = useLocation();
+
+  // The admin panel has its own layout: no public Navbar/Footer/loading screen.
+  if (location.pathname === "/admin" || location.pathname.startsWith("/admin/")) {
+    return (
+      <Suspense fallback={<PageSpinner />}>
+        <Routes>
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/messages" element={<AdminMessages />} />
+          <Route path="/admin/*" element={<Navigate to="/admin/messages" replace />} />
+        </Routes>
+      </Suspense>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -27,13 +50,7 @@ function App() {
       <main className="flex-grow">
         <AnimatePresence>
           <ChristLoadingScreen cacheKey={`app-cache-${location.pathname}`}>
-            <Suspense
-              fallback={
-                <div className="min-h-screen flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                </div>
-              }
-            >
+            <Suspense fallback={<PageSpinner />}>
               <Routes location={location} key={location.pathname}>
                 <Route path="/" element={<Home />} />
                 <Route path="/clients" element={<Client />} />
