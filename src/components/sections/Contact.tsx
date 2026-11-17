@@ -8,15 +8,35 @@ import {
   Phone,
   MapPin,
   ExternalLink,
+  AlertCircle,
+  Loader2,
 } from "lucide-react";
+import {
+  CONTACT_LIMITS,
+  validateContactInput,
+  type ContactErrors,
+} from "@/lib/contactValidation";
+
+const EMPTY_FORM = {
+  name: "",
+  email: "",
+  message: "",
+  website: "", // honeypot — hidden from humans, bots tend to fill it
+};
+
+const inputBaseClass =
+  "w-full px-6 py-4 bg-white border-2 rounded-xl text-charcoal placeholder-slate-blue focus:outline-none transition-all duration-300";
+
+const inputClass = (hasError: boolean) =>
+  `${inputBaseClass} ${
+    hasError ? "border-red-400 focus:border-red-500" : "border-accent/20 focus:border-accent"
+  }`;
 
 const Contact = () => {
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
+  const [formState, setFormState] = useState(EMPTY_FORM);
+  const [fieldErrors, setFieldErrors] = useState<ContactErrors>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (
@@ -24,19 +44,47 @@ const Contact = () => {
   ) => {
     const { name, value } = e.target;
     setFormState((prev) => ({ ...prev, [name]: value }));
+    // Clear a field's error as soon as the visitor edits it.
+    setFieldErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitted(true);
-      setFormState({
-        name: "",
-        email: "",
-        message: "",
+    if (isSubmitting) return;
+
+    const { errors } = validateContactInput(formState);
+    setFieldErrors(errors);
+    setSubmitError(null);
+    if (Object.keys(errors).length > 0) return;
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formState),
       });
-    }, 1000);
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        if (data.fieldErrors) setFieldErrors(data.fieldErrors);
+        setSubmitError(
+          data.error ??
+            "We couldn't send your message right now. Please try again shortly."
+        );
+        return;
+      }
+
+      setIsSubmitted(true);
+      setFormState(EMPTY_FORM);
+      setFieldErrors({});
+    } catch {
+      setSubmitError(
+        "We couldn't reach our server. Please check your connection and try again, or email us directly at consultancy@christuniversity.in."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -139,7 +187,34 @@ const Contact = () => {
                     </p>
                   </div>
 
-                  <form onSubmit={handleSubmit} className="space-y-8">
+                  <form onSubmit={handleSubmit} className="space-y-8" noValidate>
+                    {submitError && (
+                      <div
+                        role="alert"
+                        className="flex items-start gap-3 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700"
+                      >
+                        <AlertCircle className="w-5 h-5 mt-0.5 shrink-0" />
+                        <span>{submitError}</span>
+                      </div>
+                    )}
+
+                    {/* Honeypot: visually hidden and skipped by keyboard/screen readers */}
+                    <div
+                      aria-hidden="true"
+                      className="absolute -left-[10000px] w-px h-px overflow-hidden"
+                    >
+                      <label htmlFor="website">Website</label>
+                      <input
+                        type="text"
+                        id="website"
+                        name="website"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={formState.website}
+                        onChange={handleChange}
+                      />
+                    </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div>
                         <label
@@ -155,9 +230,18 @@ const Contact = () => {
                           value={formState.name}
                           onChange={handleChange}
                           required
-                          className="w-full px-6 py-4 bg-white border-2 border-accent/20 rounded-xl text-charcoal placeholder-slate-blue focus:outline-none focus:border-accent transition-all duration-300"
+                          maxLength={CONTACT_LIMITS.name}
+                          autoComplete="name"
+                          aria-invalid={Boolean(fieldErrors.name)}
+                          aria-describedby={fieldErrors.name ? "name-error" : undefined}
+                          className={inputClass(Boolean(fieldErrors.name))}
                           placeholder="John Doe"
                         />
+                        {fieldErrors.name && (
+                          <p id="name-error" className="mt-2 text-sm text-red-600">
+                            {fieldErrors.name}
+                          </p>
+                        )}
                       </div>
                       <div>
                         <label
@@ -173,9 +257,18 @@ const Contact = () => {
                           value={formState.email}
                           onChange={handleChange}
                           required
-                          className="w-full px-6 py-4 bg-white border-2 border-accent/20 rounded-xl text-charcoal placeholder-slate-blue focus:outline-none focus:border-accent transition-all duration-300"
+                          maxLength={CONTACT_LIMITS.email}
+                          autoComplete="email"
+                          aria-invalid={Boolean(fieldErrors.email)}
+                          aria-describedby={fieldErrors.email ? "email-error" : undefined}
+                          className={inputClass(Boolean(fieldErrors.email))}
                           placeholder="john@company.com"
                         />
+                        {fieldErrors.email && (
+                          <p id="email-error" className="mt-2 text-sm text-red-600">
+                            {fieldErrors.email}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -193,19 +286,35 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         rows={6}
-                        className="w-full px-6 py-4 bg-white border-2 border-accent/20 rounded-xl text-charcoal placeholder-slate-blue focus:outline-none focus:border-accent transition-all duration-300 resize-none"
+                        maxLength={CONTACT_LIMITS.message}
+                        aria-invalid={Boolean(fieldErrors.message)}
+                        aria-describedby={fieldErrors.message ? "message-error" : undefined}
+                        className={`${inputClass(Boolean(fieldErrors.message))} resize-none`}
                         placeholder="Tell us about your project, challenges, or goals. What kind of consulting services are you looking for?"
                       ></textarea>
+                      {fieldErrors.message && (
+                        <p id="message-error" className="mt-2 text-sm text-red-600">
+                          {fieldErrors.message}
+                        </p>
+                      )}
                     </div>
 
                     <div className="text-center pt-4">
                       <Button
                         type="submit"
-                        className="bg-primary hover:bg-primary-dark text-white font-bold py-4 px-12 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 mx-auto shadow-lg"
+                        disabled={isSubmitting}
+                        className="bg-primary hover:bg-primary-dark text-white font-bold py-4 px-12 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100 flex items-center justify-center gap-3 mx-auto shadow-lg"
                       >
-                        <Send size={20} />
-                        Send Message
-                      </Button> {/*Mail inbox link here*/}
+                        {isSubmitting ? (
+                          <Loader2 size={20} className="animate-spin" />
+                        ) : (
+                          <Send size={20} />
+                        )}
+                        {isSubmitting ? "Sending…" : "Send Message"}
+                      </Button>
+                      {/* Submissions are stored via /api/contact and listed in the
+                          admin panel (/admin/messages). Email notifications are a
+                          TODO in api/contact.ts, pending IT approval. */}
                     </div>
                   </form>
                 </>
