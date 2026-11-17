@@ -24,5 +24,12 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
     },
+  },
+  {
+    // Server-side code (Vercel functions, Node scripts, Vite config)
+    files: ['api/**/*.ts', 'scripts/**/*.{js,mjs}', 'vite.config.ts'],
+    languageOptions: {
+      globals: globals.node,
+    },
   }
 );

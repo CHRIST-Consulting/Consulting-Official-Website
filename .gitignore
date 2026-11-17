@@ -23,5 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 .env
+.env.*
+!.env.example
 
 .vercel
+
+# Local contact-form submissions (dev fallback storage — may contain personal data)
+.data
