@@ -15,14 +15,21 @@ const AdminLayout = ({ title, actions, children }: AdminLayoutProps) => {
     const previousTitle = document.title;
     document.title = `${title} | CICF Admin`;
 
-    const robots = document.createElement("meta");
-    robots.name = "robots";
+    // index.html ships a global robots meta tag; override it while on admin pages.
+    let robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    const createdTag = !robots;
+    if (!robots) {
+      robots = document.createElement("meta");
+      robots.name = "robots";
+      document.head.appendChild(robots);
+    }
+    const previousRobots = robots.content;
     robots.content = "noindex, nofollow";
-    document.head.appendChild(robots);
 
     return () => {
       document.title = previousTitle;
-      robots.remove();
+      if (createdTag) robots.remove();
+      else robots.content = previousRobots;
     };
   }, [title]);
 
