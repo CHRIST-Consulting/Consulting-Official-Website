@@ -84,6 +84,38 @@ This website showcases:
 - Event highlights and achievements
 - Contact and consultation booking
 
+## Admin Panel (contact form messages)
+
+Messages submitted through the home page contact form are stored and listed at
+`/admin/messages` (sign in at `/admin/login`). The admin pages are not linked
+from the site and are marked `noindex`.
+
+- **API:** Vercel serverless functions in `api/` (`/api/contact`, `/api/admin/*`).
+  `npm run dev` serves them locally through a dev-only Vite plugin.
+- **Storage:** Upstash Redis in production. Locally, when Upstash isn't
+  configured, submissions go to `.data/contact-submissions.json` (gitignored).
+- **Auth:** one admin account configured through environment variables only;
+  see `.env.example`.
+
+### Local setup
+
+1. `npm install`
+2. `npm run hash-password` and enter a password (min. 12 characters).
+3. Create `.env.local` (gitignored) with `ADMIN_USERNAME=admin` plus the
+   `ADMIN_PASSWORD_HASH` and `SESSION_SECRET` lines the script printed.
+4. `npm run dev`, submit the contact form on the home page, then sign in at
+   `http://localhost:5173/admin/login`.
+
+### Production (Vercel project settings)
+
+Add an Upstash Redis database (Vercel Marketplace or upstash.com) and set
+`UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (or the `KV_REST_API_*`
+pair the integration injects), `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH` and
+`SESSION_SECRET` under Settings → Environment Variables, then redeploy.
+
+Email notifications for new messages are not implemented yet (pending IT
+approval); see the `TODO(email-notifications)` in `api/contact.ts`.
+
 ---
 
 _CHRIST Incubation and Consultancy Foundation - Bridging Academia and Industry Excellence_
