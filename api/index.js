@@ -81,4 +81,8 @@ app.use((req, res) => {
   });
 });
 
-export default app;
+export { app };
+
+export default function handler(req, res) {
+  return app(req, res);
+}
