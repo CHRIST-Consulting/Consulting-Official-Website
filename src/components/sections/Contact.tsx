@@ -17,7 +17,9 @@ const Contact = () => {
     message: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -26,17 +28,34 @@ const Contact = () => {
     setFormState((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitted(true);
-      setFormState({
-        name: "",
-        email: "",
-        message: "",
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("http://localhost:5000/api/content/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formState.name,
+          email: formState.email,
+          message: formState.message,
+          subject: "Microsite Consultation Request",
+        }),
       });
-    }, 1000);
+
+      if (!response.ok) {
+        throw new Error("Failed to send message. Please try again.");
+      }
+
+      setIsSubmitted(true);
+      setFormState({ name: "", email: "", message: "" });
+    } catch (err: any) {
+      setErrorMessage(err.message || "Failed to submit message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -198,14 +217,20 @@ const Contact = () => {
                       ></textarea>
                     </div>
 
+                    {errorMessage && (
+                      <div className="mb-4 p-4 bg-red-100 border border-red-300 text-red-700 rounded-xl text-sm">
+                        {errorMessage}
+                      </div>
+                    )}
                     <div className="text-center pt-4">
                       <Button
                         type="submit"
-                        className="bg-primary hover:bg-primary-dark text-white font-bold py-4 px-12 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 mx-auto shadow-lg"
+                        disabled={isSubmitting}
+                        className="bg-primary hover:bg-primary-dark text-white font-bold py-4 px-12 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 mx-auto shadow-lg disabled:opacity-50"
                       >
                         <Send size={20} />
-                        Send Message
-                      </Button> {/*Mail inbox link here*/}
+                        {isSubmitting ? "Sending Message..." : "Send Message"}
+                      </Button>
                     </div>
                   </form>
                 </>

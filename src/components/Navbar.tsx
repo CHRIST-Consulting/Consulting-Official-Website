@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { LiquidGlass } from "./admin/LiquidGlass";
+import { CICFLogo } from "./CICFLogo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -121,18 +123,15 @@ const Navbar = () => {
       }`}
       style={{ willChange: "transform, width" }}
     >
-      <div 
+      <LiquidGlass 
         ref={containerRef}
-        className={`mx-auto motion-safe:transition-all motion-safe:duration-600 motion-safe:ease-in-out transform ${
+        variant="light"
+        active={isScrolled}
+        className={`mx-auto motion-safe:transition-all motion-safe:duration-500 motion-safe:ease-in-out transform ${
           isScrolled
-            ? "bg-white/80 backdrop-blur-xl shadow-2xl shadow-black/10 rounded-full px-6 py-3 border border-white/40 scale-[0.985] hover:scale-100" 
-            : "bg-white shadow-sm px-4 sm:px-6 lg:px-8 py-4 scale-100"
+            ? "rounded-full px-6 py-2.5 sm:py-3 scale-[0.985] hover:scale-100" 
+            : "bg-white shadow-sm px-4 sm:px-6 lg:px-8 py-4 rounded-none scale-100"
         }`}
-        style={{
-          backdropFilter: isScrolled ? 'blur(20px) saturate(180%)' : 'none',
-          WebkitBackdropFilter: isScrolled ? 'blur(20px) saturate(180%)' : 'none',
-          willChange: "transform, filter, box-shadow"
-        }}
       >
         <nav className="flex items-center justify-between">
           <div className="flex items-center">
@@ -142,53 +141,57 @@ const Navbar = () => {
                 e.preventDefault();
                 handleLinkClick("/#home");
               }}
-              className={`font-heading font-bold text-xl md:text-2xl text-primary motion-safe:transition-all motion-safe:duration-600 motion-safe:ease-in-out transform ${
-                isScrolled ? "pt-1 scale-100" : "pt-2 scale-100"
+              className={`flex items-center transition-all duration-300 ${
+                isScrolled ? "py-0.5" : "py-1"
               }`}
             >
-              <img
-                src="/images/CICF_LOGO.png"
-                alt="CHRIST Consulting Logo"
-                className={`object-cover motion-safe:transition-all motion-safe:duration-600 motion-safe:ease-in-out transform ${
+              <CICFLogo
+                className={`w-auto transition-all duration-300 drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)] ${
                   isScrolled 
-                    ? "max-h-[44px] w-auto scale-100" 
-                    : "max-h-[50px] scale-100"
+                    ? "h-8 sm:h-9 md:h-10" 
+                    : "h-10 sm:h-11 md:h-12"
                 }`}
-                width={isScrolled ? 200 : 250}
               />
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
-            {navLinks.map((link, index) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLinkClick(link.href);
-                }}
-                className={`font-medium motion-safe:transition-all motion-safe:duration-500 motion-safe:ease-in-out transform hover:scale-105 ${
-                  isScrolled 
-                    ? "text-sm lg:text-base px-3 py-2 rounded-full hover:bg-white/60" 
-                    : "text-base px-2 py-1"
-                } ${
-                  isLinkActive(link.href)
-                    ? "text-royal-blue font-semibold"
-                    : "text-charcoal-light hover:text-royal-blue"
-                }`}
-                style={{
-                  transitionDelay: isScrolled ? `${index * 50}ms` : '0ms'
-                }}
-              >
-                {link.name}
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
+            {navLinks.map((link, index) => {
+              const active = isLinkActive(link.href);
+              return (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLinkClick(link.href);
+                  }}
+                  className={`font-medium motion-safe:transition-all motion-safe:duration-300 transform hover:scale-105 ${
+                    isScrolled 
+                      ? "text-sm lg:text-[15px] px-3.5 py-1.5 rounded-full" 
+                      : "text-base px-2 py-1"
+                  } ${
+                    active
+                      ? isScrolled
+                        ? "text-royal-blue font-bold bg-white/60 shadow-[inset_0_1px_1px_rgba(255,255,255,0.95),_0_2px_8px_rgba(15,42,77,0.08)] border border-white/70"
+                        : "text-royal-blue font-semibold"
+                      : isScrolled
+                        ? "text-slate-700 hover:text-royal-blue hover:bg-white/40"
+                        : "text-charcoal-light hover:text-royal-blue"
+                  }`}
+                  style={{
+                    transitionDelay: isScrolled ? `${index * 30}ms` : '0ms'
+                  }}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
 
           <button
-            className={`md:hidden p-2 rounded-full text-charcoal hover:text-royal-blue focus:outline-none motion-safe:transition-all motion-safe:duration-500 motion-safe:ease-in-out transform hover:scale-110 focus:scale-110 ${
-              isScrolled ? "scale-90 hover:bg-white/60" : "scale-100"
+            className={`md:hidden p-2 rounded-full text-charcoal hover:text-royal-blue focus:outline-none motion-safe:transition-all motion-safe:duration-300 transform hover:scale-105 ${
+              isScrolled ? "scale-95 hover:bg-white/50 border border-transparent hover:border-white/60" : "scale-100"
             }`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
@@ -200,26 +203,26 @@ const Navbar = () => {
             </div>
           </button>
         </nav>
+      </LiquidGlass>
 
-        {/* Mobile Menu */}
-        <div
-          id="mobile-menu"
-          className={`md:hidden fixed left-0 right-0 z-40 motion-safe:transition-all motion-safe:duration-500 motion-safe:ease-in-out transform ${
-            isMenuOpen
-              ? "translate-y-0 opacity-100 pointer-events-auto"
-              : "-translate-y-full opacity-0 pointer-events-none"
-          } ${
-            isScrolled 
-              ? "bg-white/90 backdrop-blur-xl border border-white/40 rounded-3xl mx-4 shadow-2xl"
-              : "bg-white/95 backdrop-blur-md"
-          }`}
-          style={{ 
-            top: `${menuTop}px`,
-            backdropFilter: 'blur(20px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          }}
-        >
-          <div className={`px-6 py-8 ${isScrolled ? 'rounded-3xl' : ''}`}>
+      {/* Mobile Menu */}
+      <div
+        id="mobile-menu"
+        className={`md:hidden fixed left-0 right-0 z-40 motion-safe:transition-all motion-safe:duration-500 motion-safe:ease-in-out transform ${
+          isMenuOpen
+            ? "translate-y-0 opacity-100 pointer-events-auto"
+            : "-translate-y-full opacity-0 pointer-events-none"
+        } ${
+          isScrolled 
+            ? "mx-4 top-20"
+            : "w-full top-[72px]"
+        }`}
+        style={{ 
+          top: `${menuTop}px`,
+        }}
+      >
+        {isScrolled ? (
+          <LiquidGlass variant="light" className="rounded-3xl p-6">
             <div className="flex flex-col space-y-1">
               {navLinks.map((link, index) => (
                 <Link
@@ -229,13 +232,38 @@ const Navbar = () => {
                     e.preventDefault();
                     handleLinkClick(link.href);
                   }}
-                  className={`text-lg font-medium motion-safe:transition-all motion-safe:duration-300 motion-safe:ease-in-out px-4 py-3 rounded-2xl hover:bg-white/60 transform hover:scale-[1.02] ${
+                  className={`text-lg font-medium motion-safe:transition-all motion-safe:duration-300 px-4 py-3 rounded-2xl transform hover:scale-[1.02] ${
                     isLinkActive(link.href)
-                      ? "text-royal-blue bg-white/70 font-semibold"
+                      ? "text-royal-blue bg-white/70 font-bold shadow-sm border border-white/70"
+                      : "text-slate-800 hover:text-royal-blue hover:bg-white/40"
+                  }`}
+                  style={{
+                    transitionDelay: isMenuOpen ? `${index * 50}ms` : '0ms'
+                  }}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+          </LiquidGlass>
+        ) : (
+          <div className="bg-white/95 backdrop-blur-md px-6 py-8 shadow-xl border-t border-slate-100">
+            <div className="flex flex-col space-y-1">
+              {navLinks.map((link, index) => (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLinkClick(link.href);
+                  }}
+                  className={`text-lg font-medium motion-safe:transition-all motion-safe:duration-300 px-4 py-3 rounded-2xl hover:bg-slate-100/60 transform hover:scale-[1.02] ${
+                    isLinkActive(link.href)
+                      ? "text-royal-blue bg-white font-semibold shadow-sm"
                       : "text-charcoal hover:text-royal-blue"
                   }`}
                   style={{
-                    transitionDelay: isMenuOpen ? `${index * 80}ms` : '0ms'
+                    transitionDelay: isMenuOpen ? `${index * 50}ms` : '0ms'
                   }}
                 >
                   {link.name}
@@ -243,17 +271,17 @@ const Navbar = () => {
               ))}
             </div>
           </div>
-        </div>
-
-        {/* Backdrop overlay for mobile menu */}
-        {isMenuOpen && (
-          <div
-            className="md:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-30 transition-opacity duration-300"
-            onClick={() => setIsMenuOpen(false)}
-            style={{ top: `${menuTop}px` }}
-          />
         )}
       </div>
+
+      {/* Backdrop overlay for mobile menu */}
+      {isMenuOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/25 backdrop-blur-xs z-30 transition-opacity duration-300"
+          onClick={() => setIsMenuOpen(false)}
+          style={{ top: `${menuTop}px` }}
+        />
+      )}
     </header>
   );
 };
