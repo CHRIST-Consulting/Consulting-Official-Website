@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ScrollAnimation from "../ui/ScrollAnimation";
 import { Button } from "../ui/Button";
+import { apiRequest } from "../../lib/api";
 import {
   Send,
   CheckCircle,
@@ -34,9 +35,8 @@ const Contact = () => {
     setErrorMessage("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/content/contact", {
+      await apiRequest("/content/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formState.name,
           email: formState.email,
@@ -44,10 +44,6 @@ const Contact = () => {
           subject: "Microsite Consultation Request",
         }),
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to send message. Please try again.");
-      }
 
       setIsSubmitted(true);
       setFormState({ name: "", email: "", message: "" });
