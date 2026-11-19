@@ -35,7 +35,7 @@ async function connectToDatabase() {
 // Database connection middleware for serverless environment
 app.use(async (req, res, next) => {
   // Allow health check without blocking on DB
-  if (req.path === "/api/health" || req.path === "/health") {
+  if (req.path.includes("health")) {
     return next();
   }
 
@@ -44,23 +44,40 @@ app.use(async (req, res, next) => {
     next();
   } catch (error) {
     console.error("MongoDB Serverless Connection Error:", error);
+    // For contact inquiries, still allow next() so Google Script email notification dispatches
+    if (req.path.includes("contact")) {
+      return next();
+    }
     return res.status(500).json({
-      message: "Database connection failed. Please ensure MONGODB_URI is configured in Vercel Environment Variables.",
+      message: "Database connection failed. Please ensure MONGODB_URI is configured in Vercel Environment Variables: " + error.message,
       error: error.message,
     });
   }
 });
 
-// Routes
+// Routes - Mount both with and without '/api' prefix so it works regardless of Vercel path rewrites
 app.use("/api/auth", authRoutes);
-app.use("/api/content", contentRoutes);
+app.use("/auth", authRoutes);
 
-// Health check
-app.get("/api/health", (req, res) => {
+app.use("/api/content", contentRoutes);
+app.use("/content", contentRoutes);
+
+// Health check handler
+const healthHandler = (req, res) => {
   res.json({
     status: "ok",
     database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
     timestamp: new Date().toISOString(),
+  });
+};
+
+app.get("/api/health", healthHandler);
+app.get("/health", healthHandler);
+
+// Fallback 404 handler returning JSON instead of HTML
+app.use((req, res) => {
+  res.status(404).json({
+    message: `API route not found: ${req.method} ${req.url}`,
   });
 });
 

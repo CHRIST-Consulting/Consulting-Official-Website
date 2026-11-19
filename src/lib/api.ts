@@ -30,14 +30,25 @@ export async function apiRequest(endpoint: string, options: RequestInit = {}) {
     headers,
   });
 
-  const data = await response.json().catch(() => ({}));
+  let data: any = {};
+  const contentType = response.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    data = await response.json().catch(() => ({}));
+  } else {
+    const text = await response.text().catch(() => "");
+    data = { message: text };
+  }
 
   if (!response.ok) {
     if (response.status === 401) {
       removeAuthToken();
       removeAdminUser();
     }
-    throw new Error(data.message || "An error occurred while connecting to server.");
+    throw new Error(
+      data.message ||
+      data.error ||
+      `Server returned HTTP ${response.status} (${response.statusText || "Error"})`
+    );
   }
 
   return data;

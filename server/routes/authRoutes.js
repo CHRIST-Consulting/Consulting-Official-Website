@@ -9,7 +9,7 @@ const router = express.Router();
 
 // Helper to send email via Google Apps Script
 const sendViaGoogleScript = async (payload) => {
-  const url = process.env.GOOGLE_SCRIPT_URL;
+  const url = process.env.GOOGLE_AUTH_SCRIPT_URL || process.env.GOOGLE_SCRIPT_URL;
   if (!url) return false;
   try {
     const res = await fetch(url, {

@@ -93,32 +93,41 @@ router.post("/contact", async (req, res) => {
       return res.status(400).json({ message: "Name, email and message are required." });
     }
 
-    // 1. Save directly into MongoDB
-    const savedMessage = await ContactMessage.create({
-      name,
-      email,
-      phone,
-      organization,
-      subject: subject || "General Enquiry",
-      message,
-    });
+    // 1. Save into MongoDB (safe failover so DB issue never halts email delivery)
+    let savedMessage = null;
+    try {
+      savedMessage = await ContactMessage.create({
+        name,
+        email,
+        phone,
+        organization,
+        subject: subject || "Microsite Consultation Request",
+        message,
+      });
+    } catch (dbErr) {
+      console.warn("MongoDB inquiry save skipped/failed, continuing with email notification:", dbErr.message);
+    }
 
-    // 2. Relay notification to consultancy@christuniversity.in via Google Apps Script
-    const scriptUrl = process.env.GOOGLE_SCRIPT_URL;
+    // 2. Relay notification to email via Google Apps Script (awaited for serverless environments)
+    const scriptUrl = process.env.GOOGLE_CONTACT_SCRIPT_URL || process.env.GOOGLE_SCRIPT_URL;
     if (scriptUrl) {
-      fetch(scriptUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "CONTACT_ENQUIRY",
-          name,
-          email,
-          phone,
-          organization,
-          subject,
-          message,
-        }),
-      }).catch((err) => console.error("Google Script notification failed:", err));
+      try {
+        await fetch(scriptUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "CONTACT_ENQUIRY",
+            name,
+            email,
+            phone: phone || "",
+            organization: organization || "",
+            subject: subject || "Microsite Consultation Request",
+            message,
+          }),
+        });
+      } catch (scriptErr) {
+        console.error("Google Script notification failed:", scriptErr.message);
+      }
     }
 
     res.status(201).json({
