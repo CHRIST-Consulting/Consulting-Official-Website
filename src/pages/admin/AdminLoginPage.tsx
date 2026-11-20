@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Lock, Mail, ArrowRight, AlertCircle, Loader2, ShieldCheck, Sparkles } from "lucide-react";
+import { Lock, Mail, ArrowRight, AlertCircle, Loader2, ShieldCheck, Sparkles, Eye, EyeOff } from "lucide-react";
 import { apiRequest, setAuthToken, setAdminUser } from "../../lib/api";
 
 const AdminLoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ const AdminLoginPage = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="consultancy@christuniversity.in"
+                  placeholder="Email"
                   className="w-full pl-11 pr-4 py-3 bg-secondary/60 border border-slate-200 rounded-xl text-charcoal placeholder-slate-400 text-sm focus:outline-none focus:border-royal-blue focus:bg-white transition-all shadow-inner"
                 />
               </div>
@@ -98,13 +99,26 @@ const AdminLoginPage = () => {
               <div className="relative">
                 <Lock className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full pl-11 pr-4 py-3 bg-secondary/60 border border-slate-200 rounded-xl text-charcoal placeholder-slate-400 text-sm focus:outline-none focus:border-royal-blue focus:bg-white transition-all shadow-inner"
+                  className="w-full pl-11 pr-11 py-3 bg-secondary/60 border border-slate-200 rounded-xl text-charcoal placeholder-slate-400 text-sm focus:outline-none focus:border-royal-blue focus:bg-white transition-all shadow-inner"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer p-0.5 rounded transition-colors"
+                  title={showPassword ? "Hide password" : "Show password"}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
               </div>
             </div>
 

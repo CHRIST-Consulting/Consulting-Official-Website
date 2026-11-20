@@ -46,6 +46,14 @@ export const FloatingBottomDock: React.FC<FloatingBottomDockProps> = ({
   const [clickedButtonId, setClickedButtonId] = useState<string | null>(null);
   const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  const tabRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
+  const [indicatorRect, setIndicatorRect] = useState<{
+    left: number;
+    width: number;
+    height: number;
+    top: number;
+  } | null>(null);
+
   const triggerButtonClick = (id: string) => {
     setClickedButtonId(id);
     if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
@@ -92,6 +100,28 @@ export const FloatingBottomDock: React.FC<FloatingBottomDockProps> = ({
 
   const currentItem = navItems.find((item) => item.id === activeTab) || navItems[0];
   const CurrentIcon = currentItem?.icon || Users;
+
+  useEffect(() => {
+    const updateIndicator = () => {
+      const activeEl = tabRefs.current[activeTab];
+      if (activeEl) {
+        setIndicatorRect({
+          left: activeEl.offsetLeft,
+          top: activeEl.offsetTop,
+          width: activeEl.offsetWidth,
+          height: activeEl.offsetHeight,
+        });
+      }
+    };
+
+    updateIndicator();
+    const frameId = requestAnimationFrame(updateIndicator);
+    window.addEventListener("resize", updateIndicator);
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener("resize", updateIndicator);
+    };
+  }, [activeTab, isSuperAdmin, inquiriesCount]);
 
   return (
     <>
@@ -242,114 +272,124 @@ export const FloatingBottomDock: React.FC<FloatingBottomDockProps> = ({
       )}
 
       {/* ================= FLOATING BOTTOM DOCK ================= */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-[96vw] pointer-events-auto">
-        <LiquidGlass className="rounded-full shadow-2xl p-1.5 sm:p-2 border border-white/40">
-          {/* ================= 1. DESKTOP DOCK (md and up) ================= */}
-          <div className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeTab === item.id;
-              const isItemClicked = clickedButtonId === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onPointerDown={() => triggerButtonClick(item.id)}
-                  onClick={() => onSelectTab(item.id)}
-                  className={`relative inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs transition-colors duration-200 cursor-pointer whitespace-nowrap shrink-0 overflow-hidden ${
-                    isActive
-                      ? "text-white font-black"
-                      : "text-white font-extrabold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)] hover:text-amber-200 hover:bg-white/15"
-                  }`}
-                >
-                  {/* Brief click highlight pulse ONLY on this button */}
-                  {isItemClicked && (
-                    <motion.div
-                      initial={{ opacity: 0.95, scale: 0.95 }}
-                      animate={{ opacity: 0, scale: 1.08 }}
-                      transition={{ duration: 0.45, ease: "easeOut" }}
-                      className="absolute inset-0 rounded-full pointer-events-none z-20 border border-white shadow-[0_0_16px_rgba(255,255,255,0.7),_inset_0_0_8px_rgba(255,255,255,0.4)] bg-white/25"
-                    />
-                  )}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-[96vw] pointer-events-auto flex justify-center">
+        <motion.div
+          layout
+          transition={{
+            type: "spring",
+            stiffness: 140,
+            damping: 24,
+            mass: 1.2,
+          }}
+          className="rounded-full flex items-center justify-center"
+        >
+          <LiquidGlass className="rounded-full shadow-2xl p-1.5 sm:p-2 border border-white/40">
+            {/* ================= 1. DESKTOP DOCK (md and up) ================= */}
+            <div className="relative hidden md:flex items-center gap-1">
+              {/* Smooth Sliding Liquid Glass Lens Capsule */}
+              {indicatorRect && (
+                <motion.div
+                  initial={false}
+                  animate={{
+                    x: indicatorRect.left,
+                    top: indicatorRect.top,
+                    width: indicatorRect.width,
+                    height: indicatorRect.height,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 140,
+                    damping: 24,
+                    mass: 1.2,
+                  }}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                  }}
+                  className="rounded-full bg-white/20 backdrop-blur-xl border border-white/50 shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.8),_inset_0_-1px_0.5px_rgba(0,0,0,0.1),_0_2px_8px_rgba(0,0,0,0.2)] pointer-events-none z-0"
+                />
+              )}
 
-                  {/* Sliding Liquid Glass Lens Capsule */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="active-desktop-dock-indicator"
-                      transition={{
-                        type: "spring",
-                        stiffness: 160,
-                        damping: 22,
-                        mass: 1,
-                      }}
-                      className="absolute inset-0 rounded-full bg-white/20 backdrop-blur-xl border border-white/50 shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.8),_inset_0_-1px_0.5px_rgba(0,0,0,0.1),_0_2px_8px_rgba(0,0,0,0.2)]"
-                      style={{ willChange: "transform, width, left" }}
-                    />
-                  )}
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.id;
+                const isItemClicked = clickedButtonId === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    ref={(el) => {
+                      tabRefs.current[item.id] = el;
+                    }}
+                    onPointerDown={() => triggerButtonClick(item.id)}
+                    onClick={() => onSelectTab(item.id)}
+                    className={`relative inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs transition-colors duration-200 cursor-pointer whitespace-nowrap shrink-0 z-10 ${
+                      isActive
+                        ? "text-white font-black"
+                        : "text-white font-extrabold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)] hover:text-amber-200 hover:bg-white/15"
+                    }`}
+                  >
+                    {/* Brief click highlight pulse ONLY on this button */}
+                    {isItemClicked && (
+                      <motion.div
+                        initial={{ opacity: 0.95, scale: 0.95 }}
+                        animate={{ opacity: 0, scale: 1.08 }}
+                        transition={{ duration: 0.45, ease: "easeOut" }}
+                        className="absolute inset-0 rounded-full pointer-events-none z-20 border border-white shadow-[0_0_16px_rgba(255,255,255,0.7),_inset_0_0_8px_rgba(255,255,255,0.4)] bg-white/25"
+                      />
+                    )}
 
-                  <span className="relative z-10 flex items-center gap-1.5">
-                    <Icon
-                      className={`w-3.5 h-3.5 shrink-0 transition-colors duration-300 ${
-                        isActive
-                          ? "text-[#F7DC6F] stroke-[2.6] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
-                          : "text-sky-300 stroke-[2.3] drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
-                      }`}
-                    />
-                    <span className="text-white font-black drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-                      {item.label}
-                    </span>
-                    {item.badge && (
-                      <span
-                        className={`ml-0.5 px-1.5 py-0.2 rounded-full text-[9px] font-black ${
+                    <span className="relative z-10 flex items-center gap-1.5">
+                      <Icon
+                        className={`w-3.5 h-3.5 shrink-0 transition-colors duration-300 ${
                           isActive
-                            ? "bg-[#DAA520] text-slate-950 shadow-sm"
-                            : "bg-sky-400 text-slate-950 font-black shadow-sm"
+                            ? "text-[#F7DC6F] stroke-[2.6] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+                            : "text-sky-300 stroke-[2.3] drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
                         }`}
-                      >
-                        {item.badge}
+                      />
+                      <span className="text-white font-black drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                        {item.label}
                       </span>
-                    )}
-                    {item.isSpecial && !isActive && (
-                      <span className="w-2 h-2 rounded-full bg-[#F7DC6F] shadow-[0_0_8px_#F7DC6F]" />
-                    )}
-                  </span>
-                </button>
-              );
-            })}
+                      {item.badge && (
+                        <span
+                          className={`ml-0.5 px-1.5 py-0.2 rounded-full text-[9px] font-black ${
+                            isActive
+                              ? "bg-[#DAA520] text-slate-950 shadow-sm"
+                              : "bg-sky-400 text-slate-950 font-black shadow-sm"
+                          }`}
+                        >
+                          {item.badge}
+                        </span>
+                      )}
+                      {item.isSpecial && !isActive && (
+                        <span className="w-2 h-2 rounded-full bg-[#F7DC6F] shadow-[0_0_8px_#F7DC6F]" />
+                      )}
+                    </span>
+                  </button>
+                );
+              })}
 
-            {/* Separator Line */}
-            <div className="w-[1px] h-6 bg-white/30 mx-1 shrink-0" />
+              {/* Separator Line */}
+              <div className="w-[1px] h-6 bg-white/30 mx-1 shrink-0" />
 
-            {/* Primary Action Button Pill */}
-            {activeTab === "inquiries" ? (
-              <button
-                onPointerDown={() => triggerButtonClick("action-export")}
-                onClick={onExportCSV}
-                className="relative inline-flex items-center gap-1.5 px-4 py-2 bg-white/15 hover:bg-white/25 text-white text-xs font-black tracking-wide rounded-full transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),_0_4px_12px_rgba(0,0,0,0.2)] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] cursor-pointer whitespace-nowrap shrink-0 border border-white/40 backdrop-blur-md overflow-hidden"
-                title="Export CSV"
-              >
-                {clickedButtonId === "action-export" && (
-                  <motion.div
-                    initial={{ opacity: 0.95, scale: 0.95 }}
-                    animate={{ opacity: 0, scale: 1.08 }}
-                    transition={{ duration: 0.45, ease: "easeOut" }}
-                    className="absolute inset-0 rounded-full pointer-events-none z-20 border border-white shadow-[0_0_16px_rgba(255,255,255,0.7),_inset_0_0_8px_rgba(255,255,255,0.4)] bg-white/25"
-                  />
-                )}
-                <Download className="w-3.5 h-3.5 text-[#F7DC6F] stroke-[2.5]" />
-                <span>Export CSV</span>
-              </button>
-            ) : (
-              <button
-                onPointerDown={() => triggerButtonClick("action-add")}
-                onClick={onOpenAddModal}
-                className={`relative inline-flex items-center gap-1.5 px-4 py-2 text-xs font-black tracking-wide rounded-full transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),_0_4px_12px_rgba(0,0,0,0.2)] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] cursor-pointer whitespace-nowrap shrink-0 backdrop-blur-md overflow-hidden ${
+              {/* Primary Action Button Pill with smooth layout resizing */}
+              <motion.button
+                layout
+                transition={{
+                  type: "spring",
+                  stiffness: 140,
+                  damping: 24,
+                  mass: 1.2,
+                }}
+                onPointerDown={() => triggerButtonClick(activeTab === "inquiries" ? "action-export" : "action-add")}
+                onClick={activeTab === "inquiries" ? onExportCSV : onOpenAddModal}
+                className={`relative inline-flex items-center gap-1.5 px-4 py-2 text-xs font-black tracking-wide rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),_0_4px_12px_rgba(0,0,0,0.2)] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] cursor-pointer whitespace-nowrap shrink-0 backdrop-blur-md overflow-hidden ${
                   activeTab === "admins"
                     ? "bg-[#DAA520]/30 hover:bg-[#DAA520]/45 text-[#F7DC6F] border border-[#DAA520]/50"
                     : "bg-white/15 hover:bg-white/25 text-white border border-white/40"
                 }`}
-                title="Add New Record"
+                title={activeTab === "inquiries" ? "Export CSV" : "Add New Record"}
               >
-                {clickedButtonId === "action-add" && (
+                {clickedButtonId === (activeTab === "inquiries" ? "action-export" : "action-add") && (
                   <motion.div
                     initial={{ opacity: 0.95, scale: 0.95 }}
                     animate={{ opacity: 0, scale: 1.08 }}
@@ -357,26 +397,58 @@ export const FloatingBottomDock: React.FC<FloatingBottomDockProps> = ({
                     className="absolute inset-0 rounded-full pointer-events-none z-20 border border-white shadow-[0_0_16px_rgba(255,255,255,0.7),_inset_0_0_8px_rgba(255,255,255,0.4)] bg-white/25"
                   />
                 )}
-                <Plus className="w-4 h-4 text-[#F7DC6F] stroke-[2.8]" />
-                <span>
-                  Add {activeTab === "team" ? "Member" : activeTab === "testimonials" ? "Testimonial" : activeTab === "admins" ? "Admin" : activeTab.slice(0, -1)}
-                </span>
-              </button>
-            )}
-          </div>
 
-          {/* ================= 2. MOBILE STREAMLINED DOCK (under md) ================= */}
-          <div className="flex md:hidden items-center gap-2 px-1">
-            {/* Active Section Indicator Badge */}
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 text-white text-xs font-black shrink-0 border border-white/40 shadow-sm backdrop-blur-md drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
-              <CurrentIcon className="w-3.5 h-3.5 text-sky-300 stroke-[2.5]" />
-              <span className="truncate max-w-[90px]">{currentItem.label}</span>
-              {currentItem.badge && (
-                <span className="px-1.5 py-0.2 rounded-full text-[9px] bg-sky-400 text-slate-950 font-black">
-                  {currentItem.badge}
-                </span>
-              )}
+                {activeTab === "inquiries" ? (
+                  <motion.span layout="position" className="flex items-center gap-1.5">
+                    <Download className="w-3.5 h-3.5 text-[#F7DC6F] stroke-[2.5]" />
+                    <span>Export CSV</span>
+                  </motion.span>
+                ) : (
+                  <motion.span layout="position" className="flex items-center gap-1.5">
+                    <Plus className="w-4 h-4 text-[#F7DC6F] stroke-[2.8]" />
+                    <motion.span
+                      key={activeTab}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      Add {activeTab === "team" ? "Member" : activeTab === "testimonials" ? "Testimonial" : activeTab === "admins" ? "Admin" : activeTab.slice(0, -1)}
+                    </motion.span>
+                  </motion.span>
+                )}
+              </motion.button>
             </div>
+
+            {/* ================= 2. MOBILE STREAMLINED DOCK (under md) ================= */}
+            <div className="flex md:hidden items-center gap-2 px-1">
+              {/* Active Section Indicator Badge */}
+              <motion.div
+                layout
+                transition={{
+                  type: "spring",
+                  stiffness: 140,
+                  damping: 24,
+                  mass: 1.2,
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 text-white text-xs font-black shrink-0 border border-white/40 shadow-sm backdrop-blur-md drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]"
+              >
+                <CurrentIcon className="w-3.5 h-3.5 text-sky-300 stroke-[2.5]" />
+                <motion.span
+                  key={currentItem.id}
+                  layout="position"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                  className="truncate max-w-[90px]"
+                >
+                  {currentItem.label}
+                </motion.span>
+                {currentItem.badge && (
+                  <span className="px-1.5 py-0.2 rounded-full text-[9px] bg-sky-400 text-slate-950 font-black">
+                    {currentItem.badge}
+                  </span>
+                )}
+              </motion.div>
 
             {/* Quick Action Pill on Mobile */}
             {activeTab === "inquiries" ? (
@@ -443,7 +515,8 @@ export const FloatingBottomDock: React.FC<FloatingBottomDockProps> = ({
             </button>
           </div>
         </LiquidGlass>
-      </div>
-    </>
+      </motion.div>
+    </div>
+  </>
   );
 };

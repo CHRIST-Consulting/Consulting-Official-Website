@@ -30,7 +30,7 @@ export const LiquidGlass = React.forwardRef<HTMLDivElement, LiquidGlassProps>(
         ref={ref}
         onClick={onClick}
         style={style}
-        className={`relative isolate transition-all duration-500 ease-out ${
+        className={`relative isolate transition-transform duration-500 ease-out ${
           isExpanded ? "scale-[1.01]" : "scale-100"
         } ${className}`}
       >
