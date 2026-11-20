@@ -24,11 +24,25 @@ export interface DepartmentExpertise {
   logos?: { name: string; path: string }[];
 }
 
+export interface CampusContact {
+  name: string;
+  role: string;
+  email: string;
+  phone?: string;
+}
+
+export interface ServiceCategory {
+  category: string;
+  iconName: string;
+  topics: string[];
+}
+
 export interface CampusSPOC {
   name: string;
   role: string;
   email: string;
   image: string;
+  phone?: string;
 }
 
 export interface Campus {
@@ -51,6 +65,8 @@ export interface Campus {
   studentsEngagedCount: number;
   keyProjectsCount: number;
   spoc: CampusSPOC;
+  additionalContacts?: CampusContact[];
+  servicesOffered?: ServiceCategory[];
   departments: DepartmentExpertise[];
 }
 
@@ -576,93 +592,210 @@ export const campusesData: Campus[] = [
       },
     ],
   },
-  {
+      {
     id: "pune-lavasa-campus",
     name: "Pune Lavasa Campus",
     location: "Pune",
     image: "/images/campuses/Pune Lavasa/pune-lavasa-campus.jpg",
-    description: "Nestled in the scenic hills, this campus is a hub for analytical sciences, data science, law, and business leadership.",
+    description:
+      'Known as "The Hub of Analytics", this campus sits in the lap of the Sahyadri hills, a scenic learner\'s paradise and an ideal place for corporate outreach and training programs, offering niche expertise across several specific branches of business analytics.',
     link: "https://lavasa.christuniversity.in/",
     stats: {
-      totalProjects: 3,
-      activeProjects: 1,
-      studentsInvolved: 90,
-      completionRate: "33%",
+      totalProjects: 0,
+      activeProjects: 0,
+      studentsInvolved: 0,
+      completionRate: "0%",
     },
-    projectsCompletedCount: 29,
-    facultyEngagedCount: 45,
-    studentsEngagedCount: 90,
-    keyProjectsCount: 8,
+    projectsCompletedCount: 0,
+    facultyEngagedCount: 0,
+    studentsEngagedCount: 0,
+    keyProjectsCount: 0,
     spoc: {
-      name: "Dr. Fr. Jossy P. George",
-      role: "Director & Professor, Dept. of Computer Science",
-      email: "jossy.george@christuniversity.in",
-      image: "/images/teams/consultants/FR Jossy.png",
+      name: "Dr. Amit Seth",
+      role: "Consultancy Coordinator",
+      email: "amit.seth@christuniversity.in",
+      phone: "+91 99999 29511",
+      image: "",
     },
+    additionalContacts: [
+      {
+        name: "Ms. Tooba Fatma Bilgrami",
+        role: "Faculty",
+        email: "tooba.bilgrami@christuniversity.in",
+        phone: "+91 84107 75241",
+      },
+    ],
     departments: [
       {
-        name: "Data Science",
-        expertise: ["Predictive Analytics", "Big Data Engineering", "Business Intelligence"],
-        iconName: "Database",
-      },
-      {
-        name: "Management",
-        expertise: ["Entrepreneurship Mentoring", "Leadership Coaching", "Rural Management"],
-        iconName: "Briefcase",
-      },
-      {
-        name: "Law",
-        expertise: ["Corporate Law", "Dispute Resolution", "Legal Drafting", "Contract Management"],
-        iconName: "Scale",
-      },
-      {
-        name: "Commerce",
-        expertise: ["Fintech Strategy", "Cost Accounting", "Wealth Management Advisory"],
+        name: "Financial Analytics & FinTech",
         iconName: "TrendingUp",
+        description:
+          "Specializing in financial data interpretation, forecasting, portfolio modeling, time series analytics, risk analysis, and corporate finance business intelligence.",
+        expertise: [
+          "Financial Data Interpretation",
+          "Forecasting",
+          "Portfolio Modeling",
+          "Time Series Analytics",
+          "Risk Analysis",
+          "Corporate Finance Business Intelligence",
+        ],
+      },
+      {
+        name: "Marketing & Customer Insights",
+        iconName: "Users",
+        description:
+          "Delivering capabilities in market analytics, consumer behavior, social media analytics, and customer segmentation modeling using Python and R.",
+        expertise: [
+          "Market Analytics",
+          "Consumer Behavior",
+          "Social Media Analytics",
+          "Customer Segmentation Modeling (Python & R)",
+        ],
+      },
+      {
+        name: "Operations & Supply Chain Analytics",
+        iconName: "Settings",
+        description:
+          "Optimizing business logistics, quality control systems, and operational processes using technology-driven, data-informed decision frameworks.",
+        expertise: [
+          "Logistics Optimization",
+          "Quality Control Systems",
+          "Operational Process Optimization",
+          "Data-Informed Decision Frameworks",
+        ],
+      },
+      {
+        name: "HR Analytics",
+        iconName: "Heart",
+        description:
+          "Applying data-driven workforce decision-making, talent management analysis, and organizational behavior diagnostics.",
+        expertise: [
+          "Data-Driven Workforce Decision-Making",
+          "Talent Management Analysis",
+          "Organizational Behavior Diagnostics",
+        ],
+      },
+      {
+        name: "Business Intelligence & Dashboards",
+        iconName: "Database",
+        description:
+          "Designing real-time predictive analytics models and visual, interactive management reporting dashboards using Power BI.",
+        expertise: [
+          "Real-Time Predictive Analytics Models",
+          "Interactive Management Dashboards",
+          "Power BI",
+        ],
+      },
+      {
+        name: "Consultancy Services",
+        iconName: "Briefcase",
+        description:
+          "The campus undertakes large-scale, multidisciplinary consultancy projects, including business, technology, law, and social sciences.",
+        customIntro: "Key consultancy areas include:",
+        expertise: [
+          "Strategic Consulting: Assisting organizations with capacity building and organizational transformation.",
+          "Public Sector & Development: Partnering with government agencies and development organizations to create systemic, community-level impact.",
+          "RFP-Based Consulting: Responding to formal requests for proposals with structured, tailor-made solutions.",
+        ],
+      },
+      {
+        name: "Corporate Outreach & Training",
+        iconName: "GraduationCap",
+        description:
+          "Leveraging its reputation as an analytical hub, the campus provides structured learning programs to upskill professionals.",
+        customIntro: "Capabilities in Corporate Outreach & Training:",
+        expertise: [
+          "Customized Corporate Training: Programs tailored to the unique learning and development needs of businesses.",
+          "Technical & Managerial Skilling: Intensive upskilling across technical, managerial, and behavioral competency areas.",
+          "Institutional Partnerships: Collaborating with industry bodies (such as the MCCIA) and academic institutions to align training directly with workforce requirements.",
+        ],
       },
     ],
-    projects: [
+    servicesOffered: [
       {
-        id: "pl-001",
-        title: "Hospitality Excellence Center",
-        description:
-          "World-class hospitality training facility with simulated hotel environments and industry-standard equipment.",
-        status: "Active",
-        startDate: "Nov 2023",
-        teamSize: 18,
-        category: "Hospitality",
-        image: "/images/services/hotel-culinary.jpg",
-        tags: ["Hospitality", "Training", "Hotel Management", "Excellence"],
-        priority: "High",
+        category: "Personal Development & Human Resources",
+        iconName: "Brain",
+        topics: [
+          "Learning & Development and Change Management",
+          "Employee Engagement & Culture Building",
+          "HR & IR Compliance & Policy Development Framework",
+          "Corporate Social Responsibility",
+          "POSH (Prevention of Sexual Harassment) & Workplace Ethics",
+          "Operations & expert in cognitive ergonomics in ops",
+          "Building Psychologically Safe Workplace (Creating Positive Work Environment)",
+          "Business Storytelling Basics",
+        ],
       },
       {
-        id: "pl-002",
-        title: "Culinary Arts Studio",
-        description:
-          "Professional culinary training facility with commercial-grade kitchens and specialized cooking equipment.",
-        status: "Completed",
-        startDate: "Jan 2024",
-        endDate: "Nov 2024",
-        teamSize: 15,
-        category: "Culinary Arts",
-        image: "/images/services/hotel-culinary.jpg",
-        tags: ["Culinary", "Cooking", "Professional Kitchen", "Arts"],
-        priority: "High",
+        category: "Leadership",
+        iconName: "Briefcase",
+        topics: [
+          "Leadership studies",
+          "Strategy & Turnaround Management",
+          "Design Thinking",
+          "Stress & Conflict Management",
+          "Time Management Skills for Successful Leadership",
+          "Communication at Workplace through Body Language, Business Etiquette & Email Communication",
+          "Emotional Intelligence - Self Analysis and Self Control",
+          "Sharpening the Tenets of Interpersonal Communication",
+          "Managing Multi-Skilled Workforce",
+          "Managing Multiple Priorities and Managing Workload & Deadline",
+          "Team Goal Settings and Tools to Achieve",
+          "Effective Managerial Skills",
+          "Unleash Your Problem Solving and Decision-Making Skills",
+          "Strategic Thinking Mindset",
+          "Leadership Communication",
+          "Middle Level Managers: The Game Changers",
+          "Entrepreneurial Mindset & Leadership",
+        ],
       },
       {
-        id: "pl-003",
-        title: "Adventure Learning Program",
-        description:
-          "Outdoor education and adventure-based learning programs utilizing the scenic Lavasa environment.",
-        status: "Planning",
-        startDate: "Jun 2024",
-        teamSize: 12,
-        category: "Outdoor Education",
-        image: "/images/services/education-training.jpg",
-        tags: ["Adventure", "Outdoor", "Learning", "Nature"],
-        priority: "Medium",
+        category: "Business Development",
+        iconName: "TrendingUp",
+        topics: [
+          "Market Entry Strategy (Domestic & International)",
+          "Business Expansion Planning",
+          "Customer Acquisition Strategies",
+          "Negotiation Excellence: Building Win-Win Solutions",
+          "Enhancing Sales and Marketing Performance",
+          "Managing Business Transformation",
+          "Handling Difficult Customers",
+        ],
+      },
+      {
+        category: "GST",
+        iconName: "Scale",
+        topics: [
+          "Master class on GST",
+          "Input Tax Credit & Reverse Charge Mechanism under GST",
+          "Event on Gearing up for Tax Audit",
+          "Event on Handling Audit or Litigation in GST",
+          "Various Beneficial Schemes under Customs and Foreign Trade Policy for Importers & Exporters / GST annual return",
+        ],
+      },
+      {
+        category: "Operations",
+        iconName: "Settings",
+        topics: [
+          "Effective Budgeting and Forecasting of Sales Growth",
+          "Preparation of Balance Sheet",
+          "Event on Finance for Non-Finance Managers",
+          "5-S and Kaizen: The Mantras for Workplace Improvement",
+          "Poka-Yoke: Gateway to World Class Quality",
+          "Overview of TDS Compliances under Income Tax Act",
+          "Operational Excellence: The Toyota Way",
+          "Concept of Integrated Supply Chain for Improving Profitability",
+          "Session on Finance for Sales & Marketing",
+          "Lean Management Basics",
+          "Microsoft Power BI",
+          "Financial Risk Management",
+          "Cost Reduction & Efficiency Management",
+          "Problem Solving Methodology for Efficient Workplace Management",
+          "Project Management: Leading Projects to Success",
+        ],
       },
     ],
+    projects: [],
   },
   {
     id: "delhi-ncr-campus",

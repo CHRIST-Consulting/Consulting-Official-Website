@@ -41,7 +41,8 @@ const CampusModal: React.FC<CampusModalProps> = ({
   const [activeTab, setActiveTab] = useState(0);
   const [showAllDepartments, setShowAllDepartments] = useState(false);
   const [animationKey, setAnimationKey] = useState(0);
-
+  const [expandedServices, setExpandedServices] = useState<Record<string, boolean>>({});
+ 
   // Set the initial tab when the modal opens based on the clicked campus card
   useEffect(() => {
     if (campus && isOpen) {
@@ -54,6 +55,7 @@ const CampusModal: React.FC<CampusModalProps> = ({
 
   useEffect(() => {
     setShowAllDepartments(false);
+    setExpandedServices({});
     setAnimationKey((prev) => prev + 1);
   }, [activeTab]);
 
@@ -63,6 +65,22 @@ const CampusModal: React.FC<CampusModalProps> = ({
 
   const activeProjects = selectedCampus.projects?.filter((p) => p.status === "Active") || [];
   const completedProjects = selectedCampus.projects?.filter((p) => p.status === "Completed") || [];
+
+    const hasStats = [
+    selectedCampus.projectsCompletedCount,
+    selectedCampus.facultyEngagedCount,
+    selectedCampus.studentsEngagedCount,
+    selectedCampus.keyProjectsCount,
+  ].some((n) => n > 0);
+  const hasProjects = (selectedCampus.projects?.length ?? 0) > 0;
+  const spocInitials = selectedCampus.spoc.name
+    .replace(/^(Dr|Ms|Mr|Mrs|Fr)\.?\s+/gi, "")
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -203,7 +221,7 @@ const CampusModal: React.FC<CampusModalProps> = ({
                   </div>
 
                   {/* 4 Statistics Cards Row */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 p-6 md:p-8 pt-6 border-t border-slate-200/50 dark:border-white/5 bg-slate-50/30 dark:bg-slate-900/10">
+                  <div className={`${hasStats ? "grid" : "hidden"} grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 p-6 md:p-8 pt-6 border-t border-slate-200/50 dark:border-white/5 bg-slate-50/30 dark:bg-slate-900/10`}>
                     {/* Projects Completed */}
                     <div className="bg-white dark:bg-white/5 p-4 rounded-xl border border-slate-150 dark:border-white/5 shadow-[0_2px_8px_rgba(0,0,0,0.01)] flex flex-col justify-between h-full hover:shadow-md transition-shadow group">
                       <div>
@@ -306,12 +324,18 @@ const CampusModal: React.FC<CampusModalProps> = ({
                     </h4>
                     {/* SPOC Photo (Square with fixed width/height matching design layout) */}
                     <div className="w-32 h-32 md:w-36 md:h-36 rounded-xl overflow-hidden shadow-inner mb-4 relative bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-white/10 flex-shrink-0">
-                      <img
-                        src={selectedCampus.spoc.image}
-                        alt={selectedCampus.spoc.name}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
+                                            {selectedCampus.spoc.image ? (
+                        <img
+                          src={selectedCampus.spoc.image}
+                          alt={selectedCampus.spoc.name}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary dark:text-sky-blue text-3xl font-bold">
+                          {spocInitials}
+                        </div>
+                      )}
                     </div>
                     {/* Identity Details */}
                     <h5 className="text-base font-bold text-slate-800 dark:text-slate-100 leading-snug mb-1">
@@ -334,6 +358,31 @@ const CampusModal: React.FC<CampusModalProps> = ({
                       <Mail className="h-4 w-4 text-slate-400 mr-2 flex-shrink-0 group-hover:text-primary-light" />
                       <span>{selectedCampus.spoc.email}</span>
                     </a>
+                                        {selectedCampus.spoc.phone && (
+                      <a
+                        href={`tel:${selectedCampus.spoc.phone.replace(/\s/g, "")}`}
+                        className="flex items-center text-xs text-slate-600 dark:text-slate-300 hover:text-primary-light dark:hover:text-sky-blue transition-colors mt-2"
+                      >
+                        <Icons.Phone className="h-4 w-4 text-slate-400 mr-2 flex-shrink-0" />
+                        <span>{selectedCampus.spoc.phone}</span>
+                      </a>
+                    )}
+                    {selectedCampus.additionalContacts?.map((c) => (
+                      <div key={c.email} className="mt-4 pt-4 border-t border-slate-100 dark:border-white/5">
+                        <p className="text-sm font-bold text-slate-800 dark:text-slate-100 leading-snug">{c.name}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">{c.role}</p>
+                        <a href={`mailto:${c.email}`} className="flex items-center text-xs text-slate-600 dark:text-slate-300 hover:text-primary-light break-all">
+                          <Mail className="h-4 w-4 text-slate-400 mr-2 flex-shrink-0" />
+                          <span>{c.email}</span>
+                        </a>
+                        {c.phone && (
+                          <a href={`tel:${c.phone.replace(/\s/g, "")}`} className="flex items-center text-xs text-slate-600 dark:text-slate-300 hover:text-primary-light mt-1.5">
+                            <Icons.Phone className="h-4 w-4 text-slate-400 mr-2 flex-shrink-0" />
+                            <span>{c.phone}</span>
+                          </a>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -398,8 +447,73 @@ const CampusModal: React.FC<CampusModalProps> = ({
                 )}
               </div>
 
+              {/* Services Offered */}
+              {selectedCampus.servicesOffered && selectedCampus.servicesOffered.length > 0 && (
+                <div className="bg-white dark:bg-white/5 border border-slate-150 dark:border-white/10 rounded-2xl p-6 md:p-8 shadow-sm">
+                  <div className="mb-6">
+                    <h4 className="text-xl md:text-2xl font-bold text-primary dark:text-white mb-1.5">
+                      Services Offered
+                    </h4>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      What can be offered to the industry across our key expertise areas.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
+                    {selectedCampus.servicesOffered.map((service) => {
+                      const isExpanded = !!expandedServices[service.category];
+                      const visibleTopics = isExpanded ? service.topics : service.topics.slice(0, 5);
+                      return (
+                        <div
+                          key={service.category}
+                          className="bg-slate-50/50 dark:bg-slate-900/10 p-5 rounded-xl border border-slate-100/50 dark:border-white/5 text-left"
+                        >
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="w-9 h-9 bg-primary/10 dark:bg-primary/20 text-primary dark:text-sky-blue rounded-full flex items-center justify-center flex-shrink-0">
+                              {renderIcon(service.iconName, "h-4.5 w-4.5")}
+                            </div>
+                            <h5 className="font-bold text-slate-800 dark:text-slate-200 text-sm md:text-base">
+                              {service.category}
+                            </h5>
+                          </div>
+                          <ul className="space-y-2">
+                            {visibleTopics.map((topic) => (
+                              <li
+                                key={topic}
+                                className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300 leading-snug"
+                              >
+                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary/60 flex-shrink-0" />
+                                <span>{topic}</span>
+                              </li>
+                            ))}
+                          </ul>
+                          {service.topics.length > 5 && (
+                            <button
+                              onClick={() =>
+                                setExpandedServices((prev) => ({
+                                  ...prev,
+                                  [service.category]: !prev[service.category],
+                                }))
+                              }
+                              className="flex items-center gap-1.5 text-xs font-semibold text-primary-light hover:underline mt-4 cursor-pointer focus:outline-none"
+                              type="button"
+                            >
+                              {isExpanded ? "Show less" : `Show all ${service.topics.length}`}
+                              <ChevronRight
+                                className={`h-3.5 w-3.5 transition-transform duration-300 ${
+                                  isExpanded ? "rotate-90" : ""
+                                }`}
+                              />
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
               {/* Bottom Projects List */}
-              <div id="modal-projects-section" className="pt-8 border-t border-slate-200 dark:border-white/5 space-y-6">
+               <div id="modal-projects-section" className={`${hasProjects ? "" : "hidden"} pt-8 border-t border-slate-200 dark:border-white/5 space-y-6`}>
                 {/* Active Projects Grid */}
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
