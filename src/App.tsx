@@ -5,8 +5,9 @@ import ChristLoadingScreen from "./components/ChristLoadingScreen";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 
-// Lazy load pages
+// Lazy load public pages
 const Home = lazy(() => import("./pages/HomePage"));
 const Client = lazy(() => import("./pages/ClientsPage"));
 const Event = lazy(() => import("./pages/EventsPage"));
@@ -15,13 +16,22 @@ const Expertise = lazy(() => import("./pages/ExpertisePage"));
 const Lab = lazy(() => import("./pages/LabsPage"));
 const EventRecapPage = lazy(() => import("./pages/EventsRecapPage"));
 const InternshipRegistration = lazy(() => import("./pages/InternshipRegistrationPage"));
+const CampusDetails = lazy(() => import("./pages/CampusDetailsPage"));
+const DepartmentDetails = lazy(() => import("./pages/DepartmentDetailsPage"));
+
+// Lazy load admin pages
+const AdminLogin = lazy(() => import("./pages/admin/AdminLoginPage"));
+const ForgotPassword = lazy(() => import("./pages/admin/ForgotPasswordPage"));
+const ResetPassword = lazy(() => import("./pages/admin/ResetPasswordPage"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboardPage"));
 
 function App() {
   const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Navbar />
+      {!isAdminRoute && <Navbar />}
       <main className="flex-grow">
         <AnimatePresence>
           <ChristLoadingScreen cacheKey={`app-cache-${location.pathname}`}>
@@ -33,6 +43,7 @@ function App() {
               }
             >
               <Routes location={location} key={location.pathname}>
+                {/* Public Routes */}
                 <Route path="/" element={<Home />} />
                 <Route path="/clients" element={<Client />} />
                 <Route path="/events" element={<Event />} />
@@ -41,13 +52,30 @@ function App() {
                 <Route path="/expertise" element={<Expertise />} />
                 <Route path="/labs" element={<Lab />} />
                 <Route path="/internship-registration" element={<InternshipRegistration />} />
+                <Route path="/campus/:id" element={<CampusDetails />} />
+                <Route path="/campus/:campusId/department/:deptId" element={<DepartmentDetails />} />
+
+                {/* Admin Auth Routes */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin/forgot-password" element={<ForgotPassword />} />
+                <Route path="/admin/reset-password" element={<ResetPassword />} />
+
+                {/* Protected Admin Dashboard */}
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
               </Routes>
             </Suspense>
           </ChristLoadingScreen>
         </AnimatePresence>
       </main>
-      <Footer />
-      <ScrollToTopButton />
+      {!isAdminRoute && <Footer />}
+      {!isAdminRoute && <ScrollToTopButton />}
     </div>
   );
 }
