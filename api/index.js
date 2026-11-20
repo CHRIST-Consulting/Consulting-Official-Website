@@ -7,7 +7,10 @@ import authRoutes from "../server/routes/authRoutes.js";
 import contentRoutes from "../server/routes/contentRoutes.js";
 
 try {
-  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+  // Only override DNS on Windows where local Node SRV resolution fails
+  if (process.platform === "win32") {
+    dns.setServers(["8.8.8.8", "1.1.1.1"]);
+  }
 } catch (e) {
   // Ignore in environments where custom DNS is restricted
 }
@@ -19,6 +22,12 @@ const app = express();
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
+// Request logger for Vercel runtime logs
+app.use((req, res, next) => {
+  console.log(`[API ${req.method}] ${req.url}`);
+  next();
+});
+
 async function connectToDatabase() {
   if (mongoose.connection.readyState >= 1) {
     return;
@@ -28,7 +37,7 @@ async function connectToDatabase() {
     throw new Error("MONGODB_URI environment variable is missing.");
   }
   await mongoose.connect(mongoUri, {
-    serverSelectionTimeoutMS: 8000,
+    serverSelectionTimeoutMS: 15000,
   });
 }
 
@@ -81,8 +90,4 @@ app.use((req, res) => {
   });
 });
 
-export { app };
-
-export default function handler(req, res) {
-  return app(req, res);
-}
+export default app;

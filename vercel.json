@@ -1,9 +1,14 @@
 {
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/" }
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
   ],
-  "cleanUrls": true,
-  "framework": "vite",
   "headers": [
     {
       "source": "/(.*)",
