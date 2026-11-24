@@ -1,15 +1,16 @@
 // Storage for contact form submissions.
 //
-// - Production (Vercel): Upstash Redis. Configure either
-//   UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN, or the KV_REST_API_URL +
-//   KV_REST_API_TOKEN variables that Vercel's Upstash integration injects.
-// - Local development: if Redis isn't configured, submissions are written to
+// - Production (Vercel) and any environment with MONGODB_URI set: MongoDB
+//   (the CICF Atlas cluster). Every submission is inserted into the
+//   `contact_submissions` collection, and the admin panel reads from the same
+//   collection — so what the admin sees is exactly what is stored in MongoDB.
+// - Local development without MONGODB_URI: submissions are written to
 //   .data/contact-submissions.json (gitignored). This fallback is refused on
 //   Vercel, whose filesystem is not persistent.
-import { randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
 import path from "node:path";
-import { Redis } from "@upstash/redis";
+import { type Db, MongoClient, type ObjectId } from "mongodb";
 import type { ContactInput } from "../../src/lib/contactValidation.js";
 
 export interface ContactSubmission extends ContactInput {
@@ -17,23 +18,81 @@ export interface ContactSubmission extends ContactInput {
   submittedAt: string; // ISO 8601
 }
 
-const SUBMISSIONS_KEY = "contact:submissions";
+/** Shape of a submission document in MongoDB. */
+interface SubmissionDocument extends ContactInput {
+  _id?: ObjectId;
+  submittedAt: Date; // stored as a BSON date (holds both date and time, UTC)
+}
+
+interface RateLimitDocument {
+  _id: string;
+  count: number;
+  expiresAt: Date;
+}
+
+const SUBMISSIONS_COLLECTION = "contact_submissions";
+const RATE_LIMITS_COLLECTION = "rate_limits";
+const DEFAULT_DB_NAME = "cicf_website";
 /** Upper bound on how many submissions the admin list returns. */
 export const MAX_LISTED_SUBMISSIONS = 1000;
 
-let redisClient: Redis | null | undefined;
+// ---------------------------------------------------------------------------
+// MongoDB connection (reused across invocations of a warm serverless function)
+// ---------------------------------------------------------------------------
 
-function getRedis(): Redis | null {
-  if (redisClient !== undefined) return redisClient;
-  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
-  redisClient = url && token ? new Redis({ url, token }) : null;
-  if (!redisClient && process.env.VERCEL) {
-    throw new Error(
-      "Upstash Redis is not configured. Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN."
-    );
+const globalForMongo = globalThis as typeof globalThis & {
+  __cicfMongoDb?: Promise<Db>;
+};
+
+async function connect(uri: string): Promise<Db> {
+  const client = new MongoClient(uri, {
+    // Serverless functions handle one request at a time; keep the pool small
+    // so many concurrent instances don't exhaust the cluster's connections.
+    maxPoolSize: 5,
+    serverSelectionTimeoutMS: 8000,
+    appName: "cicf-website",
+  });
+  await client.connect();
+  const db = client.db(process.env.MONGODB_DB || DEFAULT_DB_NAME);
+
+  // Idempotent; runs once per cold start. A missing createIndex permission
+  // must not take the contact form down, so failures are only logged.
+  await Promise.all([
+    db.collection(SUBMISSIONS_COLLECTION).createIndex({ submittedAt: -1 }),
+    // TTL index: MongoDB deletes rate-limit counters once they expire.
+    db.collection(RATE_LIMITS_COLLECTION).createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 }),
+  ]).catch((error) => console.error("[storage] Could not create MongoDB indexes:", error));
+
+  return db;
+}
+
+/** Returns the database, or null when MongoDB isn't configured (local dev). */
+function getDb(): Promise<Db> | null {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    if (process.env.VERCEL) {
+      throw new Error("MongoDB is not configured. Set MONGODB_URI.");
+    }
+    return null;
   }
-  return redisClient;
+  if (!globalForMongo.__cicfMongoDb) {
+    globalForMongo.__cicfMongoDb = connect(uri).catch((error) => {
+      // Don't cache a failed connection; the next request retries.
+      globalForMongo.__cicfMongoDb = undefined;
+      throw error;
+    });
+  }
+  return globalForMongo.__cicfMongoDb;
+}
+
+function toSubmission(doc: SubmissionDocument & { _id: ObjectId }): ContactSubmission {
+  return {
+    id: doc._id.toHexString(),
+    name: doc.name,
+    email: doc.email,
+    message: doc.message,
+    submittedAt: doc.submittedAt.toISOString(),
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -68,27 +127,44 @@ function appendFileSubmission(submission: ContactSubmission): Promise<void> {
 // ---------------------------------------------------------------------------
 
 export async function saveSubmission(input: ContactInput): Promise<ContactSubmission> {
+  const submittedAt = new Date();
+
+  const dbPromise = getDb();
+  if (dbPromise) {
+    const db = await dbPromise;
+    const doc: SubmissionDocument = {
+      name: input.name,
+      email: input.email,
+      message: input.message,
+      submittedAt,
+    };
+    const { insertedId } = await db
+      .collection<SubmissionDocument>(SUBMISSIONS_COLLECTION)
+      .insertOne(doc);
+    return toSubmission({ ...doc, _id: insertedId });
+  }
+
   const submission: ContactSubmission = {
     id: randomUUID(),
     ...input,
-    submittedAt: new Date().toISOString(),
+    submittedAt: submittedAt.toISOString(),
   };
-
-  const redis = getRedis();
-  if (redis) {
-    // LPUSH keeps the newest submission at the head of the list.
-    await redis.lpush(SUBMISSIONS_KEY, submission);
-  } else {
-    await appendFileSubmission(submission);
-  }
+  await appendFileSubmission(submission);
   return submission;
 }
 
 /** Returns submissions, newest first. */
 export async function listSubmissions(): Promise<ContactSubmission[]> {
-  const redis = getRedis();
-  if (redis) {
-    return redis.lrange<ContactSubmission>(SUBMISSIONS_KEY, 0, MAX_LISTED_SUBMISSIONS - 1);
+  const dbPromise = getDb();
+  if (dbPromise) {
+    const db = await dbPromise;
+    const docs = await db
+      .collection<SubmissionDocument>(SUBMISSIONS_COLLECTION)
+      .find({})
+      .sort({ submittedAt: -1 })
+      .limit(MAX_LISTED_SUBMISSIONS)
+      .toArray();
+    return docs.map(toSubmission);
   }
   const submissions = await readFileSubmissions();
   return submissions.slice(0, MAX_LISTED_SUBMISSIONS);
@@ -109,12 +185,28 @@ export async function consumeRateLimit(
   limit: number,
   windowSeconds: number
 ): Promise<boolean> {
-  const redis = getRedis();
-  if (redis) {
-    const redisKey = `ratelimit:${key}`;
-    const count = await redis.incr(redisKey);
-    if (count === 1) await redis.expire(redisKey, windowSeconds);
-    return count <= limit;
+  const dbPromise = getDb();
+  if (dbPromise) {
+    const db = await dbPromise;
+    const now = new Date();
+    const windowActive = { $gt: ["$expiresAt", now] };
+    // One atomic upsert: increment inside an active window, otherwise start a
+    // new window. (Both $set fields read the document as it was before.)
+    const doc = await db.collection<RateLimitDocument>(RATE_LIMITS_COLLECTION).findOneAndUpdate(
+      { _id: key },
+      [
+        {
+          $set: {
+            count: { $cond: [windowActive, { $add: ["$count", 1] }, 1] },
+            expiresAt: {
+              $cond: [windowActive, "$expiresAt", new Date(now.getTime() + windowSeconds * 1000)],
+            },
+          },
+        },
+      ],
+      { upsert: true, returnDocument: "after" }
+    );
+    return (doc?.count ?? 1) <= limit;
   }
 
   const now = Date.now();
@@ -128,7 +220,11 @@ export async function consumeRateLimit(
 }
 
 export async function resetRateLimit(key: string): Promise<void> {
-  const redis = getRedis();
-  if (redis) await redis.del(`ratelimit:${key}`);
-  else memoryCounters.delete(key);
+  const dbPromise = getDb();
+  if (dbPromise) {
+    const db = await dbPromise;
+    await db.collection<RateLimitDocument>(RATE_LIMITS_COLLECTION).deleteOne({ _id: key });
+  } else {
+    memoryCounters.delete(key);
+  }
 }

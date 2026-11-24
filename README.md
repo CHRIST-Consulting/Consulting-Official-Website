@@ -92,8 +92,11 @@ from the site and are marked `noindex`.
 
 - **API:** Vercel serverless functions in `api/` (`/api/contact`, `/api/admin/*`).
   `npm run dev` serves them locally through a dev-only Vite plugin.
-- **Storage:** Upstash Redis in production. Locally, when Upstash isn't
-  configured, submissions go to `.data/contact-submissions.json` (gitignored).
+- **Storage:** MongoDB (CICF Atlas cluster). Each submission is saved to the
+  `contact_submissions` collection (`name`, `email`, `message`, `submittedAt`
+  as a date/time) and the admin page lists that same collection. Locally, when
+  `MONGODB_URI` isn't set, submissions go to `.data/contact-submissions.json`
+  (gitignored).
 - **Auth:** one admin account configured through environment variables only;
   see `.env.example`.
 
@@ -103,15 +106,18 @@ from the site and are marked `noindex`.
 2. `npm run hash-password` and enter a password (min. 12 characters).
 3. Create `.env.local` (gitignored) with `ADMIN_USERNAME=admin` plus the
    `ADMIN_PASSWORD_HASH` and `SESSION_SECRET` lines the script printed.
+   Add `MONGODB_URI=<connection string>` to use the Atlas cluster (your IP
+   must be on the Atlas Network Access list).
 4. `npm run dev`, submit the contact form on the home page, then sign in at
    `http://localhost:5173/admin/login`.
 
 ### Production (Vercel project settings)
 
-Add an Upstash Redis database (Vercel Marketplace or upstash.com) and set
-`UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (or the `KV_REST_API_*`
-pair the integration injects), `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH` and
-`SESSION_SECRET` under Settings → Environment Variables, then redeploy.
+Set `MONGODB_URI` (and optionally `MONGODB_DB`), `ADMIN_USERNAME`,
+`ADMIN_PASSWORD_HASH` and `SESSION_SECRET` under Settings → Environment
+Variables, then redeploy. In Atlas → Network Access, allow connections from
+Vercel (Vercel functions have no fixed IPs, so this usually means
+`0.0.0.0/0`, protected by the database user's password).
 
 Email notifications for new messages are not implemented yet (pending IT
 approval); see the `TODO(email-notifications)` in `api/contact.ts`.
